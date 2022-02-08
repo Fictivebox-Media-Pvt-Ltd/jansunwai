@@ -47,5 +47,13 @@ $db     = "DB_NAME";
 
 ## Time to launch the application
 Hit `HOST_PROTOCOL/IP_OR_DNS/jansunwai` in your browser to launch the application login page.
+<img src="https://github.com/Fictivebox-Media-Pvt-Ltd/jansunwai/blob/main/image/login_screen.png" height="600" width="1000">
+Now enter your login creds to login as an `Super Admin`, `Admin` & `Surveyer`.
 
-...typing
+Here you go, with the `Admin/Super Dashboard` (`Surveyer` don't have access of admin dashboard, So you'll be redirected to `Survey Page`)
+<img src="https://github.com/Fictivebox-Media-Pvt-Ltd/jansunwai/blob/main/image/dashboard.png" height="600" width="1000">
+
+## License
+
+    Copyright © 2021 All rights reserved | Developed by Fictive Box
+    
