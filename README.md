@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/pranavpandey/dynamic-support/master/graphics/dynamic-support.png" width="160" height="160" align="right" hspace="20">
+
 # Jansunwai
 
 Jansunwai is basically a PHP-based application, that has been developed to make a two-way communication channel, between the voters and the politicians.
@@ -42,5 +44,8 @@ $dbuser = "DB_USERNAME";
 $dbpass = "DB_PASSWORD";
 $db     = "DB_NAME";
 ```
+
+## Time to launch the application
+Hit `HOST_PROTOCOL/IP_OR_DNS/jansunwai` in your browser to launch the application login page.
 
 ...typing
