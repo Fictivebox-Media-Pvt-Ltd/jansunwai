@@ -59,7 +59,7 @@ $request_data = [
  echo json_encode(
          array(
             "success" => true,
-             "message" => "Successful login.",
+             "message" => "Login successfull",
              "jwt" => $jwt,
              "expireAt" => $expire_at,
              "user" => $user
