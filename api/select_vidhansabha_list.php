@@ -8,7 +8,7 @@ use Firebase\JWT\Key;
 	if($jwt){
 			try {
 					$decoded = JWT::decode($jwt,new Key($secret_key, 'HS256'));
-			$query="SELECT DISTINCT vidhansabha FROM tbl_voters " ;
+			$query="SELECT DISTINCT vidhansabha FROM tbl_voters";
 			mysqli_set_charset($conn,'utf8');
 			$result=mysqli_query($conn,$query) or die("Query problem".mysqli_error($conn));
 			$rows=mysqli_num_rows($result);
@@ -21,10 +21,13 @@ use Firebase\JWT\Key;
 					$row['vidhansabha'],
 				));
 					}
-						echo json_encode(array("vidhansabha"=>$info),JSON_UNESCAPED_UNICODE);
+						echo json_encode(array("success" => true,
+						"message" => "Vidhansabha List",
+						"vidhansabha"=>$info),JSON_UNESCAPED_UNICODE);
 				}
 				else {
-					echo "false";
+					echo json_encode(array("success" => true,
+						"message" => "No data found"),JSON_UNESCAPED_UNICODE);
 				}
 
 			}
