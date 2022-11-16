@@ -10,6 +10,7 @@ $jwt = null;
 $headers = getallheaders();   
 if(empty($headers['Authorization'])){
     echo json_encode(array(
+        "success" => false,
         "message" => "Access denied."
         ));
         exit();
