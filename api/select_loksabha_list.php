@@ -14,28 +14,22 @@ use Firebase\JWT\Key;
 					));
 					exit();
 			}
-			if(empty($_POST['loksabha'])){
-				echo json_encode(array(
-					"message" => "loksabha field is required."
-					));
-					exit();
-			}
-			$loksabha = $_POST['loksabha'];
-			$query="SELECT DISTINCT vidhansabha FROM tbl_mandal_panchayat_mapping WHERE loksabha='$loksabha'";
+			$query="SELECT DISTINCT loksabha FROM tbl_mandal_panchayat_mapping";
 			mysqli_set_charset($conn,'utf8');
 			$result=mysqli_query($conn,$query) or die("Query problem".mysqli_error($conn));
 			$rows=mysqli_num_rows($result);
-            if($rows >0) {
+
+				if($rows >0) {
 					$info=array();
 					while($row=mysqli_fetch_array($result))
 					{
 						array_push($info,array(
-					$row['vidhansabha'],
+					$row['loksabha'],
 				));
 					}
 						echo json_encode(array("success" => true,
-						"message" => "Vidhansabha List",
-						"vidhansabha"=>$info),JSON_UNESCAPED_UNICODE);
+						"message" => "loksabha List",
+						"loksabha"=>$info),JSON_UNESCAPED_UNICODE);
 				}
 				else {
 					echo json_encode(array("success" => true,

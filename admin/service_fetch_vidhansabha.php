@@ -1,7 +1,6 @@
 <?php
 include_once '../configs/includes.php';
 $loksabha = $_POST['loksabha'];
-
 $query = "SELECT vidhansabha FROM `tbl_loksabha` WHERE `loksabha` = '$loksabha' AND `vidhansabha` != '' GROUP BY vidhansabha";
 
 mysqli_set_charset($conn,'utf8');
