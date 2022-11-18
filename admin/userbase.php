@@ -44,7 +44,6 @@ if (!isset($_SESSION['user_id'])) {
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <?php include_once 'head.php'; ?>
-
 <body class="nk-body bg-lighter npc-default has-sidebar">
     <div class="nk-app-root">
         <!-- main @s -->

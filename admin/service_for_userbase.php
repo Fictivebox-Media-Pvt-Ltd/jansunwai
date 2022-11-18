@@ -153,8 +153,8 @@ foreach($response as $row)
         $sub_array[] = $row['caste'];
         $sub_array[] = $row['caste_categories'];
         }
+        
     }
-
 	$data[] = $sub_array;
     $i++;
 }
