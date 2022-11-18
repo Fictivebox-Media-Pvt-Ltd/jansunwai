@@ -205,7 +205,7 @@ $deptName = get_department_details($conn, $deptId);
                         </ul>
                     </li> -->
                     <?php } ?>
-                    <?php if($assignedLoksabha === 'चित्तौड़गढ़'){ ?>
+                    <!--?php if($assignedLoksabha === 'चित्तौड़गढ़'){ ?-->
                     <li class="nk-menu-item has-sub">
                                     <a href="#" class="nk-menu-link nk-menu-toggle">
                                         <span class="nk-menu-icon"><em class="icon ni ni-light-fill"></em></span>
@@ -314,7 +314,7 @@ $deptName = get_department_details($conn, $deptId);
                         </a>
                     </li>
                     
-                    <?php } ?>
+                    <!--?php } ?-->
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                         <span class="nk-menu-icon"><em class="icon ni ni-list-round"></em></span>
@@ -329,14 +329,14 @@ $deptName = get_department_details($conn, $deptId);
                             </li>
                         </ul><!-- .nk-menu-sub -->
                     </li>
-                    <?php if($assignedLoksabha === 'चित्तौड़गढ़' || $assignedLoksabha == ''){ ?>
+                    <!--?php if($assignedLoksabha === 'चित्तौड़गढ़' || $assignedLoksabha == ''){ ?-->
                         <li class="nk-menu-item has-sub">
                             <a href="analytics.php"  class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-activity-round"></em></span>
                                 <span class="nk-menu-text">Analytics</span>
                             </a>
                         </li>
-                    <?php } ?>
+                    <!--?php } ?-->
                     <!--li class="nk-menu-item">
                         <a href="#" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-contact"></em></span>
