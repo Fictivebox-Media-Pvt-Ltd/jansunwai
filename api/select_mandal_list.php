@@ -30,7 +30,7 @@ use Firebase\JWT\Key;
 					while($row=mysqli_fetch_array($result))
 					{
 					array_push($info,array(
-					    $row['mandal'],
+						'name' =>   $row['mandal'],
 				    ));
 					}
 						echo json_encode(array("success" => true,

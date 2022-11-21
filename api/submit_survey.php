@@ -37,6 +37,5 @@ if(!$numberExist){
 }else{
         throw new Exception("Phone Number Already Exist!",403);
 }
-
 return;
 ?>

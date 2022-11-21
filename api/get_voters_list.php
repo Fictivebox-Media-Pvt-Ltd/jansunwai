@@ -12,22 +12,19 @@ use Firebase\JWT\Key;
 if ($jwt) {
     try {
 
-        if ($_POST['vidhansabha'] != '' && $_POST['booth_no'] != '' && $_POST['ward_hin'] != '') {
+        if ($_POST['loksabha'] != '' && $_POST['vidhansabha'] != '' && $_POST['booth_no'] != '') {
             $vidhansabha = $_POST['vidhansabha'];
             $booth_no = $_POST['booth_no'];
-            $ward_hin = $_POST['ward_hin']; // ward
             $voter_name_hin = isset($_POST['name']) ? $_POST['name'] : ''; // Optional
             $house_no = isset($_POST['house_no']) ? $_POST['house_no'] : '0'; // Optional
         } else if ($_POST['vidhansabha'] != '' && $_POST['booth_no'] != '') {
             $vidhansabha = $_POST['vidhansabha'];
             $booth_no = $_POST['booth_no'];
-            $ward_hin = 'no_value';
             $voter_name_hin = isset($_POST['name']) ? $_POST['name'] : ''; // Optional
             $house_no = isset($_POST['house_no']) ? $_POST['house_no'] : '0'; // Optional
         } else {
             $vidhansabha = 'no_value';
-            $booth_no = 'no_value';
-            $ward_hin = 'no_value';
+            $booth_no = 'no_value';            
             $voter_name_hin = 'no_value';
             $house_no = '0';
         }
@@ -41,10 +38,6 @@ if ($jwt) {
         }
 
         $query = "SELECT * FROM `tbl_voters` WHERE id NOT IN (" . implode(", ", $voterIdsThatHasBeenSurveyed) . ") AND `vidhansabha` = '$vidhansabha' AND `booth_no` = '$booth_no'";
-
-        if ($ward_hin != 'no_value' && $ward_hin != 'वार्ड चुने') {
-            $query .= "AND `ward_hin` = '$ward_hin'";
-        }
 
         if ($house_no != '0' && $house_no != 0 && $house_no != 'मकान सं चुने') {
             $query .= "AND `house_no` = '$house_no'";
@@ -61,7 +54,7 @@ if ($jwt) {
         $i = 0;
         if ($rows > 0) {
             $info = array();
-            while ($row = mysqli_fetch_array($result)) {
+            while ($row = mysqli_fetch_array($result)){
                 $i++;
                 array_push($info, array(
                     'id' => $row['id'], 'house_no' => $row['house_no'], 'name' => $row['voter_name_hin'], 'age' => $row['voter_age'], 'address' => $row['poling_station_hin'], 'father_husband_name' => $row['father_husband_name_hin'],
@@ -69,7 +62,7 @@ if ($jwt) {
             }
             echo json_encode(array(
                 "success" => true,
-	        "message" => "voters List",
+	            "message" => "voters List",
                 "voters_list" => $info), JSON_UNESCAPED_UNICODE);
         }else {
                 echo json_encode(array("success" => true,

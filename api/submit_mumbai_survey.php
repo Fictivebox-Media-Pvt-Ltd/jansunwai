@@ -32,7 +32,6 @@ if(isset($_GET['voter_id'])){
 
 $query="INSERT IGNORE INTO `tbl_mumbai_voter_survey` (`voter_id`, `pesha`, `makaan`, `mobile`, `whatsapp`, `mojudaa_sarkaar`, `mojudaa_vidhayak`, `mudde`, `bmc_chunaw`, `party_vs_umeedwar`, `parshad_ka_karya`, `if_bad_then_why`, `bmc_chunaw_2021`, `bmc_chunaw_mudde`, `ward_parshad_kon`, `bmc_chunaw_gathbandhan`, `social_media`, `dharm`, `jaati`, `shredi`, `samudaye`, `surveyed_by`, `created_at`)
 VALUES ('$voter_id', '$pesha', '$makaan', '$mobile', '$whatsapp', '$mojudaa_sarkaar', '$mojudaa_vidhayak', '$mudde', '$bmc_chunaw', '$party_vs_umeedwar', '$parshad_ka_karya', '$if_bad_then_why', '$bmc_chunaw_2021', '$bmc_chunaw_mudde', '$ward_parshad_kon', '$bmc_chunaw_gathbandhan', '$social_media', '$dharm', '$jaati', '$shredi', '$samudaye', '$surveyed_by', now())";
-
 $ph_no_validation = "SELECT COUNT(id) AS 'NumberExist' FROM `tbl_mumbai_voter_survey` WHERE `mobile` = '$mobile'";
 $isNoExist = mysqli_query($conn,$ph_no_validation);
 $numberExist = mysqli_fetch_assoc($isNoExist)['NumberExist'];
