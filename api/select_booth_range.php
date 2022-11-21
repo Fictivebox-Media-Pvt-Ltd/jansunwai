@@ -5,7 +5,7 @@ require "../vendor/autoload.php";
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-	if($jwt){
+	if($jwt){  
 			try {
 			$decoded = JWT::decode($jwt,new Key($secret_key, 'HS256'));
 			if(empty($_POST['user_id'])){
@@ -30,7 +30,7 @@ use Firebase\JWT\Key;
 					while($row=mysqli_fetch_array($result))
 					{
 						array_push($info,array(
-					$row['booth_range'],
+							'name' => $row['booth_range'],
 				));
 					}
 						echo json_encode(array("success" => true,
