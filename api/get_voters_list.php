@@ -11,6 +11,12 @@ use Firebase\JWT\Key;
 
 if ($jwt) {
     try {
+        if(empty($_POST['user_id'])){
+            echo json_encode(array(
+                "message" => "user_id field is required."
+                ));
+                exit();
+        }
         if(empty($_POST['loksabha'])){
             echo json_encode(array(
                 "message" => "loksabha field is required."
