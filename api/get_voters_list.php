@@ -84,7 +84,7 @@ if ($jwt) {
             while ($row = mysqli_fetch_array($result)){
                 $i++;
                 array_push($info, array(
-                    'id' => $row['id'], 'house_no' => $row['house_no'], 'name' => $row['voter_name_hin'], 'age' => $row['voter_age'], 'address' => $row['poling_station_hin'], 'father_husband_name' => $row['father_husband_name_hin'],
+                    'id' => $row['id'], 'house_no' => $row['house_no'], 'name' => $row['voter_name_hin'], 'age' => $row['voter_age'], 'address' => $row['poling_station_hin'], 'father_husband_name' => $row['father_husband_name_hin'],'survey_status' => true
                 ));
             }
             echo json_encode(array(
