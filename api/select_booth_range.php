@@ -29,13 +29,19 @@ use Firebase\JWT\Key;
 					$info=array();
 					while($row=mysqli_fetch_array($result))
 					{
-						array_push($info,array(
-							'name' => $row['booth_range'],
-				));
+						array_push($info,$row['booth_range']);
+					}
+					$booth = explode(",",$info[0]);
+					
+					$info1=array();
+					for($i = 0;$i < count($booth);$i++)
+					{
+						array_push($info1,array('booth'=>$booth[$i]
+				    ));
 					}
 						echo json_encode(array("success" => true,
 						"message" => "Booth Range List",
-						"boothRange"=>$info),JSON_UNESCAPED_UNICODE);
+						"boothRange"=>$info1),JSON_UNESCAPED_UNICODE);
 				}
 				else {
 					echo json_encode(array("success" => true,
