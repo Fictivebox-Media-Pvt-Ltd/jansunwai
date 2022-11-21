@@ -11,23 +11,44 @@ use Firebase\JWT\Key;
 
 if ($jwt) {
     try {
+        if(empty($_POST['loksabha'])){
+            echo json_encode(array(
+                "message" => "loksabha field is required."
+                ));
+                exit();
+        }
+        if(empty($_POST['vidhansabha'])){
+            echo json_encode(array(
+                "message" => "vidhansabha field is required."
+                ));
+                exit();
+        }
+        if(empty($_POST['mandal'])){
+            echo json_encode(array(
+                "message" => "mandal field is required."
+                ));
+                exit();
+        }
+        if(empty($_POST['panchayat'])){
+            echo json_encode(array(
+                "message" => "panchayat field is required."
+                ));
+                exit();
+        }
+        if(empty($_POST['booth_no'])){
+            echo json_encode(array(
+                "message" => "booth number field is required."
+                ));
+                exit();
+        }
 
         if ($_POST['loksabha'] != '' && $_POST['vidhansabha'] != '' && $_POST['booth_no'] != '') {
             $vidhansabha = $_POST['vidhansabha'];
             $booth_no = $_POST['booth_no'];
             $voter_name_hin = isset($_POST['name']) ? $_POST['name'] : ''; // Optional
             $house_no = isset($_POST['house_no']) ? $_POST['house_no'] : '0'; // Optional
-        } else if ($_POST['vidhansabha'] != '' && $_POST['booth_no'] != '') {
-            $vidhansabha = $_POST['vidhansabha'];
-            $booth_no = $_POST['booth_no'];
-            $voter_name_hin = isset($_POST['name']) ? $_POST['name'] : ''; // Optional
-            $house_no = isset($_POST['house_no']) ? $_POST['house_no'] : '0'; // Optional
-        } else {
-            $vidhansabha = 'no_value';
-            $booth_no = 'no_value';            
-            $voter_name_hin = 'no_value';
-            $house_no = '0';
         }
+
 
         $voterIdsThatHasBeenSurveyed = array();
         $queryForVoterIds = "SELECT * FROM (SELECT voter_id FROM `tbl_mumbai_voter_survey` UNION SELECT voter_id FROM `tbl_voter_survey`) as voter_ids";
