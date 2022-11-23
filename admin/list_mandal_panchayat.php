@@ -49,7 +49,7 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                                 <h4 class="nk-block-title">Mandal's & Panchayat's</h4>
                                             </div>
                                         </div>
-                                        <div class="card card-preview" style="width: max-content;">
+                                        <div class="card card-preview w-100" style="width: max-content;">
                                             <div class="card-inner">
                                                 <table class="table" id="mandal_datasets">
                                                     <thead>
