@@ -29,9 +29,23 @@ if ($jwt) {
                 ));
                 exit();
         }
+        if(empty($_POST['voter_id'])){
+            echo json_encode(array(
+                "message" => "voter Id field is required."
+                ));
+                exit();
+        }
 
+        $voterId = $_POST['voter_id'];
         $loksabha = $_POST['loksabha'];
         $vidhansabha = $_POST['vidhansabha'];
+
+
+        $voter="SELECT id,booth_no,voter_name_hin,father_husband_name_hin,house_no,voter_age,gender_hin,ward_hin FROM tbl_voters WHERE id = '$voterId'";
+        $result=mysqli_query($conn,$voter) or die("Query problem".mysqli_error($conn));
+        $row=mysqli_fetch_array($result);
+ 
+
         $query = "SELECT id,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM `tbl_survey_questions` WHERE `vidhansabha` = '$vidhansabha' AND `loksabha` = '$loksabha'";
 
         mysqli_set_charset($conn, 'utf8');
