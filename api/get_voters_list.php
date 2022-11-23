@@ -54,8 +54,6 @@ if ($jwt) {
             $voter_name_hin = isset($_POST['name']) ? $_POST['name'] : ''; // Optional
             $house_no = isset($_POST['house_no']) ? $_POST['house_no'] : '0'; // Optional
         }
-
-
         $voterIdsThatHasBeenSurveyed = array();
         $queryForVoterIds = "SELECT * FROM (SELECT voter_id FROM `tbl_mumbai_voter_survey` UNION SELECT voter_id FROM `tbl_voter_survey`) as voter_ids";
         $queryForVoterIdsResult = mysqli_query($conn, $queryForVoterIds);
