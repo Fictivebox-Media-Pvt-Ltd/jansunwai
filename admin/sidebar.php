@@ -381,23 +381,23 @@ $deptName = get_department_details($conn, $deptId);
                                         Data</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="loksabha-add.php" class="nk-menu-link"><span class="nk-menu-text">Add
+                                <a href="loksabha_add.php" class="nk-menu-link"><span class="nk-menu-text">Add
                                         Loksabha</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="vidhansabha-add.php" class="nk-menu-link"><span class="nk-menu-text">Add
+                                <a href="vidhansabha_add.php" class="nk-menu-link"><span class="nk-menu-text">Add
                                         Vidhansabha</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="mandal-add.php" class="nk-menu-link"><span class="nk-menu-text">Add
+                                <a href="mandal_add.php" class="nk-menu-link"><span class="nk-menu-text">Add
                                         Mandal</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="panchayat-add.php" class="nk-menu-link"><span class="nk-menu-text">Add
+                                <a href="panchayat_add.php" class="nk-menu-link"><span class="nk-menu-text">Add
                                         Panchayat</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="booth-range-add.php" class="nk-menu-link"><span class="nk-menu-text">Add
+                                <a href="booth_range_add.php" class="nk-menu-link"><span class="nk-menu-text">Add
                                         Booth Range</span></a>
                             </li>
                         </ul><!-- .nk-menu-sub -->

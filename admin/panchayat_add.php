@@ -46,7 +46,7 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                 <div class="nk-block nk-block-lg">
                                     <div class="nk-block-head">
                                         <div class="nk-block-head-content">
-                                            <h4 class="nk-block-title">Add Vidhansabha</h4>
+                                            <h4 class="nk-block-title">Add Panchayat</h4>
                                         </div>
                                     </div>
                                     <div class="card card-preview w-100" style="width: max-content;">
@@ -54,19 +54,19 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="form-label">Loksabha</label>
+                                                        <label class="form-label">Mandal</label>
                                                         <select name="" id="" class="form-control">
-                                                            <option value="">Loksabha</option>
-                                                            <option value="">Loksabha</option>
-                                                            <option value="">Loksabha</option>
+                                                            <option value="">Mandal</option>
+                                                            <option value="">Mandal</option>
+                                                            <option value="">Mandal</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="form-label">Vidhansabha</label>
+                                                        <label class="form-label">Panchayat</label>
                                                         <input type="text" class="form-control"
-                                                            placeholder="Add Vidhansabha" name="">
+                                                            placeholder="Mandal" name="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 align-self-end">
@@ -78,8 +78,8 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                                         <thead>
                                                             <tr>
                                                                 <th>S.No.</th>
-                                                                <th>Loksabha</th>
-                                                                <th>Vidhansabha</th>
+                                                                <th>Mandal</th>
+                                                                <th>Panchayat</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>
@@ -89,7 +89,7 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                                                 <td>Data</td>
                                                                 <td>Data</td>
                                                                 <td>
-                                                                    <a href="vidhansabha-edit.php"
+                                                                    <a href="panchayat_edit.php"
                                                                         class="btn btn-icon btn-trigger btn-tooltip"
                                                                         title="Edit"><em
                                                                             class="icon ni ni-edit"></em></a>
@@ -104,7 +104,7 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                                                 <td>Data</td>
                                                                 <td>Data</td>
                                                                 <td>
-                                                                    <a href="vidhansabha-edit.php"
+                                                                    <a href="panchayat-edit.php"
                                                                         class="btn btn-icon btn-trigger btn-tooltip"
                                                                         title="Edit"><em
                                                                             class="icon ni ni-edit"></em></a>

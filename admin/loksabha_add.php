@@ -46,30 +46,20 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                 <div class="nk-block nk-block-lg">
                                     <div class="nk-block-head">
                                         <div class="nk-block-head-content">
-                                            <h4 class="nk-block-title">Add Booth Range</h4>
+                                            <h4 class="nk-block-title">Add Loksabha</h4>
                                         </div>
                                     </div>
                                     <div class="card card-preview w-100" style="width: max-content;">
                                         <div class="card-inner">
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="form-label">Panchayat</label>
-                                                        <select name="" id="" class="form-control">
-                                                            <option value="">Panchayat</option>
-                                                            <option value="">Panchayat</option>
-                                                            <option value="">Panchayat</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="form-label">Booth Range</label>
+                                                        <label class="form-label">Loksabha</label>
                                                         <input type="text" class="form-control"
-                                                            placeholder="Booth Range" name="">
+                                                            placeholder="Loksabha" name="">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 align-self-end">
+                                                <div class="col-md-3 align-self-end">
                                                     <button name="import" type="submit"
                                                         class="btn btn-lg btn-primary">Submit</button>
                                                 </div>
@@ -78,8 +68,7 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                                         <thead>
                                                             <tr>
                                                                 <th>S.No.</th>
-                                                                <th>Panchayat</th>
-                                                                <th>Booth Range</th>
+                                                                <th>Loksabha</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>
@@ -87,9 +76,8 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                                             <tr>
                                                                 <td>1</td>
                                                                 <td>Data</td>
-                                                                <td>Data</td>
                                                                 <td>
-                                                                    <a href="booth-range-edit.php"
+                                                                    <a href="loksabha_edit.php"
                                                                         class="btn btn-icon btn-trigger btn-tooltip"
                                                                         title="Edit"><em
                                                                             class="icon ni ni-edit"></em></a>
@@ -100,11 +88,24 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>1</td>
-                                                                <td>Data</td>
+                                                                <td>2</td>
                                                                 <td>Data</td>
                                                                 <td>
-                                                                    <a href="booth-range-edit.php"
+                                                                    <a href="loksabha-edit.php"
+                                                                        class="btn btn-icon btn-trigger btn-tooltip"
+                                                                        title="Edit"><em
+                                                                            class="icon ni ni-edit"></em></a>
+                                                                    <a href="#!"
+                                                                        class="btn btn-icon btn-trigger btn-tooltip"
+                                                                        title="Delete"><em
+                                                                            class="icon ni ni-trash"></em></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td>Data</td>
+                                                                <td>
+                                                                    <a href="loksabha-edit.php"
                                                                         class="btn btn-icon btn-trigger btn-tooltip"
                                                                         title="Edit"><em
                                                                             class="icon ni ni-edit"></em></a>
