@@ -30,6 +30,8 @@ function asd($data, $flg=1){
     }
 }
 
+
+
 function admin_profile_update($conn,$profile_image='',$f_name='',$l_name='',$admin_email=''){
     $query = "UPDATE `tbl_admin_users` SET ";
     
@@ -2580,15 +2582,36 @@ function track_field_workers($conn,$assignedLoksabha){
 }
 
 function add_loksabha($loksabha_name,$conn){
-    $query = "INSERT INTO tbl_loksabha (loksabha) VALUES ('$loksabha_name')";
-    try{
-        mysqli_set_charset($conn,'utf8');
-        mysqli_query($conn, $query);
-    }catch(Exception $e){
-        //asd($e->getMessage());
+    if(!empty($_POST) && $_SERVER['REQUEST_METHOD'] == 'POST'){
+        $query = "INSERT INTO tbl_loksabha (loksabha) VALUES ('$loksabha_name')";
+        try{
+            mysqli_set_charset($conn,'utf8');
+            mysqli_query($conn, $query);
+           
+        }catch(Exception $e){
+            //asd($e->getMessage());
+        }
+
+        return;
     }
-    return;
 }
+
+function addLoksabha($loksabha_name,$conn){
+    if(!empty($_POST) && $_SERVER['REQUEST_METHOD'] == 'POST'){
+        $query = "INSERT INTO tbl_loksabha (loksabha) VALUES ('$loksabha_name')";
+        try{
+            mysqli_set_charset($conn,'utf8');
+            mysqli_query($conn, $query);
+           
+        }catch(Exception $e){
+            //asd($e->getMessage());
+        }
+        header("Location:loksabha_add.php");
+    }
+}
+
+
+
 function add_vidhansabha($conn,$selected_loksabha,$vidhansabha){
     $query = "INSERT INTO tbl_loksabha (loksabha,vidhansabha) VALUES ('$selected_loksabha','$vidhansabha')";
     try{

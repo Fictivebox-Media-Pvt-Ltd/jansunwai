@@ -41,10 +41,16 @@ if ($jwt) {
         $vidhansabha = $_POST['vidhansabha'];
 
 
-        $voter="SELECT id,booth_no,voter_name_hin,father_husband_name_hin,house_no,voter_age,gender_hin,ward_hin FROM tbl_voters WHERE id = '$voterId'";
+        $voter="SELECT id,voter_name_hin,father_husband_name_hin,mobile_no,whatsapp_no FROM tbl_voters WHERE id = '$voterId'";
         $result=mysqli_query($conn,$voter) or die("Query problem".mysqli_error($conn));
-        $row=mysqli_fetch_array($result);
- 
+        $row = mysqli_num_rows($result);
+        $personal_details = array();
+         if ($row > 0) {
+            while ($row = mysqli_fetch_array($result)){
+               array_push($personal_details, array(
+                    'voter_id' => $row['id'], 'voter_name' => $row['voter_name_hin'], 'father_husband_name' => $row['father_husband_name_hin'], 'mobile_no' => $row['mobile_no'], 'whatsapp_no' => $row['whatsapp_no']));
+            }
+        }
 
         $query = "SELECT id,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM `tbl_survey_questions` WHERE `vidhansabha` = '$vidhansabha' AND `loksabha` = '$loksabha'";
 
@@ -63,6 +69,7 @@ if ($jwt) {
             echo json_encode(array(
                 "success" => true,
 	            "message" => "question List",
+                "personal_details" => $personal_details,
                 "question_list" => $info), JSON_UNESCAPED_UNICODE);
         }else {
                 echo json_encode(array("success" => true,

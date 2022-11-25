@@ -1,9 +1,6 @@
 <?php
 include_once '../configs/includes.php';
 
-if (isset($_GET['del'])) {
-    delete_mandal_panchayat_datasets($conn, $_GET['del']);
-}
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -18,8 +15,8 @@ if (!isset($_SESSION['user_id'])) {
     $assignedLoksabha = $loginUserData['assigned_loksabha'];
     $deptName = get_department_details($conn, $deptId);
 }
-
-$datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
+$all_loksabhas = array();
+$all_loksabhas = get_all_loksabha($conn);
 
 ?>
 <!DOCTYPE html>
@@ -55,11 +52,12 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="form-label">Loksabha</label>
-                                                        <select name="" id="" class="form-control">
-                                                            <option value="">Loksabha</option>
-                                                            <option value="">Loksabha</option>
-                                                            <option value="">Loksabha</option>
-                                                        </select>
+                                                        <select name="selected_loksabha" class="form-control">
+                                                    <?php foreach($all_loksabhas as $key => $value){?>
+                                                        <option value="" selected disabled hidden>Choose here</option>
+                                                        <option value="<?php echo $value['loksabha']; ?>"><?php echo $value['loksabha']; ?></option>
+                                                    <?php } ?>
+                                                </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
