@@ -1,9 +1,14 @@
 <?php
 include_once '../configs/includes.php';
 
-if (isset($_GET['del'])) {
-    delete_mandal_panchayat_datasets($conn, $_GET['del']);
+if(isset($_POST['selected_Vidhansabha']) && isset($_POST['mandal_name'])){
+    addMandal($conn,$_POST['selected_Vidhansabha'],$_POST['mandal_name']);
 }
+
+if (isset($_GET['del'])) {
+    deleteMandal($conn, $_GET['del']);
+}
+
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -18,9 +23,8 @@ if (!isset($_SESSION['user_id'])) {
     $assignedLoksabha = $loginUserData['assigned_loksabha'];
     $deptName = get_department_details($conn, $deptId);
 }
-
-$datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
-
+$all_vidhansabhas = array();
+$all_vidhansabhas = getAllVidhansabha($conn);
 ?>
 <!DOCTYPE html>
 <html lang="zxx" class="js">
@@ -56,18 +60,18 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="form-label">Vidhansabha</label>
-                                                        <select name="" id="" class="form-control">
-                                                            <option value="">Vidhansabha</option>
-                                                            <option value="">Vidhansabha</option>
-                                                            <option value="">Vidhansabha</option>
-                                                        </select>
+                                                        <select name="selected_Vidhansabha" class="form-control">
+                                                    <?php foreach($all_vidhansabhas as $key => $value){?>
+                                                        <option value="" selected disabled hidden>Choose here</option>
+                                                        <option value="<?php echo $value['vidhansabha']; ?>"><?php echo $value['vidhansabha']; ?></option>
+                                                    <?php } ?>
+                                                    </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="form-label">Mandal</label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Mandal" name="">
+                                                        <input type="text" class="form-control" placeholder="Mandal" name="mandal_name">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 align-self-end">
@@ -78,7 +82,7 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                             </form>
                                             <div class="row">
                                             <div class="col-md-12 mt-4">
-                                                    <table class="table" id="mandal_datasets">
+                                                    <table class="table" id="mandalList">
                                                         <thead>
                                                             <tr>
                                                                 <th>S.No.</th>
@@ -86,39 +90,7 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                                                 <th>Mandal</th>
                                                                 <th>Action</th>
                                                             </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Data</td>
-                                                                <td>Data</td>
-                                                                <td>
-                                                                    <a href="mandal_edit.php"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Edit"><em
-                                                                            class="icon ni ni-edit"></em></a>
-                                                                    <a href="#!"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Delete"><em
-                                                                            class="icon ni ni-trash"></em></a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Data</td>
-                                                                <td>Data</td>
-                                                                <td>
-                                                                    <a href="mandal-edit.php"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Edit"><em
-                                                                            class="icon ni ni-edit"></em></a>
-                                                                    <a href="#!"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Delete"><em
-                                                                            class="icon ni ni-trash"></em></a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
+                                                        </thead>                                                  
                                                     </table>
                                                 </div>
                                             </div>
@@ -139,23 +111,24 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
     <!-- app-root @e -->
     <!-- JavaScript -->
     <script>
-    $(document).ready(function() {
-        NioApp.DataTable('#mandal_datasets', {
-            "paging": true,
-            "processing": true,
-            "serverSide": false,
-            "order": [],
-            "info": true,
-            "columnDefs": [{
-                "targets": [6],
-                "orderable": false,
-            }, ],
-            responsive: {
-                details: true
-            }
-        });
-    });
-    </script>
+            $(document).ready(function() {
+                    NioApp.DataTable('#mandalList', {
+                        "paging":true,
+                        "processing":true,
+                        "serverSide":true,
+                        "order": [],
+                        "info":true,
+                        "ajax":{
+                            url:"service_fetchMandal.php",
+                            type:"POST"
+                            },
+                        "ordering": false,
+                        responsive: {
+                            details: true
+                        }
+                    });
+            });
+        </script>
     <script src="assets/js/bundle.js?ver=2.2.0"></script>
     <script src="assets/js/scripts.js?ver=2.2.0"></script>
     <script src="assets/js/charts/chart-ecommerce.js?ver=2.2.0"></script>

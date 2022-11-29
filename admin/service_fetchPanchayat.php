@@ -1,6 +1,6 @@
 <?php
 include_once '../configs/includes.php';
-$query = "SELECT id, loksabha,vidhansabha FROM tbl_vidhansabha";
+$query = "SELECT id,mandal,panchayat,booth_range FROM tbl_panchayat";
 if(isset($_POST["order"]))
 {
 	$query .= ' ORDER BY '.($_POST['order']['0']['column']+1).' '.$_POST['order']['0']['dir'].' ';
@@ -22,8 +22,9 @@ $filtered_rows = count($result);
 foreach($result as $key => $value){
     foreach($value as $innerKey => $innerValue){
         $response[$key]['id'] = $value[0];
-        $response[$key]['loksabha'] = $value[1];
-        $response[$key]['vidhansabha'] = $value[2];
+        $response[$key]['mandal'] = $value[1];
+        $response[$key]['panchayat'] = $value[2];
+        $response[$key]['booth_range'] = $value[3];
     }
 }
 $i = 1;
@@ -31,9 +32,10 @@ foreach($response as $row)
 {
 	$sub_array = array();
 	$sub_array[] = $_POST['start']+$i;
-    $sub_array[] = $row['loksabha'];
-    $sub_array[] = $row['vidhansabha'];
-    $sub_array[] =  '<a href="?del='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Delete This Vidhansabha.!"><em class="icon ni ni-trash"></em></a>';
+    $sub_array[] = $row['mandal'];
+    $sub_array[] = $row['panchayat'];
+    $sub_array[] = $row['booth_range'];
+    $sub_array[] =  '<a href="?del='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Delete This Panchayat.!"><em class="icon ni ni-trash"></em></a>';
     $data[] = $sub_array;
     $i++;
 }
@@ -44,7 +46,7 @@ $output = array(
 	"data"				=>	$data
 );
 function get_total_all_records($conn){
-    $query = "SELECT count(id) as total_records FROM tbl_vidhansabha";
+    $query = "SELECT count(id) as total_records FROM tbl_panchayat";
     $value= mysqli_query($conn,$query);
     $result = mysqli_fetch_assoc($value)['total_records'];
     return $result;

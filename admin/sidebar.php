@@ -396,10 +396,7 @@ $deptName = get_department_details($conn, $deptId);
                                 <a href="panchayat_add.php" class="nk-menu-link"><span class="nk-menu-text">Add
                                         Panchayat</span></a>
                             </li>
-                            <li class="nk-menu-item">
-                                <a href="booth_range_add.php" class="nk-menu-link"><span class="nk-menu-text">Add
-                                        Booth Range</span></a>
-                            </li>
+                        
                         </ul><!-- .nk-menu-sub -->
                     </li>
                     <!--?php if($assignedLoksabha === 'चित्तौड़गढ़' || $assignedLoksabha == ''){ ?-->
