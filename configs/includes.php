@@ -211,11 +211,18 @@ function get_governance_order($conn,$notice_id){
     return $response;
 }
 
+function deleteLoksabha($conn,$id){
+    $query = "DELETE FROM `tbl_loksabha` WHERE `id` = $id";
+    mysqli_query($conn, $query);
+    return;
+}
+
 function delete_governance_order($conn,$id){
     $query = "DELETE FROM `tbl_governance_order` WHERE `id` = $id";
     mysqli_query($conn, $query);
     return;
 }
+
 
 function approve_governance_order($conn,$id){
     $query = "UPDATE `tbl_governance_order` SET is_approved = 1, updated_at = now() WHERE id = $id";
@@ -2610,6 +2617,16 @@ function addLoksabha($loksabha_name,$conn){
     }
 }
 
+function addVidhansabha($conn,$selected_loksabha,$vidhansabha){
+    $query = "INSERT INTO tbl_vidhansabha (loksabha,vidhansabha,created_at) VALUES ('$selected_loksabha','$vidhansabha', now())";
+    try{
+        mysqli_set_charset($conn,'utf8');
+        mysqli_query($conn, $query);
+    }catch(Exception $e){
+        //asd($e->getMessage());
+    }
+    header("Location:vidhansabha_add.php");
+}
 
 
 function add_vidhansabha($conn,$selected_loksabha,$vidhansabha){

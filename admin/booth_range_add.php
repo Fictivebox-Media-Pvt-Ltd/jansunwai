@@ -51,6 +51,7 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                     </div>
                                     <div class="card card-preview w-100" style="width: max-content;">
                                         <div class="card-inner">
+                                        <form method="POST" class="gy-3">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -73,7 +74,10 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                                     <button name="import" type="submit"
                                                         class="btn btn-lg btn-primary">Submit</button>
                                                 </div>
-                                                <div class="col-md-12 mt-4">
+                                            </div>
+                                            </form>
+                                            <div class="row">
+                                            <div class="col-md-12 mt-4">
                                                     <table class="table" id="mandal_datasets">
                                                         <thead>
                                                             <tr>
