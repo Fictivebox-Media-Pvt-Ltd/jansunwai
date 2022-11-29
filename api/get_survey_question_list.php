@@ -41,7 +41,7 @@ if ($jwt) {
         $vidhansabha = $_POST['vidhansabha'];
 
 
-        $voter="SELECT id,voter_name_hin,father_husband_name_hin,mobile_no,whatsapp_no FROM tbl_voters WHERE id = '$voterId'";
+        $voter="SELECT id,voter_name_hin,father_husband_name_hin,mobileNo as mobile_no ,whatsappNo  as whatsapp_no FROM tbl_voters WHERE id = '$voterId'";
         $result=mysqli_query($conn,$voter) or die("Query problem".mysqli_error($conn));
         $row = mysqli_num_rows($result);
         $personal_details = array();
