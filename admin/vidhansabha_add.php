@@ -1,5 +1,8 @@
 <?php
 include_once '../configs/includes.php';
+if (isset($_GET['del'])) {
+    deleteVidhansabha($conn, $_GET['del']);
+}
 
 if(isset($_POST['selected_loksabha']) && isset($_POST['vidhansabha_name'])){
     addVidhansabha($conn,$_POST['selected_loksabha'],$_POST['vidhansabha_name']);
@@ -18,6 +21,7 @@ if (!isset($_SESSION['user_id'])) {
     $assignedLoksabha = $loginUserData['assigned_loksabha'];
     $deptName = get_department_details($conn, $deptId);
 }
+
 $all_loksabhas = array();
 $all_loksabhas = get_all_loksabha($conn);
 

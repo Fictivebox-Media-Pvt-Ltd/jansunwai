@@ -210,6 +210,22 @@ function get_governance_order($conn,$notice_id){
     }
     return $response;
 }
+function deletePanchayat($conn,$id){
+    $query = "DELETE FROM `tbl_panchayat` WHERE `id` = $id";
+    mysqli_query($conn, $query);
+    return;
+}
+function deleteMandal($conn,$id){
+    $query = "DELETE FROM `tbl_mandal` WHERE `id` = $id";
+    mysqli_query($conn, $query);
+    return;
+}
+
+function deleteVidhansabha($conn,$id){
+    $query = "DELETE FROM `tbl_vidhansabha` WHERE `id` = $id";
+    mysqli_query($conn, $query);
+    return;
+}
 
 function deleteLoksabha($conn,$id){
     $query = "DELETE FROM `tbl_loksabha` WHERE `id` = $id";
@@ -2582,8 +2598,7 @@ function track_field_workers($conn,$assignedLoksabha){
         }
     }catch(Exception $e){
         //asd($e->getMessage());
-    }
-    
+    }    
     // asd($response_map_locn);
     return $response_map_locn;
 }
@@ -2593,12 +2608,10 @@ function add_loksabha($loksabha_name,$conn){
         $query = "INSERT INTO tbl_loksabha (loksabha) VALUES ('$loksabha_name')";
         try{
             mysqli_set_charset($conn,'utf8');
-            mysqli_query($conn, $query);
-           
+            mysqli_query($conn, $query);           
         }catch(Exception $e){
             //asd($e->getMessage());
         }
-
         return;
     }
 }
@@ -2608,13 +2621,32 @@ function addLoksabha($loksabha_name,$conn){
         $query = "INSERT INTO tbl_loksabha (loksabha) VALUES ('$loksabha_name')";
         try{
             mysqli_set_charset($conn,'utf8');
-            mysqli_query($conn, $query);
-           
+            mysqli_query($conn, $query);   
         }catch(Exception $e){
             //asd($e->getMessage());
         }
         header("Location:loksabha_add.php");
     }
+}
+function addMandal($conn,$selected_vidhansabha,$mandal){
+    $query = "INSERT INTO tbl_mandal (vidhansabha,mandal,created_at) VALUES ('$selected_vidhansabha','$mandal', now())";
+    try{
+        mysqli_set_charset($conn,'utf8');
+        mysqli_query($conn, $query);
+    }catch(Exception $e){
+        //asd($e->getMessage());
+    }
+    header("Location:mandal_add.php");
+}
+function addPanchayat($conn,$selected_mandal,$panchayat,$boothRange){
+    $query = "INSERT INTO tbl_panchayat (mandal,panchayat,booth_range,created_at) VALUES ('$selected_mandal','$panchayat','$boothRange', now())";
+    try{
+        mysqli_set_charset($conn,'utf8');
+        mysqli_query($conn, $query);
+    }catch(Exception $e){
+        //asd($e->getMessage());
+    }
+    header("Location:panchayat_add.php");
 }
 
 function addVidhansabha($conn,$selected_loksabha,$vidhansabha){
@@ -2656,6 +2688,23 @@ function get_all_loksabha($conn){
     return $response;
 }
 
+function getAllVidhansabha($conn){
+    $query = "SELECT vidhansabha FROM tbl_vidhansabha GROUP BY vidhansabha HAVING vidhansabha != 'NULL'";
+    try{
+        mysqli_set_charset($conn,'utf8');
+        $query_result = mysqli_query($conn, $query);
+        $result = mysqli_fetch_all($query_result);
+        foreach($result as $key => $value){
+            foreach($value as $innerKey => $innerValue){
+                $response[$key]['vidhansabha'] = $value[0];
+            }
+        }
+    }catch(Exception $e){
+        //asd($e->getMessage());
+    }
+    return $response;
+}
+
 function get_all_vidhansabha($conn){
     $query = "SELECT vidhansabha FROM tbl_loksabha GROUP BY vidhansabha HAVING vidhansabha != 'NULL'";
     try{
@@ -2665,6 +2714,22 @@ function get_all_vidhansabha($conn){
         foreach($result as $key => $value){
             foreach($value as $innerKey => $innerValue){
                 $response[$key]['vidhansabha'] = $value[0];
+            }
+        }
+    }catch(Exception $e){
+        //asd($e->getMessage());
+    }
+    return $response;
+}
+function getAllMandal($conn){
+    $query = "SELECT mandal FROM tbl_mandal GROUP BY mandal HAVING mandal != 'NULL'";
+    try{
+        mysqli_set_charset($conn,'utf8');
+        $query_result = mysqli_query($conn, $query);
+        $result = mysqli_fetch_all($query_result);
+        foreach($result as $key => $value){
+            foreach($value as $innerKey => $innerValue){
+                $response[$key]['mandal'] = $value[0];
             }
         }
     }catch(Exception $e){
