@@ -6,7 +6,6 @@ if(isset($_POST['loksabha_name']) && trim($_POST['loksabha_name']) != '' && $_PO
 }
 if(isset($_POST['selected_loksabha']) && isset($_POST['vidhansabha_name'])){
     add_vidhansabha($conn,$_POST['selected_loksabha'],$_POST['vidhansabha_name']);
-
 }
 if(isset($_POST['selected_loksabha_for_delete'])){
     delete_loksabha($conn,$_POST['selected_loksabha_for_delete']);

@@ -1,6 +1,10 @@
 <?php
 include_once '../configs/includes.php';
 
+if (isset($_GET['del'])) {
+    deleteLoksabha($conn, $_GET['del']);
+}
+
 if(isset($_POST['loksabha_name']) && trim($_POST['loksabha_name']) != '' && $_POST['loksabha_name'] != NULL){
     addLoksabha($_POST['loksabha_name'],$conn);
 }
@@ -22,7 +26,6 @@ if (!isset($_SESSION['user_id'])) {
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <?php include_once 'head.php'; ?>
-
 <body class="nk-body bg-lighter npc-default has-sidebar">
     <div class="nk-app-root">
         <!-- main @s -->
