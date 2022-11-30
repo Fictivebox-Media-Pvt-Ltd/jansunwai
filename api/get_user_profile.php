@@ -19,18 +19,27 @@ if($jwt){
       $voter="SELECT id,f_name,l_name,age,aadhar_no,phone_no,user_image,aadhar_front,aadhar_back FROM tbl_admin_users WHERE id = '$user_id'";
       $result=mysqli_query($conn,$voter) or die("Query problem".mysqli_error($conn));
       $row = mysqli_num_rows($result);
-      $personal_details = array();
+    
        if ($row > 0) {
+        $personal_details = array();
           while ($row = mysqli_fetch_array($result)){
              array_push($personal_details, array(
                   'user_id' => $row['id'], 'f_name' => $row['f_name'], 'l_name' => $row['l_name'], 'age' => $row['age'], 'aadhar_no' => $row['aadhar_no'], 'phone_no' => $row['phone_no'], 'user_image' => 'admin/images/avatar/'.$row['user_image'],'aadhar_front' => $row['aadhar_front'],'aadhar_back' => $row['aadhar_back']));
           }
+
+          echo json_encode(array(
+            "success" => true,
+            "message" => "User profile details",
+            "user_profile" => $personal_details), JSON_UNESCAPED_UNICODE);
+      }
+      else{
+        
+        echo json_encode(array(
+          "success" => true,
+          "message" => "Data Not Found"), JSON_UNESCAPED_UNICODE);
       }
 
-      echo json_encode(array(
-        "success" => true,
-        "message" => "User profile details",
-        "user_profile" => $personal_details), JSON_UNESCAPED_UNICODE);
+    
 
     
       }
