@@ -80,10 +80,10 @@ $g10 = get_g10($conn,$filters);
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                        <form method="POST" class="form-validate">
+                                        <form method="POST" class="form-validate" id="myForm">
                                             <div class="row g-12">
                                                 <div class="col-lg-2">
-                                                    <div class="form-group">
+                                                    <div class="form-group">                                                   
                                                         <div class="form-control-wrap">
                                                             <select id="loksabha" name="loksabha" class="form-control" required>
                                                             <?php if(!empty($filters['loksabha'])){ ?>
@@ -110,7 +110,7 @@ $g10 = get_g10($conn,$filters);
                                                         </select>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div>                                               
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
@@ -171,7 +171,7 @@ $g10 = get_g10($conn,$filters);
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
-                                                            <select name="gender" class="form-control">
+                                                            <select name="gender" class="form-control" id="selectGender">
                                                             <?php if(!empty($filters['gender'])){ ?>
                                                                 <option value="<?php echo $filters['gender']?>" selected><?php echo $filters['gender'].'✓'?></option>
                                                             <?php }else{ ?>
@@ -188,7 +188,7 @@ $g10 = get_g10($conn,$filters);
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
-                                                        <select name="ageGroup" class="form-control">
+                                                        <select name="ageGroup" class="form-control" id="ageGroup">
                                                             <?php if(!empty($filters['ageGroup'])){ ?>
                                                                 <option value="<?php echo $filters['ageGroup']?>" selected><?php echo $filters['ageGroup'].'✓'?></option>
                                                             <?php }else{ ?>
@@ -219,6 +219,7 @@ $g10 = get_g10($conn,$filters);
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
@@ -242,7 +243,7 @@ $g10 = get_g10($conn,$filters);
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
-                                                            <input style="min-width:-webkit-fill-available;justify-content:center" type="reset" class="btn btn-outline-warning">
+                                                        <input type="button" class="btn btn-outline-warning" style="min-width:-webkit-fill-available;justify-content:center" onclick="myFunction()" value="Reset">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -384,7 +385,25 @@ $g10 = get_g10($conn,$filters);
     </div>
     <!-- app-root @e -->
     <!-- JavaScript -->
+    <script>
+function myFunction() {  
+    $('#ageGroup').prop('selectedIndex',0);
+    $('#category').prop('selectedIndex',0);
+    $('#caste_list').prop('selectedIndex',0);
+    $('#selectGender').prop('selectedIndex',0);
+    $('#ward_list').prop('selectedIndex',0);
+    $('#booth_range').prop('selectedIndex',0);
+    $('#panchayat_list').prop('selectedIndex',0);
+    $('#mandal_list').prop('selectedIndex',0);
+    $('#vidhansabha_list').prop('selectedIndex',0);
+    $('#loksabha').prop('selectedIndex',0);
+}
+</script>
+
+
     <script type="text/javascript">
+
+        
       $(document).ready(function(){
         $("#loksabha").click(function(){
             var loksabha = $(this).val();
