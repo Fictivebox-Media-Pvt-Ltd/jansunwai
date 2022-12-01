@@ -2804,7 +2804,7 @@ function delete_voters_data($conn,$id){
 }
 
 function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$question_option){
-   $optionCount = count($question_option);
+ 
    $option = !empty($question_option[0]) ? "$question_option[0]" : 'NULL';
    $option1 = !empty($question_option[1]) ? "$question_option[1]" : 'NULL';
    $option2 = !empty($question_option[2]) ? "$question_option[2]" : 'NULL';
