@@ -38,10 +38,6 @@ if($jwt){
           "success" => true,
           "message" => "Data Not Found"), JSON_UNESCAPED_UNICODE);
       }
-
-    
-
-    
       }
       catch (Exception $e){
         http_response_code(401);
