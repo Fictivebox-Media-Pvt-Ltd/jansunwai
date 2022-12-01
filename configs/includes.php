@@ -2661,6 +2661,7 @@ function addVidhansabha($conn,$selected_loksabha,$vidhansabha){
 }
 
 
+
 function add_vidhansabha($conn,$selected_loksabha,$vidhansabha){
     $query = "INSERT INTO tbl_loksabha (loksabha,vidhansabha) VALUES ('$selected_loksabha','$vidhansabha')";
     try{
@@ -2800,6 +2801,31 @@ function delete_voters_data($conn,$id){
     mysqli_query($conn, $query2);
     mysqli_query($conn, $query3);
     return;
+}
+
+function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$question_option){
+   $optionCount = count($question_option);
+   $option = !empty($question_option[0]) ? "$question_option[0]" : 'NULL';
+   $option1 = !empty($question_option[1]) ? "$question_option[1]" : 'NULL';
+   $option2 = !empty($question_option[2]) ? "$question_option[2]" : 'NULL';
+   $option3 = !empty($question_option[3]) ? "$question_option[3]" : 'NULL';
+   $option4 = !empty($question_option[4]) ? "$question_option[4]" : 'NULL';
+   $option5 = !empty($question_option[5]) ? "$question_option[5]" : 'NULL';
+   $option6 = !empty($question_option[6]) ? "$question_option[6]" : 'NULL';
+   $option7 = !empty($question_option[7]) ? "$question_option[7]" : 'NULL';
+   $option8 = !empty($question_option[8]) ? "$question_option[8]" : 'NULL';
+   $option9 = !empty($question_option[9]) ? "$question_option[9]" : 'NULL';
+
+    $query = "INSERT INTO tbl_survey_questions(loksabha,vidhansabha,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,created_at) VALUES ('$selected_loksabha','$vidhansabha','$question','$option','$option1','$option2','$option3','$option4','$option5','$option6','$option7','$option8','$option9',now())";
+//    print_r($query);
+//    die;
+    try{
+        mysqli_set_charset($conn,'utf8');
+        mysqli_query($conn, $query);
+    }catch(Exception $e){
+        //asd($e->getMessage());
+    }
+    header("Location:questions.php");
 }
 
 function get_surveyers_stats($conn,$loksabha,$start_date,$end_date){
