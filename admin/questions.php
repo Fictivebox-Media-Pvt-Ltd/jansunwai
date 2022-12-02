@@ -1,19 +1,9 @@
 <?php
 include_once '../configs/includes.php';
-
 if(isset($_POST['selected_loksabha']) && isset($_POST['vidhansabha'])&& isset($_POST['question'])&& isset($_POST['question_option'])){
     addQuestion($conn,$_POST['selected_loksabha'],$_POST['vidhansabha'],$_POST['question'],$_POST['question_option']);
     
 }
-
-if(isset($_POST['submit'])){
-    
-    $selected = $_POST;
-  
-    die; 
-}
-
-
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
 } else {

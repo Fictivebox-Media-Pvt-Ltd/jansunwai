@@ -122,13 +122,19 @@ $all_vidhansabhas = getAllVidhansabha($conn);
                             url:"service_fetchMandal.php",
                             type:"POST"
                             },
-                        "ordering": false,
+                            "columnDefs":[
+                                        {
+                                            "targets":[0,3],
+                                            "orderable":false,
+                                        },
+                                    ],
                         responsive: {
                             details: true
                         }
                     });
             });
         </script>
+
     <script src="assets/js/bundle.js?ver=2.2.0"></script>
     <script src="assets/js/scripts.js?ver=2.2.0"></script>
     <script src="assets/js/charts/chart-ecommerce.js?ver=2.2.0"></script>

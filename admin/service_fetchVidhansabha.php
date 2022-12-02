@@ -1,6 +1,11 @@
 <?php
 include_once '../configs/includes.php';
 $query = "SELECT id, loksabha,vidhansabha FROM tbl_vidhansabha";
+if(isset($_POST["search"]["value"]))
+{
+	$query .= ' WHERE vidhansabha LIKE "%'.$_POST["search"]["value"].'%" ';
+	$query .= ' OR'." DATE_FORMAT(created_at, '%d %b, %Y')".' LIKE "%'.$_POST["search"]["value"].'%" ';
+}
 if(isset($_POST["order"]))
 {
 	$query .= ' ORDER BY '.($_POST['order']['0']['column']+1).' '.$_POST['order']['0']['dir'].' ';
