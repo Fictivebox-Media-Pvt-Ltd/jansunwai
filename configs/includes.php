@@ -3860,6 +3860,26 @@ function get_sms($conn,$sms_id){
     return $response;
 }
 
+function getSurveyQuestion($conn,$questionid){
+    $response = array();
+    $query = "SELECT id,loksabha,vidhansabha,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM tbl_survey_questions";
+    $query = isset($questionid) ? $query." where id = $questionid" : $query;
+    mysqli_set_charset($conn,'utf8');
+    $value= mysqli_query($conn,$query);
+    $result= mysqli_fetch_all($value);
+    foreach($result as $key => $value){
+            $response['id'] = $value[0];
+            $response['loksabha'] = $value[1];
+            $response['vidhansabha'] = $value[2];
+            $response['question'] = $value[3];
+            $response['option'] = array('option1' => $value[4], 'option2' => $value[5], 'option3' => $value[6], 'option4' => $value[7],'option5' => $value[8],'option6' => $value[9],'option7' =>$value[10],'option8' => $value[11],'option9' => $value[12],'option10' => $value[13]);
+
+    }
+
+  // asd($response);
+    return $response;
+}
+
 function get_asha_worker($conn,$worker_id){
     $response = array();
     $query = "SELECT id, loksabha, vidhansabha, mandal, panchayat, booth, name, fathers_name, age, caste, mobile, address, dob, kab_se, kab_tak, status FROM tbl_asha_worker";
