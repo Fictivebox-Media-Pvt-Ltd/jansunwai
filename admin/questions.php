@@ -98,7 +98,7 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                             <div class="row mb-3">
                                                 <div class="col-md-9">
                                                     <div class="form-group">
-                                                        <label class="form-label">Option 1</label>
+                                                        <label cmainlass="form-label">Option 1</label>
                                                         <input type="text" class="form-control"
                                                             placeholder="Booth Range" name="">
                                                     </div>
