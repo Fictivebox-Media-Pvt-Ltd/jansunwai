@@ -20,7 +20,6 @@ if($_POST["length"] != -1)
 {
 	$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 }
-
 mysqli_set_charset($conn,'utf8');
 $value = mysqli_query($conn,$query);
 $result = mysqli_fetch_all($value);

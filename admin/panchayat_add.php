@@ -1,9 +1,13 @@
 <?php
 include_once '../configs/includes.php';
+if(isset($_POST['selected_Mandal']) && isset($_POST['panchayat_name'])&& isset($_POST['Booth_Range_name'])){
+    addPanchayat($conn,$_POST['selected_Mandal'],$_POST['panchayat_name'],$_POST['Booth_Range_name']);
+}
 
 if (isset($_GET['del'])) {
-    delete_mandal_panchayat_datasets($conn, $_GET['del']);
+    deletePanchayat($conn, $_GET['del']);
 }
+
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -18,9 +22,8 @@ if (!isset($_SESSION['user_id'])) {
     $assignedLoksabha = $loginUserData['assigned_loksabha'];
     $deptName = get_department_details($conn, $deptId);
 }
-
-$datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
-
+$allMandal = array();
+$allMandal = getAllMandal($conn);
 ?>
 <!DOCTYPE html>
 <html lang="zxx" class="js">
@@ -51,70 +54,52 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                     </div>
                                     <div class="card card-preview w-100" style="width: max-content;">
                                         <div class="card-inner">
+                                        <form method="POST" class="gy-3">
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label class="form-label">Mandal</label>
-                                                        <select name="" id="" class="form-control">
-                                                            <option value="">Mandal</option>
-                                                            <option value="">Mandal</option>
-                                                            <option value="">Mandal</option>
-                                                        </select>
+                                                        <select name="selected_Mandal" class="form-control">
+                                                    <?php foreach($allMandal as $key => $value){?>
+                                                        <option value="" selected disabled hidden>Choose here</option>
+                                                        <option value="<?php echo $value['mandal']; ?>"><?php echo $value['mandal']; ?></option>
+                                                    <?php } ?>
+                                                    </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label class="form-label">Panchayat</label>
                                                         <input type="text" class="form-control"
-                                                            placeholder="Mandal" name="">
+                                                            placeholder="Enter Panchayat Name" name="panchayat_name">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 align-self-end">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Booth Range</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Enter Booth Range" name="Booth_Range_name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 align-self-end">
                                                     <button name="import" type="submit"
                                                         class="btn btn-lg btn-primary">Submit</button>
                                                 </div>
-                                                <div class="col-md-12 mt-4">
-                                                    <table class="table" id="mandal_datasets">
+                                            </div>
+                                            </form>
+                                            <div class="row">
+                                            <div class="col-md-12 mt-4">
+                                                    <table class="table" id="panchayatList">
                                                         <thead>
                                                             <tr>
                                                                 <th>S.No.</th>
                                                                 <th>Mandal</th>
                                                                 <th>Panchayat</th>
+                                                                <th>Booth Range</th>
                                                                 <th>Action</th>
+                                                               
                                                             </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Data</td>
-                                                                <td>Data</td>
-                                                                <td>
-                                                                    <a href="panchayat-edit.php"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Edit"><em
-                                                                            class="icon ni ni-edit"></em></a>
-                                                                    <a href="#!"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Delete"><em
-                                                                            class="icon ni ni-trash"></em></a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Data</td>
-                                                                <td>Data</td>
-                                                                <td>
-                                                                    <a href="panchayat-edit.php"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Edit"><em
-                                                                            class="icon ni ni-edit"></em></a>
-                                                                    <a href="#!"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Delete"><em
-                                                                            class="icon ni ni-trash"></em></a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
+                                                        </thead>                                                   
                                                     </table>
                                                 </div>
                                             </div>
@@ -135,23 +120,24 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
     <!-- app-root @e -->
     <!-- JavaScript -->
     <script>
-    $(document).ready(function() {
-        NioApp.DataTable('#mandal_datasets', {
-            "paging": true,
-            "processing": true,
-            "serverSide": false,
-            "order": [],
-            "info": true,
-            "columnDefs": [{
-                "targets": [6],
-                "orderable": false,
-            }, ],
-            responsive: {
-                details: true
-            }
-        });
-    });
-    </script>
+            $(document).ready(function() {
+                    NioApp.DataTable('#panchayatList', {
+                        "paging":true,
+                        "processing":true,
+                        "serverSide":true,
+                        "order": [],
+                        "info":true,
+                        "ajax":{
+                            url:"service_fetchPanchayat.php",
+                            type:"POST"
+                            },
+                        "ordering": false,
+                        responsive: {
+                            details: true
+                        }
+                    });
+            });
+        </script>
     <script src="assets/js/bundle.js?ver=2.2.0"></script>
     <script src="assets/js/scripts.js?ver=2.2.0"></script>
     <script src="assets/js/charts/chart-ecommerce.js?ver=2.2.0"></script>

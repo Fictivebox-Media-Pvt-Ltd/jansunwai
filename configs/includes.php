@@ -30,6 +30,8 @@ function asd($data, $flg=1){
     }
 }
 
+
+
 function admin_profile_update($conn,$profile_image='',$f_name='',$l_name='',$admin_email=''){
     $query = "UPDATE `tbl_admin_users` SET ";
     
@@ -208,12 +210,35 @@ function get_governance_order($conn,$notice_id){
     }
     return $response;
 }
+function deletePanchayat($conn,$id){
+    $query = "DELETE FROM `tbl_panchayat` WHERE `id` = $id";
+    mysqli_query($conn, $query);
+    return;
+}
+function deleteMandal($conn,$id){
+    $query = "DELETE FROM `tbl_mandal` WHERE `id` = $id";
+    mysqli_query($conn, $query);
+    return;
+}
+
+function deleteVidhansabha($conn,$id){
+    $query = "DELETE FROM `tbl_vidhansabha` WHERE `id` = $id";
+    mysqli_query($conn, $query);
+    return;
+}
+
+function deleteLoksabha($conn,$id){
+    $query = "DELETE FROM `tbl_loksabha` WHERE `id` = $id";
+    mysqli_query($conn, $query);
+    return;
+}
 
 function delete_governance_order($conn,$id){
     $query = "DELETE FROM `tbl_governance_order` WHERE `id` = $id";
     mysqli_query($conn, $query);
     return;
 }
+
 
 function approve_governance_order($conn,$id){
     $query = "UPDATE `tbl_governance_order` SET is_approved = 1, updated_at = now() WHERE id = $id";
@@ -2573,22 +2598,70 @@ function track_field_workers($conn,$assignedLoksabha){
         }
     }catch(Exception $e){
         //asd($e->getMessage());
-    }
-    
+    }    
     // asd($response_map_locn);
     return $response_map_locn;
 }
 
 function add_loksabha($loksabha_name,$conn){
-    $query = "INSERT INTO tbl_loksabha (loksabha) VALUES ('$loksabha_name')";
+    if(!empty($_POST) && $_SERVER['REQUEST_METHOD'] == 'POST'){
+        $query = "INSERT INTO tbl_loksabha (loksabha) VALUES ('$loksabha_name')";
+        try{
+            mysqli_set_charset($conn,'utf8');
+            mysqli_query($conn, $query);           
+        }catch(Exception $e){
+            //asd($e->getMessage());
+        }
+        return;
+    }
+}
+
+function addLoksabha($loksabha_name,$conn){
+    if(!empty($_POST) && $_SERVER['REQUEST_METHOD'] == 'POST'){
+        $query = "INSERT INTO tbl_loksabha (loksabha) VALUES ('$loksabha_name')";
+        try{
+            mysqli_set_charset($conn,'utf8');
+            mysqli_query($conn, $query);   
+        }catch(Exception $e){
+            //asd($e->getMessage());
+        }
+        header("Location:loksabha_add.php");
+    }
+}
+function addMandal($conn,$selected_vidhansabha,$mandal){
+    $query = "INSERT INTO tbl_mandal (vidhansabha,mandal,created_at) VALUES ('$selected_vidhansabha','$mandal', now())";
     try{
         mysqli_set_charset($conn,'utf8');
         mysqli_query($conn, $query);
     }catch(Exception $e){
         //asd($e->getMessage());
     }
-    return;
+    header("Location:mandal_add.php");
 }
+function addPanchayat($conn,$selected_mandal,$panchayat,$boothRange){
+    $query = "INSERT INTO tbl_panchayat (mandal,panchayat,booth_range,created_at) VALUES ('$selected_mandal','$panchayat','$boothRange', now())";
+    try{
+        mysqli_set_charset($conn,'utf8');
+        mysqli_query($conn, $query);
+    }catch(Exception $e){
+        //asd($e->getMessage());
+    }
+    header("Location:panchayat_add.php");
+}
+
+function addVidhansabha($conn,$selected_loksabha,$vidhansabha){
+    $query = "INSERT INTO tbl_vidhansabha (loksabha,vidhansabha,created_at) VALUES ('$selected_loksabha','$vidhansabha', now())";
+    try{
+        mysqli_set_charset($conn,'utf8');
+        mysqli_query($conn, $query);
+    }catch(Exception $e){
+        //asd($e->getMessage());
+    }
+    header("Location:vidhansabha_add.php");
+}
+
+
+
 function add_vidhansabha($conn,$selected_loksabha,$vidhansabha){
     $query = "INSERT INTO tbl_loksabha (loksabha,vidhansabha) VALUES ('$selected_loksabha','$vidhansabha')";
     try{
@@ -2616,6 +2689,23 @@ function get_all_loksabha($conn){
     return $response;
 }
 
+function getAllVidhansabha($conn){
+    $query = "SELECT vidhansabha FROM tbl_vidhansabha GROUP BY vidhansabha HAVING vidhansabha != 'NULL'";
+    try{
+        mysqli_set_charset($conn,'utf8');
+        $query_result = mysqli_query($conn, $query);
+        $result = mysqli_fetch_all($query_result);
+        foreach($result as $key => $value){
+            foreach($value as $innerKey => $innerValue){
+                $response[$key]['vidhansabha'] = $value[0];
+            }
+        }
+    }catch(Exception $e){
+        //asd($e->getMessage());
+    }
+    return $response;
+}
+
 function get_all_vidhansabha($conn){
     $query = "SELECT vidhansabha FROM tbl_loksabha GROUP BY vidhansabha HAVING vidhansabha != 'NULL'";
     try{
@@ -2625,6 +2715,22 @@ function get_all_vidhansabha($conn){
         foreach($result as $key => $value){
             foreach($value as $innerKey => $innerValue){
                 $response[$key]['vidhansabha'] = $value[0];
+            }
+        }
+    }catch(Exception $e){
+        //asd($e->getMessage());
+    }
+    return $response;
+}
+function getAllMandal($conn){
+    $query = "SELECT mandal FROM tbl_mandal GROUP BY mandal HAVING mandal != 'NULL'";
+    try{
+        mysqli_set_charset($conn,'utf8');
+        $query_result = mysqli_query($conn, $query);
+        $result = mysqli_fetch_all($query_result);
+        foreach($result as $key => $value){
+            foreach($value as $innerKey => $innerValue){
+                $response[$key]['mandal'] = $value[0];
             }
         }
     }catch(Exception $e){
@@ -2695,6 +2801,31 @@ function delete_voters_data($conn,$id){
     mysqli_query($conn, $query2);
     mysqli_query($conn, $query3);
     return;
+}
+
+function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$question_option){
+ 
+   $option = !empty($question_option[0]) ? "$question_option[0]" : 'NULL';
+   $option1 = !empty($question_option[1]) ? "$question_option[1]" : 'NULL';
+   $option2 = !empty($question_option[2]) ? "$question_option[2]" : 'NULL';
+   $option3 = !empty($question_option[3]) ? "$question_option[3]" : 'NULL';
+   $option4 = !empty($question_option[4]) ? "$question_option[4]" : 'NULL';
+   $option5 = !empty($question_option[5]) ? "$question_option[5]" : 'NULL';
+   $option6 = !empty($question_option[6]) ? "$question_option[6]" : 'NULL';
+   $option7 = !empty($question_option[7]) ? "$question_option[7]" : 'NULL';
+   $option8 = !empty($question_option[8]) ? "$question_option[8]" : 'NULL';
+   $option9 = !empty($question_option[9]) ? "$question_option[9]" : 'NULL';
+
+    $query = "INSERT INTO tbl_survey_questions(loksabha,vidhansabha,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,created_at) VALUES ('$selected_loksabha','$vidhansabha','$question','$option','$option1','$option2','$option3','$option4','$option5','$option6','$option7','$option8','$option9',now())";
+//    print_r($query);
+//    die;
+    try{
+        mysqli_set_charset($conn,'utf8');
+        mysqli_query($conn, $query);
+    }catch(Exception $e){
+        //asd($e->getMessage());
+    }
+    header("Location:questions.php");
 }
 
 function get_surveyers_stats($conn,$loksabha,$start_date,$end_date){

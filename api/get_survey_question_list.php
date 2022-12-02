@@ -29,9 +29,29 @@ if ($jwt) {
                 ));
                 exit();
         }
+        if(empty($_POST['voter_id'])){
+            echo json_encode(array(
+                "message" => "voter Id field is required."
+                ));
+                exit();
+        }
 
+        $voterId = $_POST['voter_id'];
         $loksabha = $_POST['loksabha'];
         $vidhansabha = $_POST['vidhansabha'];
+
+
+        $voter="SELECT id,voter_name_hin,father_husband_name_hin,mobileNo as mobile_no ,whatsappNo  as whatsapp_no FROM tbl_voters WHERE id = '$voterId'";
+        $result=mysqli_query($conn,$voter) or die("Query problem".mysqli_error($conn));
+        $row = mysqli_num_rows($result);
+        $personal_details = array();
+         if ($row > 0) {
+            while ($row = mysqli_fetch_array($result)){
+               array_push($personal_details, array(
+                    'voter_id' => $row['id'], 'voter_name' => $row['voter_name_hin'], 'father_husband_name' => $row['father_husband_name_hin'], 'mobile_no' => $row['mobile_no'], 'whatsapp_no' => $row['whatsapp_no']));
+            }
+        }
+
         $query = "SELECT id,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM `tbl_survey_questions` WHERE `vidhansabha` = '$vidhansabha' AND `loksabha` = '$loksabha'";
 
         mysqli_set_charset($conn, 'utf8');
@@ -49,6 +69,7 @@ if ($jwt) {
             echo json_encode(array(
                 "success" => true,
 	            "message" => "question List",
+                "personal_details" => $personal_details,
                 "question_list" => $info), JSON_UNESCAPED_UNICODE);
         }else {
                 echo json_encode(array("success" => true,

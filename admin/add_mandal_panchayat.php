@@ -27,7 +27,6 @@ if (isset($_POST["import"]))
   if(in_array($_FILES["file"]["type"],$allowedFileType)){
         $targetPath = 'doc/'.$_FILES['file']['name'];
         move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
-
         $query = "INSERT INTO `tbl_mandal_panchayat_mapping` (`loksabha`, `vidhansabha`, `mandal`, `panchayat`, `booth_range`, `created_at`) VALUES";
         $sub_query = "";
         $Reader = new SpreadsheetReader($targetPath);

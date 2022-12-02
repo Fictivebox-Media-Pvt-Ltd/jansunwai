@@ -2,9 +2,12 @@
 include_once '../configs/includes.php';
 
 if (isset($_GET['del'])) {
-    delete_mandal_panchayat_datasets($conn, $_GET['del']);
+    deleteLoksabha($conn, $_GET['del']);
 }
 
+if(isset($_POST['loksabha_name']) && trim($_POST['loksabha_name']) != '' && $_POST['loksabha_name'] != NULL){
+    addLoksabha($_POST['loksabha_name'],$conn);
+}
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
 } else {
@@ -19,13 +22,10 @@ if (!isset($_SESSION['user_id'])) {
     $deptName = get_department_details($conn, $deptId);
 }
 
-$datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
-
 ?>
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <?php include_once 'head.php'; ?>
-
 <body class="nk-body bg-lighter npc-default has-sidebar">
     <div class="nk-app-root">
         <!-- main @s -->
@@ -46,32 +46,37 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
                                 <div class="nk-block nk-block-lg">
                                     <div class="nk-block-head">
                                         <div class="nk-block-head-content">
-                                            <h4 class="nk-block-title">Edit Booth Range</h4>
+                                            <h4 class="nk-block-title">Add Loksabha</h4>
                                         </div>
                                     </div>
                                     <div class="card card-preview w-100" style="width: max-content;">
                                         <div class="card-inner">
+                                            <form method="POST" class="gy-3">
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="form-label">Panchayat</label>
-                                                        <select name="" id="" class="form-control">
-                                                            <option value="">Panchayat</option>
-                                                            <option value="">Panchayat</option>
-                                                            <option value="">Panchayat</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="form-label">Booth Range</label>
+                                                        <label class="form-label">Loksabha</label>
                                                         <input type="text" class="form-control"
-                                                            placeholder="Booth Range" name="">
+                                                        placeholder="Enter loksabha name" name="loksabha_name">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 align-self-end">
-                                                    <button name="import" type="submit"
+                                                <div class="col-md-3 align-self-end">
+                                                    <button type="submit"
                                                         class="btn btn-lg btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                            </form>
+                                            <div class="row">
+                                            <div class="col-md-12 mt-4">
+                                                    <table class="table" id="loksabha_table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>S.No.</th>
+                                                                <th>Loksabha</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,23 +96,24 @@ $datasets = get_mandal_panchayat_datasets($conn,$assignedLoksabha);
     <!-- app-root @e -->
     <!-- JavaScript -->
     <script>
-    $(document).ready(function() {
-        NioApp.DataTable('#mandal_datasets', {
-            "paging": true,
-            "processing": true,
-            "serverSide": false,
-            "order": [],
-            "info": true,
-            "columnDefs": [{
-                "targets": [6],
-                "orderable": false,
-            }, ],
-            responsive: {
-                details: true
-            }
-        });
-    });
-    </script>
+            $(document).ready(function() {
+                    NioApp.DataTable('#loksabha_table', {
+                        "paging":true,
+                        "processing":true,
+                        "serverSide":true,
+                        "order": [],
+                        "info":true,
+                        "ajax":{
+                            url:"service_fetchLoksabha.php",
+                            type:"POST"
+                            },
+                        "ordering": false,
+                        responsive: {
+                            details: true
+                        }
+                    });
+            });
+        </script>
     <script src="assets/js/bundle.js?ver=2.2.0"></script>
     <script src="assets/js/scripts.js?ver=2.2.0"></script>
     <script src="assets/js/charts/chart-ecommerce.js?ver=2.2.0"></script>
