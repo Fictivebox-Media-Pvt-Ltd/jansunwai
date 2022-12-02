@@ -152,7 +152,6 @@ $deptName = get_department_details($conn, $deptId);
                             </li>
                         </ul><!-- .nk-menu-sub -->
                     </li>
-
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-light-fill"></em></span>
@@ -404,7 +403,7 @@ $deptName = get_department_details($conn, $deptId);
                             </li>
                         </ul>
                     </li> -->
-                    <li class="nk-menu-item has-sub">
+                    <!-- <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-user-check"></em></span>
                             <span class="nk-menu-text">Local Officials</span>
@@ -436,7 +435,7 @@ $deptName = get_department_details($conn, $deptId);
                             <span class="nk-menu-icon"><em class="icon ni ni-list-round"></em></span>
                             <span class="nk-menu-text">SMS Templates</span>
                         </a>
-                    </li>
+                    </li> -->
 
                     <!--?php } ?-->
                     <li class="nk-menu-item has-sub">
