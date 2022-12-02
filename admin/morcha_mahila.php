@@ -1,10 +1,8 @@
 <?php
 include_once '../configs/includes.php';
-
 if(isset($_GET['del'])){
     hard_delete($conn,$_GET['del'],'morcha_mahila');
 }
-
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
 } else {
@@ -17,10 +15,7 @@ if (!isset($_SESSION['user_id'])) {
     $adminEmail = $loginUserData['email'];
     $deptName = get_department_details($conn, $deptId);
 }
-
-
 $worker_details = get_morcha_mahila($conn,NULL);
-
 $sms = get_sms($conn,NULL);
 ?>
 <!DOCTYPE html>

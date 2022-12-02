@@ -8,30 +8,20 @@ if(isset($_POST['submit'])){
     for($i=0; $i < $len; $i++ ){
          $phone1[$i] . "<br>";
         /*MESSAGE CODE*/
-    $sender = "HJHALA";
-        
+    $sender = "HJHALA";        
 	$user = "TusharParashar";
-
-	$pass = "123456";
-	
+	$pass = "123456";	
 	/* Multiple mobiles numbers separated by comma */
 	$phone = $phone1;
 	/* Sender ID,While using route4 sender id should be 6 characters long. */
 	$sender = $sender;
-	/* Your message to send, Add URL encoding here. */
-	
+	/* Your message to send, Add URL encoding here. */	
 	$text=urlencode($sms);
-
 	$priority = "ndnd";
-
-	$stype = "normal";
-	
-	/* Prepare you post parameters */
-	
-	
+	$stype = "normal";	
+	/* Prepare you post parameters */	
 	// Prepare data for POST request
-	$data = 'user=' . $user . '&pass=' . $pass . "&sender=" . $sender . "&phone=" . $phone1[$i] . "&text=" . $text . "&priority=" . $priority . "&stype=" . $stype;
- 
+	$data = 'user=' . $user . '&pass=' . $pass . "&sender=" . $sender . "&phone=" . $phone1[$i] . "&text=" . $text . "&priority=" . $priority . "&stype=" . $stype; 
 	// Send the GET request with cURL
 	$ch = curl_init('http://bhashsms.com/api/sendmsg.php?' . $data);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
