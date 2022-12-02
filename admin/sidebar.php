@@ -66,16 +66,33 @@ $deptName = get_department_details($conn, $deptId);
                             <span class="nk-menu-text">Voters</span>
                         </a>
                         <ul class="nk-menu-sub">
-                            <li class="nk-menu-item">
-                                <a href="userbase.php" class="nk-menu-link"><span class="nk-menu-text">List Of
-                                        Voters</span></a>
-                            </li>
                             <?php if($deptName != 'Field Worker' && $deptName != 'Administrative'){ ?>
                             <li class="nk-menu-item">
                                 <a href="add_voters.php" class="nk-menu-link"><span class="nk-menu-text">Add New
                                         Voters</span></a>
                             </li>
                             <?php } ?>
+                            <li class="nk-menu-item">
+                                <a href="userbase.php" class="nk-menu-link"><span class="nk-menu-text">List Of
+                                        Voters</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="surveyed-voter.php" class="nk-menu-link"><span class="nk-menu-text">Surveyed
+                                        Voter</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="adivasi-voter.php" class="nk-menu-link"><span class="nk-menu-text">adivasi
+                                    </span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="mahila-voter.php" class="nk-menu-link"><span class="nk-menu-text">Mahila
+                                    </span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="first-time-voter.php" class="nk-menu-link"><span class="nk-menu-text">First
+                                        time voter
+                                    </span></a>
+                            </li>
                         </ul><!-- .nk-menu-sub -->
                     </li><!-- .nk-menu-item -->
                     <?php if($deptName != 'Field Worker' && $deptName != 'Administrative'){ ?>
@@ -119,20 +136,22 @@ $deptName = get_department_details($conn, $deptId);
                             </li>
                         </ul><!-- .nk-menu-sub -->
                     </li>
-                    <!-- <li class="nk-menu-item has-sub">
+                    <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
                             <span class="nk-menu-text">Karyakarta</span>
                         </a>
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
-                                <a href="add_workers.php" class="nk-menu-link"><span class="nk-menu-text">Add New Karyakarta</span></a>
+                                <a href="add_workers.php" class="nk-menu-link"><span class="nk-menu-text">Add New
+                                        Karyakarta</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="workers_list.php" class="nk-menu-link"><span class="nk-menu-text">List Of Karyakarta's</span></a>
+                                <a href="workers_list.php" class="nk-menu-link"><span class="nk-menu-text">List Of
+                                        Karyakarta's</span></a>
                             </li>
                         </ul><!-- .nk-menu-sub -->
-                    <!-- </li> -->
+                    </li>
 
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
@@ -192,6 +211,57 @@ $deptName = get_department_details($conn, $deptId);
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nk-menu-item">
+                                <a href="#" class="nk-menu-link nk-menu-toggle"><span
+                                        class="nk-menu-text">Morcha</span></a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a href="morcha_yuva.php" class="nk-menu-link"><span class="nk-menu-text">Yuva
+                                                Morcha</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="morcha_sc.php" class="nk-menu-link"><span class="nk-menu-text">SC
+                                                Morcha</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="morcha_st.php" class="nk-menu-link"><span class="nk-menu-text">ST
+                                                Morcha</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="morcha_mahila.php" class="nk-menu-link"><span
+                                                class="nk-menu-text">Mahila
+                                                Morcha</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="morcha_kissan.php" class="nk-menu-link"><span
+                                                class="nk-menu-text">Kissan
+                                                Morcha</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="morcha_miniority.php" class="nk-menu-link"><span
+                                                class="nk-menu-text">Miniority
+                                                Morcha</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="morcha_obc.php" class="nk-menu-link"><span class="nk-menu-text">OBC
+                                                Morcha</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="#" class="nk-menu-link nk-menu-toggle"><span
+                                        class="nk-menu-text">Sangathan</span></a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a href="sangathan-add.php" class="nk-menu-link"><span class="nk-menu-text">Add
+                                                Sangathan</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="sangathan-list.php" class="nk-menu-link"><span
+                                                class="nk-menu-text">Sangathan List</span></a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul><!-- .nk-menu-sub -->
                     </li>
                     <li class="nk-menu-item has-sub">
@@ -218,6 +288,9 @@ $deptName = get_department_details($conn, $deptId);
                                 <a href="sarpanch_candidate.php" class="nk-menu-link"><span
                                         class="nk-menu-text">Voters</span></a>
                             </li>
+                            <li class="nk-menu-item">
+                                <a href="mukhiya.php" class="nk-menu-link"><span class="nk-menu-text">Mukhiya</span></a>
+                            </li>
                         </ul><!-- .nk-menu-sub -->
                     </li>
                     <!-- <li class="nk-menu-item has-sub">
@@ -236,7 +309,7 @@ $deptName = get_department_details($conn, $deptId);
                     </li> -->
                     <?php } ?>
                     <!--?php if($assignedLoksabha === 'चित्तौड़गढ़'){ ?-->
-                    <li class="nk-menu-item has-sub">
+                    <!-- <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-light-fill"></em></span>
                             <span class="nk-menu-text">Karyakarta</span>
@@ -294,9 +367,9 @@ $deptName = get_department_details($conn, $deptId);
                                     </li>
                                 </ul>
                             </li>
-                        </ul><!-- .nk-menu-sub -->
-                    </li>
-                    <li class="nk-menu-item has-sub">
+                        </ul>
+                    </li> -->
+                    <!-- <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-light-fill"></em></span>
                             <span class="nk-menu-text">Morcha</span>
@@ -330,7 +403,7 @@ $deptName = get_department_details($conn, $deptId);
                                 <a href="morcha_obc.php" class="nk-menu-link"><span class="nk-menu-text">OBC Morcha</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-user-check"></em></span>
@@ -356,7 +429,7 @@ $deptName = get_department_details($conn, $deptId);
                                         class="nk-menu-text">Voters</span></a>
                             </li>
 
-                        </ul><!-- .nk-menu-sub -->
+                        </ul>
                     </li>
                     <li class="nk-menu-item">
                         <a href="sms.php" class="nk-menu-link" data-original-title="" title="">
@@ -396,7 +469,7 @@ $deptName = get_department_details($conn, $deptId);
                                 <a href="panchayat_add.php" class="nk-menu-link"><span class="nk-menu-text">Add
                                         Panchayat</span></a>
                             </li>
-                        
+
                         </ul><!-- .nk-menu-sub -->
                     </li>
                     <!--?php if($assignedLoksabha === 'चित्तौड़गढ़' || $assignedLoksabha == ''){ ?-->
@@ -406,19 +479,51 @@ $deptName = get_department_details($conn, $deptId);
                             <span class="nk-menu-text">Analytics</span>
                         </a>
                     </li>
-                    <li class="nk-menu-item has-sub">
+                    <!-- <li class="nk-menu-item has-sub">
                         <a href="questions.php" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-activity-round"></em></span>
                             <span class="nk-menu-text">Questions</span>
                         </a>
-                    </li>
-                    <!--?php } ?-->
-                    <!--li class="nk-menu-item">
-                        <a href="#" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-contact"></em></span>
-                            <span class="nk-menu-text">Contact Us</span>
+                    </li> -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="questions.php" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-user-check"></em></span>
+                            <span class="nk-menu-text">Questions</span>
                         </a>
-                    </li-->
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="questions.php" class="nk-menu-link"><span class="nk-menu-text">Add
+                                        Questions</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="questions-list.php" class="nk-menu-link"><span class="nk-menu-text">Questions
+                                        List</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-list-round"></em></span>
+                            <span class="nk-menu-text">Media</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="news-media.php" class="nk-menu-link"><span class="nk-menu-text">News</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="Youtube-media.php" class="nk-menu-link"><span
+                                        class="nk-menu-text">Youtube</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="socialmedia-media.php" class="nk-menu-link"><span class="nk-menu-text">Social
+                                        media</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="press-media.php" class="nk-menu-link"><span
+                                        class="nk-menu-text">Press</span></a>
+                            </li>
+                        </ul>
+                    </li>
                     <!-- .nk-menu-item -->
                 </ul><!-- .nk-menu -->
             </div><!-- .nk-sidebar-menu -->

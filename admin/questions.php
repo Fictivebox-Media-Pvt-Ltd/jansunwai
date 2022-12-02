@@ -57,7 +57,7 @@ $all_loksabhas = get_all_loksabha($conn);
                                             <h4 class="nk-block-title">Questions</h4>
                                         </div>
                                     </div>
-                                    <div class="card card-preview w-100" style="width: max-content;">
+                                    <div class="card card-preview w-100 py-3" style="width: max-content;">
                                     <form method="POST" class="gy-3">
                                         <div class="card-inner">
                                             <div class="row">
