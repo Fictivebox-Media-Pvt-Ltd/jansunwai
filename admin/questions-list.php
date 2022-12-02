@@ -1,3 +1,25 @@
+<?php
+include_once '../configs/includes.php';
+
+if (isset($_GET['del'])) {
+    deleteQuestion($conn, $_GET['del']);
+}
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+} else {
+    $user_id = $_SESSION['user_id'];
+    $query = "SELECT department_id,f_name,l_name,user_image FROM tbl_admin_users WHERE id=$user_id";
+    $loginUserData = get_user_details($conn, $user_id);
+    $adminName = $loginUserData['f_name'] . ' ' . $loginUserData['l_name'];
+    $adminImage = $loginUserData['user_image'];
+    $email = $loginUserData['email'];
+    $deptId = $loginUserData['department_id'];
+    $assignedLoksabha = $loginUserData['assigned_loksabha'];
+    $deptName = get_department_details($conn, $deptId);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <?php include_once 'head.php'; ?>
@@ -35,35 +57,21 @@
                                                                 <th>S.No.</th>
                                                                 <th>Loksabha</th>
                                                                 <th>Vidhansabha</th>
-                                                                <th>Question 1</th>
-                                                                <th>Question 2</th>
-                                                                <th>Question 3</th>
-                                                                <th>Question 4</th>
-                                                                <th>Question 5</th>
-                                                                <th>Question 6</th>
-                                                                <th>Question 7</th>
-                                                                <th>Question 8</th>
-                                                                <th>Question 9</th>
-                                                                <th>Question 10</th>
+                                                                <th>Question</th>
+                                                                <th>Option 1</th>
+                                                                <th>Option 2</th>
+                                                                <th>Option 3</th>
+                                                                <th>Option 4</th>
+                                                                <th>Option 5</th>
+                                                                <th>Option 6</th>
+                                                                <th>Option 7</th>
+                                                                <th>Option 8</th>
+                                                                <th>Option 9</th>
+                                                                <th>Option 10</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>test</td>
-                                                                <td>test</td>
-                                                                <td>test</td>
-                                                                <td>test</td>
-                                                                <td>test</td>
-                                                                <td>test</td>
-                                                                <td>test</td>
-                                                                <td>test</td>
-                                                                <td>test</td>
-                                                                <td>test</td>
-                                                                <td>test</td>
-                                                                <td>test</td>
-                                                            </tr>
-                                                        </tbody>
+                                              
                                                     </table>
                                                 </div>
                                             </div>
@@ -92,7 +100,7 @@
             "order": [],
             "info": true,
             "ajax": {
-                url: "service_fetchPanchayat.php",
+                url: "service_fetchQuestionList.php",
                 type: "POST"
             },
             "ordering": false,
