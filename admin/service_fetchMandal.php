@@ -1,6 +1,12 @@
 <?php
 include_once '../configs/includes.php';
 $query = "SELECT id, vidhansabha,mandal FROM tbl_mandal";
+
+if(isset($_POST["search"]["value"]))
+{
+	$query .= ' WHERE mandal LIKE "%'.$_POST["search"]["value"].'%" ';
+	$query .= ' OR'." DATE_FORMAT(created_at, '%d %b, %Y')".' LIKE "%'.$_POST["search"]["value"].'%" ';
+}
 if(isset($_POST["order"]))
 {
 	$query .= ' ORDER BY '.($_POST['order']['0']['column']+1).' '.$_POST['order']['0']['dir'].' ';
@@ -13,6 +19,8 @@ if($_POST["length"] != -1)
 {
 	$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 }
+//asd($query);
+
 
 mysqli_set_charset($conn,'utf8');
 $value = mysqli_query($conn,$query);

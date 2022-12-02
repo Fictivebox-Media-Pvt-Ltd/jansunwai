@@ -1,14 +1,11 @@
 <?php
 include_once '../configs/includes.php';
-
 if (isset($_GET['del'])) {
     delete_governance_order($conn, $_GET['del']);
 }
-
 if (isset($_GET['approve'])) {
     approve_governance_order($conn, $_GET['approve']);
 }
-
 if (isset($_GET['discard'])) {
     discard_governance_order($conn, $_GET['discard']);
 }

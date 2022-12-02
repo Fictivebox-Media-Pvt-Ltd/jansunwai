@@ -29,9 +29,7 @@ function asd($data, $flg=1){
         print_r($data);
     }
 }
-
-
-
+ 
 function admin_profile_update($conn,$profile_image='',$f_name='',$l_name='',$admin_email=''){
     $query = "UPDATE `tbl_admin_users` SET ";
     
@@ -2815,7 +2813,6 @@ function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$question_o
    $option7 = !empty($question_option[7]) ? "$question_option[7]" : 'NULL';
    $option8 = !empty($question_option[8]) ? "$question_option[8]" : 'NULL';
    $option9 = !empty($question_option[9]) ? "$question_option[9]" : 'NULL';
-
     $query = "INSERT INTO tbl_survey_questions(loksabha,vidhansabha,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,created_at) VALUES ('$selected_loksabha','$vidhansabha','$question','$option','$option1','$option2','$option3','$option4','$option5','$option6','$option7','$option8','$option9',now())";
 //    print_r($query);
 //    die;
