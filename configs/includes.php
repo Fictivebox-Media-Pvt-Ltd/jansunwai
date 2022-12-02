@@ -208,6 +208,11 @@ function get_governance_order($conn,$notice_id){
     }
     return $response;
 }
+function deleteQuestion($conn,$id){
+    $query = "DELETE FROM `tbl_survey_questions` WHERE `id` = $id";
+    mysqli_query($conn, $query);
+    return;
+}
 function deletePanchayat($conn,$id){
     $query = "DELETE FROM `tbl_panchayat` WHERE `id` = $id";
     mysqli_query($conn, $query);
@@ -218,6 +223,8 @@ function deleteMandal($conn,$id){
     mysqli_query($conn, $query);
     return;
 }
+
+
 
 function deleteVidhansabha($conn,$id){
     $query = "DELETE FROM `tbl_vidhansabha` WHERE `id` = $id";
