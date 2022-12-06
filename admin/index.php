@@ -40,12 +40,12 @@ if (!isset($_SESSION['user_id'])) {
 
     if($assignedLoksabha === 'चित्तौड़गढ़' || $assignedLoksabha == ''){
        
-       echo $todaySurveyed = get_todaySurveyed($conn);
-       echo $totalSurveyed = get_totalSurveyed($conn);
-       echo $activeSurveyors = get_activeSurveyors($conn);
-       echo $totalSurveyors = get_totalSurveyors($conn);
+        $todaySurveyed = get_todaySurveyed($conn);
+       $totalSurveyed = get_totalSurveyed($conn);
+      $activeSurveyors = get_activeSurveyors($conn);
+      $totalSurveyors = get_totalSurveyors($conn);
 
-        die;
+       
     }
 
     if($deptName == 'Field Worker'){
