@@ -37,8 +37,11 @@ if (!isset($_SESSION['user_id'])) {
     $email = $loginUserData['email'];
     $assignedLoksabha = $loginUserData['assigned_loksabha'];
     $deptName = get_department_details($conn, $deptId);
-
+    echo "kumar";
+    die;
     if($assignedLoksabha === 'चित्तौड़गढ़' || $assignedLoksabha == ''){
+        echo "deepak";
+        die;
         $todaySurveyed = get_todaySurveyed($conn);
         $totalSurveyed = get_totalSurveyed($conn);
         $activeSurveyors = get_activeSurveyors($conn);
