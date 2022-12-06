@@ -58,9 +58,7 @@ $all_loksabhas = get_all_loksabha($conn);
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3">
                                                         <label class="form-label">Loksabha</label>
-                                                    <select name="selected_loksabha" id="loksabha" class="form-control">
-                                                        
-                                                        <option value="<?php echo $details['loksabha']; ?>" selected><?php echo $details['loksabha'];?></option>                                                   
+                                                    <select name="selected_loksabha" id="loksabha" class="form-control"> <option value="<?php echo $details['loksabha']; ?>" selected><?php echo $details['loksabha'];?></option>                                                   
                                                     <?php foreach($all_loksabhas as $key => $value){?>
                                                         <option value="<?php echo $value['loksabha']; ?>"><?php echo $value['loksabha']; ?></option>
                                                     <?php } ?>
