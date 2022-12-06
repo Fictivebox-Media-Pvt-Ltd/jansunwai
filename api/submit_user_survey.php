@@ -28,7 +28,7 @@ if($jwt){
 			}
         for ($x = 0; $x < $questioncount; $x++){
           $question_id = $survey_question[$x]['question_id'];
-          $selected_options = $survey_question[$x]["selected_options"];
+          $selected_options = implode(", ", $survey_question[$x]["selected_options"]);
           $query = "INSERT INTO tbl_survey(voter_id,question_id,selected_options,created_at,surveyed_by) VALUES ('$voter_id','$question_id','$selected_options', now(),'$surveyed_by')";
         // print_r($query);
           mysqli_set_charset($conn,'utf8');
