@@ -1,7 +1,8 @@
 <?php
 include_once '../configs/includes.php';
-if(isset($_POST['selected_loksabha']) && isset($_POST['vidhansabha'])&& isset($_POST['question'])&& isset($_POST['question_option'])){
-    addQuestion($conn,$_POST['selected_loksabha'],$_POST['vidhansabha'],$_POST['question'],$_POST['question_option']);
+if(isset($_POST['submit'])){
+
+    updateQuestion($conn,$_GET['id'],$_POST['selected_loksabha'],$_POST['vidhansabha'],$_POST['question'],$_POST['question_option']);
     
 }
 if (!isset($_SESSION['user_id'])) {
@@ -18,8 +19,7 @@ if (!isset($_SESSION['user_id'])) {
     $deptName = get_department_details($conn, $deptId);
 }
 $details = getSurveyQuestion($conn,$_GET['id']);
-// print_r($details);
-// die;
+
 
 $all_loksabhas = array();
 $all_loksabhas = get_all_loksabha($conn);
@@ -59,7 +59,8 @@ $all_loksabhas = get_all_loksabha($conn);
                                                     <div class="form-group mb-3">
                                                         <label class="form-label">Loksabha</label>
                                                     <select name="selected_loksabha" id="loksabha" class="form-control">
-                                                        <option value="<?php echo $details['loksabha']; ?>" selected disabled hidden><?php echo $details['loksabha'];?></option>                                                   
+                                                        
+                                                        <option value="<?php echo $details['loksabha']; ?>" selected><?php echo $details['loksabha'];?></option>                                                   
                                                     <?php foreach($all_loksabhas as $key => $value){?>
                                                         <option value="<?php echo $value['loksabha']; ?>"><?php echo $value['loksabha']; ?></option>
                                                     <?php } ?>
@@ -88,48 +89,48 @@ $all_loksabhas = get_all_loksabha($conn);
                                                     </div>
                                                 </div>
                                             </div>                                           
-                                            <!--<div class="row mb-3">
-                                                <div class="col-md-9">
-                                                    <div class="form-group">
-                                                        <label cmainlass="form-label">Option 1</label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Booth Range" name="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 align-self-end">
-                                                    <button name="import" type="submit"
-                                                        class="btn btn-lg btn-success">Add</button>
-                                                    <button name="import" type="submit"
-                                                        class="btn btn-lg btn-danger">Remove</button>
-                                                </div>
-                                            </div>-->
+                           
                                             <div id="add-more-per" class="mb-3">
                                         <?php 
                                         $option = $details['option'];
+                                      $arrayCount = count(array_filter($option));
+                                      $x= 1;
                                             foreach($option as $key => $value){
                                                 if(!empty($value)){
+
                                                     ?>
-                                                    <div class="form-row">
+                                                    <div class="form-row" id="data_row">
                                                         <div class="col-md-10">
                                                             <div class="form-group">
-                                                                <label class="form-label">Option 1</label>
-                                                                <input type="hidden" id="count" value="<?php echo $x;?>">
+                                                                <label class="form-label">Option <?php echo $x;?></label>
+                                                                <input type="hidden" id="count" value="<?php echo $arrayCount;?>">
                                                                 <input class="form-control" name="question_option[]" id="question_option" value="<?php echo $value;?>">              
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2 align-self-end">
                                                         <a href="javascript:void(0)" onclick="addRemovePermissions()">
-                                                                    <span name="" class="btn btn-lg btn-success">Add<span></a>                                                        
+                                                                <span name="" class="btn btn-lg btn-success">Add<span></a>
+                                                            <?php 
+                                                            if($x>1)
+                                                            {
+                                                            ?>
+                                                                 
+                                                                <a href="javascript:void(0)" class="remove_field"> <span name="import" class="btn btn-lg btn-danger">Remove</span></a> 
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                                                                           
                                                         </div>
                                                     </div>
                                         <?php
+                                        $x++;
                                                 }
                                             }                                                
                                         ?>                                                
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12 text-end">
-                                                    <button name="submit" id="" type="submit"
+                                                    <button name="submit" id="" name="submit" type="submit"
                                                         class="btn btn-lg btn-primary">Submit</button>
                                                 </div>
                                             </div>
@@ -155,7 +156,7 @@ $all_loksabhas = get_all_loksabha($conn);
         var max_fields = 10;
         var wrapper = $("#add-more-per");
         var x =  $("#count").val();
-        alert(x);
+       // alert(x);
         x++;
         if (x <= max_fields) {
             $(wrapper).append('<div id="deleteRow" class="mb-3"><div class="access-body accordion__body collapse show" id="user_permission" data-parent="#accordion-user-permission" style=""> <div class="form-row" id="add-more-per"> <div class="col-md-10"> <div class="form-group"> <label class="form-label">Option '+x+' </label> <input class="form-control" name="question_option[]" id="question_option'+x+'"></div> </div> <div class="col-md-2 align-self-end"> <a href="javascript:void(0)" onclick="addRemovePermissions()"> <span name=""  class="btn btn-lg btn-success">Add</span></a> <a href="javascript:void(0)" class="remove_field_beg"> <span name="import" class="btn btn-lg btn-danger">Remove</span></a>  </div> </div> </div> </div>');
@@ -164,6 +165,13 @@ $all_loksabhas = get_all_loksabha($conn);
 }
 $(document).on('click', '.remove_field_beg', function () {
     $(this).closest('#deleteRow').remove();
+    var counter = $('#count').val();
+    var new_counter = counter-1;
+    $('#count').val(new_counter);
+});
+
+$(document).on('click', '.remove_field', function () {
+    $(this).closest('#data_row').remove();
     var counter = $('#count').val();
     var new_counter = counter-1;
     $('#count').val(new_counter);
