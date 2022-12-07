@@ -3288,7 +3288,12 @@ function get_g1($conn,$filters){
     
     foreach($response as $key => $value){
         $percentage[$i]['name'] = $key;
-        $percentage[$i]['y'] = ($value/$sum)*100;
+        if($sum != 0){
+            $percentage[$i]['y'] = ($value/$sum)*100;
+        }else{
+            $percentage[$i]['y'] = ($value/1)*100;
+            
+        }
 
         if($i == 0){
             $percentage[$i]['selected'] = true;
