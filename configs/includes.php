@@ -3253,6 +3253,8 @@ function get_g1($conn,$filters){
     $sum = 0;
     $i=0;
     $voter_ids = array();
+//asd($filter);
+
 
     if(count($filters) > 0){
         $voter_ids = get_voter_ids_for_analytics($conn,$filters);
@@ -3274,7 +3276,7 @@ function get_g1($conn,$filters){
     }
     $query .= "GROUP BY rating_current_govt";
 
-    asd($query);
+   // asd($query);
     mysqli_set_charset($conn,'utf8');
     $total_value= mysqli_query($conn,$query);
     $result= mysqli_fetch_all($total_value);
