@@ -66,7 +66,8 @@ if (!isset($_SESSION['user_id'])) {
        
     //     echo "depak";
     //     die;
-    $g1 =  get_g1($conn,NULL);
+    $filters = array(); 
+    $g1 =  get_g1($conn,$filters);
 
 
     $graphString = "'";
