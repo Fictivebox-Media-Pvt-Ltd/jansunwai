@@ -36,7 +36,7 @@ if($assignedLoksabha != ''){
     $loksabhaList[] = 'चित्तौड़गढ़';
 }
 $category_list = get_category_list($conn);
-
+asd($filters);
 $g1 = get_g1($conn,$filters); // Current Gov
 $g2 = get_g2($conn,$filters); // Pesha
 $g3 = get_g3($conn,$filters); // Pramukh Mudde
