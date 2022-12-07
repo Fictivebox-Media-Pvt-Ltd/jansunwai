@@ -3238,15 +3238,10 @@ function get_voter_ids_for_analytics($conn,$filters){
     }
 
     $queryForVoterIds .= " AND is_surveyed = 1";
-
-    mysqli_set_charset($conn,'utf8');
-    $value = mysqli_query($conn,$queryForVoterIds);
-    $result = mysqli_fetch_all($value);
-
-    // mysqli_set_charset($conn,'utf8');
-    // $total_value = mysqli_query($conn,$queryForVoterIds);
-    // asd($total_value);
-    // $result= mysqli_fetch_all($total_value);
+     mysqli_set_charset($conn,'utf8');
+    $total_value = mysqli_query($conn,$queryForVoterIds);
+    asd($total_value);
+    $result= mysqli_fetch_all($total_value);
 
     foreach($result as $key => $value){
         $response[] = $value[0];
