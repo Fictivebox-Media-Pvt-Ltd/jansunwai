@@ -60,13 +60,13 @@ if (!isset($_SESSION['user_id'])) {
         header('location:userbase.php');
     }
   
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+    // ini_set('display_errors', 1);
+    // ini_set('display_startup_errors', 1);
+    // error_reporting(E_ALL);
        
-        echo "depak";
-        die;
-    $g1 =  get_g3($conn,NULL);
+    //     echo "depak";
+    //     die;
+    $g1 =  get_g1($conn,NULL);
 
 
     $graphString = "'";
