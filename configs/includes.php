@@ -3280,7 +3280,7 @@ function get_g1($conn,$filters){
   //  asd($query);
     mysqli_set_charset($conn,'utf8');
     $total_value= mysqli_query($conn,$query);
-    $result= mysqli_fetch_all($total_value);
+    $result= mysqli_fetch_all($total_value, MYSQLI_ASSOC);
     foreach($result as $key => $value){
         $response[$value[0]] = $value[1];
         $sum += $value[1];
