@@ -3237,13 +3237,12 @@ function get_voter_ids_for_analytics($conn,$filters){
         $queryForVoterIds .= "AND `voter_age` BETWEEN $ageGroup[0] AND $ageGroup[1] ";
     }
 
-    $queryForVoterIds .= " AND is_surveyed = 1";
- 
+    $queryForVoterIds .= " AND is_surveyed = 1"; 
     $total_value= mysqli_query($conn,$queryForVoterIds);
     $result= mysqli_fetch_all($total_value);
-
-    foreach($result as $key => $value){
-        $response[] = $value[0];
+    while ($row = mysqli_fetch_array($result)){
+    //foreach($result as $key => $value){
+        $response[] = $row[0];
     }
     return implode(', ', $response);;
 }
