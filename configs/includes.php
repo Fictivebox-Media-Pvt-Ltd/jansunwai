@@ -3238,11 +3238,9 @@ function get_voter_ids_for_analytics($conn,$filters){
     }
 
     $queryForVoterIds .= " AND is_surveyed = 1";
-     mysqli_set_charset($conn,'utf8');
-    $total_value = mysqli_query($conn,$queryForVoterIds);
-   // asd($total_value);
-   $result = mysqli_fetch_all($total_value, MYSQLI_ASSOC);
-   // $result = mysqli_fetch_all($total_value);
+ 
+    $total_value= mysqli_query($conn,$queryForVoterIds);
+    $result= mysqli_fetch_all($total_value);
 
     foreach($result as $key => $value){
         $response[] = $value[0];
@@ -3255,12 +3253,10 @@ function get_g1($conn,$filters){
     $sum = 0;
     $i=0;
     $voter_ids = array();
-// echo count($filters);
-// die;
+
     if(count($filters) > 0){
         $voter_ids = get_voter_ids_for_analytics($conn,$filters);
     }
-
 
     $query = "SELECT rating_current_govt, COUNT(id) as rating FROM tbl_voter_survey WHERE rating_current_govt != '' ";
 
@@ -3277,10 +3273,9 @@ function get_g1($conn,$filters){
     }
     $query .= "GROUP BY rating_current_govt";
 
-  //  asd($query);
     mysqli_set_charset($conn,'utf8');
     $total_value= mysqli_query($conn,$query);
-    $result= mysqli_fetch_all($total_value, MYSQLI_ASSOC);
+    $result= mysqli_fetch_all($total_value);
     foreach($result as $key => $value){
         $response[$value[0]] = $value[1];
         $sum += $value[1];
@@ -3288,12 +3283,7 @@ function get_g1($conn,$filters){
     
     foreach($response as $key => $value){
         $percentage[$i]['name'] = $key;
-        if($sum != 0){
-            $percentage[$i]['y'] = ($value/$sum)*100;
-        }else{
-            $percentage[$i]['y'] = ($value/1)*100;
-            
-        }
+        $percentage[$i]['y'] = ($value/$sum)*100;
 
         if($i == 0){
             $percentage[$i]['selected'] = true;
@@ -3395,7 +3385,6 @@ function get_g3($conn,$filters){
     if(count($filters) > 0){
         $voter_ids = get_voter_ids_for_analytics($conn,$filters);
     }
-   // asd($voter_ids);
 
     $query = "SELECT pramukh_mudde, COUNT(id) as rating FROM tbl_voter_survey WHERE pramukh_mudde != '' ";
 
