@@ -3241,6 +3241,7 @@ function get_voter_ids_for_analytics($conn,$filters){
  
     $total_value= mysqli_query($conn,$queryForVoterIds);
     $result= mysqli_fetch_all($total_value);
+
     foreach($result as $key => $value){
         $response[] = $value[0];
     }
