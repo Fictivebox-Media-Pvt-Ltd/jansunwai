@@ -1,9 +1,5 @@
 <?php
-phpinfo();
-die;
 include_once '../configs/includes.php';
-
-
 // $total_users='';
 // $total_complaints='';
 // $today_complaints='';
@@ -42,35 +38,21 @@ if (!isset($_SESSION['user_id'])) {
     $assignedLoksabha = $loginUserData['assigned_loksabha'];
     $deptName = get_department_details($conn, $deptId);
 
-
     if($assignedLoksabha === 'चित्तौड़गढ़' || $assignedLoksabha == ''){
        
         $todaySurveyed = get_todaySurveyed($conn);
        $totalSurveyed = get_totalSurveyed($conn);
       $activeSurveyors = get_activeSurveyors($conn);
       $totalSurveyors = get_totalSurveyors($conn);
-    
+
        
     }
-
-    
-
-
 
     if($deptName == 'Field Worker'){
         header('location:userbase.php');
     }
   
-    // ini_set('display_errors', 1);
-    // ini_set('display_startup_errors', 1);
-    // error_reporting(E_ALL);
-       
-    //     echo "depak";
-    //     die;
-    $filters = array(); 
-    $g1 =  get_g3($conn,$filters);
-
-
+    $g1 =  get_g3($conn,NULL);
     $graphString = "'";
     foreach($g1 as $key => $value){
         $graphString .= $value['name'];
@@ -78,10 +60,7 @@ if (!isset($_SESSION['user_id'])) {
     $graphString .= "'";
     $graphString = str_replace(' ', '-', $graphString);
 }
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <?php include_once 'head.php';?>
