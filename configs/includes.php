@@ -3240,10 +3240,12 @@ function get_voter_ids_for_analytics($conn,$filters){
     $queryForVoterIds .= " AND is_surveyed = 1";
     mysqli_set_charset($conn,'utf8');
     $total_value = mysqli_query($conn,$queryForVoterIds);
-    $result= mysqli_fetch_all($total_value,MYSQLI_ASSOC);
-
+    $result = mysqli_fetch_all($total_value,MYSQLI_ASSOC);
+   
+    //asd($result);
     foreach($result as $key => $value){
-        $response[] = $value[0];
+       
+        $response[] = $value['id'];
     }
     return implode(', ', $response);;
 }
