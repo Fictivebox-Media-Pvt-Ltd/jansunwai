@@ -3238,8 +3238,8 @@ function get_voter_ids_for_analytics($conn,$filters){
     }
 
     $queryForVoterIds .= " AND is_surveyed = 1";
- 
-    $total_value= mysqli_query($conn,$queryForVoterIds);
+    mysqli_set_charset($conn,'utf8');
+    $total_value = mysqli_query($conn,$queryForVoterIds);
     $result= mysqli_fetch_all($total_value);
 
     foreach($result as $key => $value){
@@ -3274,7 +3274,7 @@ function get_g1($conn,$filters){
     }
     $query .= "GROUP BY rating_current_govt";
 
-    asd($query);
+  //  asd($query);
     mysqli_set_charset($conn,'utf8');
     $total_value= mysqli_query($conn,$query);
     $result= mysqli_fetch_all($total_value);
