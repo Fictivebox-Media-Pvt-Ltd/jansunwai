@@ -3258,6 +3258,7 @@ function get_g1($conn,$filters){
         $voter_ids = get_voter_ids_for_analytics($conn,$filters);
     }
 
+
     $query = "SELECT rating_current_govt, COUNT(id) as rating FROM tbl_voter_survey WHERE rating_current_govt != '' ";
 
     if(count($filters) > 0){
@@ -3273,6 +3274,7 @@ function get_g1($conn,$filters){
     }
     $query .= "GROUP BY rating_current_govt";
 
+    asd($query);
     mysqli_set_charset($conn,'utf8');
     $total_value= mysqli_query($conn,$query);
     $result= mysqli_fetch_all($total_value);
@@ -3385,7 +3387,7 @@ function get_g3($conn,$filters){
     if(count($filters) > 0){
         $voter_ids = get_voter_ids_for_analytics($conn,$filters);
     }
-    asd($voter_ids);
+   // asd($voter_ids);
 
     $query = "SELECT pramukh_mudde, COUNT(id) as rating FROM tbl_voter_survey WHERE pramukh_mudde != '' ";
 
