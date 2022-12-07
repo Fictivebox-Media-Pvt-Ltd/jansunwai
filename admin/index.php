@@ -1,5 +1,6 @@
 <?php
-
+phpinfo();
+die;
 include_once '../configs/includes.php';
 
 
