@@ -3456,8 +3456,8 @@ function get_g3($conn,$filters){
         }
         $i++;
     }
-
-    return $percentage;
+asd($percentage);
+    //return $percentage;
 }
 
 function get_g4($conn,$filters){
