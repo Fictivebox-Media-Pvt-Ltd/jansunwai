@@ -1,8 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 include_once '../configs/includes.php';
 
 
@@ -47,13 +44,11 @@ if (!isset($_SESSION['user_id'])) {
 
     if($assignedLoksabha === 'चित्तौड़गढ़' || $assignedLoksabha == ''){
        
-       echo $todaySurveyed = get_todaySurveyed($conn);
-     echo  $totalSurveyed = get_totalSurveyed($conn);
-     echo $activeSurveyors = get_activeSurveyors($conn);
-     echo $totalSurveyors = get_totalSurveyors($conn);
-      print_r($todaySurveyed);
-      echo "depak";
-      die;
+        $todaySurveyed = get_todaySurveyed($conn);
+       $totalSurveyed = get_totalSurveyed($conn);
+      $activeSurveyors = get_activeSurveyors($conn);
+      $totalSurveyors = get_totalSurveyors($conn);
+    
        
     }
 
@@ -66,6 +61,13 @@ if (!isset($_SESSION['user_id'])) {
     }
   
     $g1 =  get_g3($conn,NULL);
+    ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+    print_r($g1);
+    echo "depak";
+    die;
+
     $graphString = "'";
     foreach($g1 as $key => $value){
         $graphString .= $value['name'];
