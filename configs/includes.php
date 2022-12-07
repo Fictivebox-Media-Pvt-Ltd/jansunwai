@@ -3239,8 +3239,8 @@ function get_voter_ids_for_analytics($conn,$filters){
 
     $queryForVoterIds .= " AND is_surveyed = 1"; 
     $total_value= mysqli_query($conn,$queryForVoterIds);
-    $result= mysqli_fetch_all($total_value);
-    while ($row = mysqli_fetch_array($result)){
+   // $result= mysqli_fetch_all($total_value);
+    while ($row = mysqli_fetch_array($total_value)){
     //foreach($result as $key => $value){
         $response[] = $row[0];
     }
