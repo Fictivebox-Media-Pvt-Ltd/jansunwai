@@ -44,6 +44,8 @@ if (!isset($_SESSION['user_id'])) {
     $assignedLoksabha = $loginUserData['assigned_loksabha'];
     $deptName = get_department_details($conn, $deptId);
 
+    echo "depak";
+die;
     if($assignedLoksabha === 'चित्तौड़गढ़' || $assignedLoksabha == ''){
        
         $todaySurveyed = get_todaySurveyed($conn);
@@ -70,8 +72,7 @@ if (!isset($_SESSION['user_id'])) {
     $graphString = str_replace(' ', '-', $graphString);
 }
 
-echo "depak";
-die;
+
 ?>
 
 <!DOCTYPE html>
