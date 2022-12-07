@@ -1,7 +1,7 @@
 <?php
 set_time_limit(300);
-error_reporting(0);
-ini_set('display_errors', '0');
+error_reporting(1);
+ini_set('display_errors', '1');
 date_default_timezone_set('Asia/Kolkata');
 session_start();
 
