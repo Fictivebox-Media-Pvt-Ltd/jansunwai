@@ -3237,12 +3237,10 @@ function get_voter_ids_for_analytics($conn,$filters){
         $queryForVoterIds .= "AND `voter_age` BETWEEN $ageGroup[0] AND $ageGroup[1] ";
     }
 
-    $queryForVoterIds .= " AND is_surveyed = 1";
- 
-    $total_value= mysqli_query($conn,$queryForVoterIds);
+    $queryForVoterIds .= " AND is_surveyed = 1"; 
+    $total_value= mysqli_query($conn,$queryForVoterIds);   
     $result= mysqli_fetch_all($total_value);
-
-    foreach($result as $key => $value){
+   foreach($result as $key => $value){
         $response[] = $value[0];
     }
     return implode(', ', $response);;
@@ -3253,9 +3251,6 @@ function get_g1($conn,$filters){
     $sum = 0;
     $i=0;
     $voter_ids = array();
-//asd($filter);
-
-
     if(count($filters) > 0){
         $voter_ids = get_voter_ids_for_analytics($conn,$filters);
     }
