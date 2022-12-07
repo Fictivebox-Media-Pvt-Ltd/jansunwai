@@ -3253,7 +3253,7 @@ function get_g1($conn,$filters){
     $sum = 0;
     $i=0;
     $voter_ids = array();
-
+asd($filter);
     if(count($filters) > 0){
         $voter_ids = get_voter_ids_for_analytics($conn,$filters);
     }
