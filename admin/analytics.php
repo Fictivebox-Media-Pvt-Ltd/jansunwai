@@ -37,9 +37,10 @@ if($assignedLoksabha != ''){
 }
 $category_list = get_category_list($conn);
 
-$g1 = get_g1($conn,$filters); // Current Gov
-asd($g1);
+//$g1 = get_g1($conn,$filters); // Current Gov
+
 $g2 = get_g2($conn,$filters); // Pesha
+asd($g2);
 $g3 = get_g3($conn,$filters); // Pramukh Mudde
 $g4 = get_g4($conn,$filters);
 $g5 = get_g5($conn,$filters);
