@@ -3241,7 +3241,8 @@ function get_voter_ids_for_analytics($conn,$filters){
      mysqli_set_charset($conn,'utf8');
     $total_value = mysqli_query($conn,$queryForVoterIds);
    // asd($total_value);
-    $result = mysqli_fetch_all($total_value);
+   $result = mysqli_fetch_all($total_value, MYSQLI_ASSOC);
+   // $result = mysqli_fetch_all($total_value);
 
     foreach($result as $key => $value){
         $response[] = $value[0];
@@ -3254,7 +3255,8 @@ function get_g1($conn,$filters){
     $sum = 0;
     $i=0;
     $voter_ids = array();
-
+// echo count($filters);
+// die;
     if(count($filters) > 0){
         $voter_ids = get_voter_ids_for_analytics($conn,$filters);
     }
