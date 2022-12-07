@@ -3385,6 +3385,7 @@ function get_g3($conn,$filters){
     if(count($filters) > 0){
         $voter_ids = get_voter_ids_for_analytics($conn,$filters);
     }
+    asd($voter_ids);
 
     $query = "SELECT pramukh_mudde, COUNT(id) as rating FROM tbl_voter_survey WHERE pramukh_mudde != '' ";
 
@@ -3456,8 +3457,8 @@ function get_g3($conn,$filters){
         }
         $i++;
     }
-asd($percentage);
-    //return $percentage;
+
+    return $percentage;
 }
 
 function get_g4($conn,$filters){
