@@ -62,7 +62,7 @@ if ($jwt) {
             $voterIdsThatHasBeenSurveyed[] = $value[0];
         }
 
-        $query = "SELECT * FROM `tbl_voters` WHERE id NOT IN (" . implode(", ", $voterIdsThatHasBeenSurveyed) . ") AND `vidhansabha` = '$vidhansabha' AND `booth_no` = '$booth_no'";
+        $query = "SELECT * FROM `tbl_voters` WHERE id NOT IN (" . implode(", ", $voterIdsThatHasBeenSurveyed).") AND `vidhansabha` = '$vidhansabha' AND `booth_no` = '$booth_no'";
 
         if ($house_no != '0' && $house_no != 0 && $house_no != 'मकान सं चुने') {
             $query .= "AND `house_no` = '$house_no'";
@@ -72,6 +72,8 @@ if ($jwt) {
             $query .= "AND `voter_name_hin` LIKE '%$voter_name_hin%'";
         }
 
+        // print_r($query);
+        // die;
         mysqli_set_charset($conn, 'utf8');
         $result = mysqli_query($conn, $query) or die("Query problem" . mysqli_error($conn));
         $rows = mysqli_num_rows($result);
