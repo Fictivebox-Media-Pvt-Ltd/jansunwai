@@ -51,7 +51,6 @@ if($jwt){
 					));
 					exit();
 			}
-
       if (isset($_FILES['user_image']) || isset($_POST['f_name']) || isset($_POST['l_name']) || isset($_POST['admin_email'])) {
       $user_image = isset($_FILES['user_image']) ? $_FILES['user_image'] : '';
       $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : '';
@@ -69,38 +68,30 @@ if($jwt){
             $imageS = $_FILES['user_image']['size'];
             $ftmp = $_FILES['user_image']['tmp_name'];
             $store = $target_dir . $image_upload;
-            move_uploaded_file($ftmp, $store);
-            
-        }
-  
-        if (!empty($aadhar_front)) {
+            move_uploaded_file($ftmp, $store);            
+        }  
+      if (!empty($aadhar_front)) {
           $target_dir = "../admin/images/avatar/";
             $aadhar_front = md5(time()).'.'.pathinfo($_FILES['aadhar_front']['name'],PATHINFO_EXTENSION);
             $imageS = $_FILES['aadhar_front']['size'];
             $ftmp = $_FILES['aadhar_front']['tmp_name'];
             $store = $target_dir . $aadhar_front;
             move_uploaded_file($ftmp, $store);  
-        }
-     
-        if (!empty($aadhar_back)) {
+      }     
+      if (!empty($aadhar_back)) {
           $target_dir = "../admin/images/avatar/";
             $aadhar_back = md5(time()).'.'.pathinfo($_FILES['aadhar_back']['name'],PATHINFO_EXTENSION);
             $imageS = $_FILES['aadhar_back']['size'];
             $ftmp = $_FILES['aadhar_back']['tmp_name'];
             $store = $target_dir . $aadhar_back;
-            move_uploaded_file($ftmp, $store);
-            
+            move_uploaded_file($ftmp, $store);            
         }
-
-        $query = "UPDATE `tbl_admin_users` SET `f_name` = '$f_name',`l_name` = '$l_name',`age` = '$age',`aadhar_no` = '$aadhar_no',`phone_no` = '$phone_no',`user_image` = '$image_upload',`aadhar_front` = '$aadhar_front',`aadhar_back` = '$aadhar_back' WHERE `id` = '$user_id'";
+      $query = "UPDATE `tbl_admin_users` SET `f_name` = '$f_name',`l_name` = '$l_name',`age` = '$age',`aadhar_no` = '$aadhar_no',`phone_no` = '$phone_no',`user_image` = '$image_upload',`aadhar_front` = '$aadhar_front',`aadhar_back` = '$aadhar_back' WHERE `id` = '$user_id'";
         mysqli_set_charset($conn,'utf8');
         mysqli_query($conn, $query);
         echo json_encode(array("success" => true,
-        "message" => "profile updated successfully"),JSON_UNESCAPED_UNICODE);
-       
+        "message" => "profile updated successfully"),JSON_UNESCAPED_UNICODE);       
     }
-
-    
       }
       catch (Exception $e){
         http_response_code(401);
