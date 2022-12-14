@@ -308,7 +308,7 @@ $deptName = get_department_details($conn, $deptId);
                     </li> -->
                     <?php } ?>
                     <!--?php if($assignedLoksabha === 'चित्तौड़गढ़'){ ?-->
-                    <li class="nk-menu-item has-sub">
+                    <!-- <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-light-fill"></em></span>
                             <span class="nk-menu-text">Karyakarta</span>
@@ -367,8 +367,8 @@ $deptName = get_department_details($conn, $deptId);
                                 </ul>
                             </li>
                         </ul>
-                    </li>
-                    <li class="nk-menu-item has-sub">
+                    </li> -->
+                    <!-- <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-light-fill"></em></span>
                             <span class="nk-menu-text">Morcha</span>
@@ -402,8 +402,8 @@ $deptName = get_department_details($conn, $deptId);
                                 <a href="morcha_obc.php" class="nk-menu-link"><span class="nk-menu-text">OBC Morcha</a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="nk-menu-item has-sub">
+                    </li> -->
+                    <!-- <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-user-check"></em></span>
                             <span class="nk-menu-text">Local Officials</span>
@@ -435,7 +435,7 @@ $deptName = get_department_details($conn, $deptId);
                             <span class="nk-menu-icon"><em class="icon ni ni-list-round"></em></span>
                             <span class="nk-menu-text">SMS Templates</span>
                         </a>
-                    </li>
+                    </li> -->
 
                     <!--?php } ?-->
                     <li class="nk-menu-item has-sub">
