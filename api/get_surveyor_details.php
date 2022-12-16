@@ -27,7 +27,6 @@ if($jwt){
       $voter="SELECT  DISTINCT voter_id FROM tbl_survey WHERE surveyed_by = '$user_id' AND  created_at BETWEEN '$endDate' AND '$startDate'";
       $result=mysqli_query($conn,$voter) or die("Query problem".mysqli_error($conn));
       $allTimeSurvey = mysqli_num_rows($result);
-
     }
 else{
   $voter="SELECT  DISTINCT voter_id FROM tbl_survey WHERE surveyed_by = '$user_id'";
