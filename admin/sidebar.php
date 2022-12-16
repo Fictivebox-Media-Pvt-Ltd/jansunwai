@@ -77,19 +77,19 @@ $deptName = get_department_details($conn, $deptId);
                                         Voters</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="surveyed-voter.php" class="nk-menu-link"><span class="nk-menu-text">Surveyed
+                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">Surveyed
                                         Voter</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="adivasi-voter.php" class="nk-menu-link"><span class="nk-menu-text">adivasi
+                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">adivasi
                                     </span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="mahila-voter.php" class="nk-menu-link"><span class="nk-menu-text">Mahila
+                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">Mahila
                                     </span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="first-time-voter.php" class="nk-menu-link"><span class="nk-menu-text">First
+                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">First
                                         time voter
                                     </span></a>
                             </li>
@@ -252,11 +252,11 @@ $deptName = get_department_details($conn, $deptId);
                                         class="nk-menu-text">Sangathan</span></a>
                                 <ul class="nk-menu-sub">
                                     <li class="nk-menu-item">
-                                        <a href="sangathan-add.php" class="nk-menu-link"><span class="nk-menu-text">Add
+                                        <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">Add
                                                 Sangathan</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="sangathan-list.php" class="nk-menu-link"><span
+                                        <a href="javascript:void(0)" class="nk-menu-link"><span
                                                 class="nk-menu-text">Sangathan List</span></a>
                                     </li>
                                 </ul>
@@ -288,7 +288,7 @@ $deptName = get_department_details($conn, $deptId);
                                         class="nk-menu-text">Voters</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="mukhiya.php" class="nk-menu-link"><span class="nk-menu-text">Mukhiya</span></a>
+                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">Mukhiya</span></a>
                             </li>
                         </ul><!-- .nk-menu-sub -->
                     </li>
@@ -507,18 +507,18 @@ $deptName = get_department_details($conn, $deptId);
                         </a>
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
-                                <a href="news-media.php" class="nk-menu-link"><span class="nk-menu-text">News</span></a>
+                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">News</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="Youtube-media.php" class="nk-menu-link"><span
+                                <a href="javascript:void(0)" class="nk-menu-link"><span
                                         class="nk-menu-text">Youtube</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="socialmedia-media.php" class="nk-menu-link"><span class="nk-menu-text">Social
+                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">Social
                                         media</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="press-media.php" class="nk-menu-link"><span
+                                <a href="javascript:void(0)" class="nk-menu-link"><span
                                         class="nk-menu-text">Press</span></a>
                             </li>
                         </ul>
