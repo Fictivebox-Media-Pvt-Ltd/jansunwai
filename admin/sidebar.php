@@ -81,15 +81,15 @@ $deptName = get_department_details($conn, $deptId);
                                         Voter</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">adivasi
+                                <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span class="nk-menu-text">adivasi
                                     </span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">Mahila
+                                <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span class="nk-menu-text">Mahila
                                     </span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">First
+                                <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span class="nk-menu-text">First
                                         time voter
                                     </span></a>
                             </li>
@@ -252,11 +252,11 @@ $deptName = get_department_details($conn, $deptId);
                                         class="nk-menu-text">Sangathan</span></a>
                                 <ul class="nk-menu-sub">
                                     <li class="nk-menu-item">
-                                        <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">Add
+                                        <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span class="nk-menu-text">Add
                                                 Sangathan</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="javascript:void(0)" class="nk-menu-link"><span
+                                        <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span
                                                 class="nk-menu-text">Sangathan List</span></a>
                                     </li>
                                 </ul>
@@ -288,7 +288,7 @@ $deptName = get_department_details($conn, $deptId);
                                         class="nk-menu-text">Voters</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">Mukhiya</span></a>
+                                <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span class="nk-menu-text">Mukhiya</span></a>
                             </li>
                         </ul><!-- .nk-menu-sub -->
                     </li>
@@ -507,18 +507,18 @@ $deptName = get_department_details($conn, $deptId);
                         </a>
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
-                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">News</span></a>
+                                <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span class="nk-menu-text">News</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="javascript:void(0)" class="nk-menu-link"><span
+                                <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span
                                         class="nk-menu-text">Youtube</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">Social
+                                <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span class="nk-menu-text">Social
                                         media</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="javascript:void(0)" class="nk-menu-link"><span
+                                <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span
                                         class="nk-menu-text">Press</span></a>
                             </li>
                         </ul>

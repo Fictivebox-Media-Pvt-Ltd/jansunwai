@@ -20,27 +20,28 @@ if($jwt){
       $voter="SELECT  DISTINCT voter_id FROM tbl_survey WHERE surveyed_by = '$user_id' AND created_at >'$todaydate'";
       $result=mysqli_query($conn,$voter) or die("Query problem".mysqli_error($conn));
       $row = mysqli_num_rows($result);
-if(isset($_POST['start_date']) && isset($_POST['end_date'])){
+if(!empty($_POST['start_date']) && !empty($_POST['end_date'])){
 
-print_r("deepak");
-die;
+  $voter="SELECT  DISTINCT voter_id FROM tbl_survey WHERE surveyed_by = '$user_id' AND ";
+  $result=mysqli_query($conn,$voter) or die("Query problem".mysqli_error($conn));
+  $allTimeSurvey = mysqli_num_rows($result);
+
+}
+else{
+  $voter="SELECT  DISTINCT voter_id FROM tbl_survey WHERE surveyed_by = '$user_id'";
+  $result=mysqli_query($conn,$voter) or die("Query problem".mysqli_error($conn));
+  $allTimeSurvey = mysqli_num_rows($result);
 }
 
-
-     
-      $voter="SELECT  DISTINCT voter_id FROM tbl_survey WHERE surveyed_by = '$user_id' AND created_at >'$todaydate'";
-      $result=mysqli_query($conn,$voter) or die("Query problem".mysqli_error($conn));
-      $row = mysqli_num_rows($result);
 
        if ($row > 0) {
           echo json_encode(array(
             "success" => true,
             "message" => "Surveyor details",
-            "today_survey" => $row,
-            "user_profile" => $personal_details), JSON_UNESCAPED_UNICODE);
+            "todaySurvey" => $row,
+            "allTimeSurvey" => $allTimeSurvey), JSON_UNESCAPED_UNICODE);
       }
-      else{
-        
+      else{        
         echo json_encode(array(
           "success" => true,
           "message" => "Data Not Found"), JSON_UNESCAPED_UNICODE);
