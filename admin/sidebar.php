@@ -77,7 +77,7 @@ $deptName = get_department_details($conn, $deptId);
                                         Voters</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="javascript:void(0)" class="nk-menu-link"><span class="nk-menu-text">Surveyed
+                                <a href="surveyed_userbase.php" class="nk-menu-link"><span class="nk-menu-text">Surveyed
                                         Voter</span></a>
                             </li>
                             <li class="nk-menu-item">
