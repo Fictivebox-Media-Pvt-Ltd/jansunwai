@@ -46,8 +46,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3 align-self-end">
-                                                        <button name="import" type="submit"
-                                                            class="btn btn-lg btn-primary">Submit</button>
+                                                        <button name="import" type="submit" class="btn btn-lg btn-primary">Submit</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -71,14 +70,8 @@
                                                                 <td>+91 000 0000 000</td>
                                                                 <td>deepak@gmail.com</td>
                                                                 <td>
-                                                                    <a href="#!"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Edit"><em
-                                                                            class="icon ni ni-edit"></em></a>
-                                                                    <a href="#!"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Delete"><em
-                                                                            class="icon ni ni-trash"></em></a>
+                                                                    <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Edit"><em class="icon ni ni-edit"></em></a>
+                                                                    <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Delete"><em class="icon ni ni-trash"></em></a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -87,14 +80,8 @@
                                                                 <td>+91 000 0000 000</td>
                                                                 <td>deepak@gmail.com</td>
                                                                 <td>
-                                                                    <a href="#!"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Edit"><em
-                                                                            class="icon ni ni-edit"></em></a>
-                                                                    <a href="#!"
-                                                                        class="btn btn-icon btn-trigger btn-tooltip"
-                                                                        title="Delete"><em
-                                                                            class="icon ni ni-trash"></em></a>
+                                                                    <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Edit"><em class="icon ni ni-edit"></em></a>
+                                                                    <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Delete"><em class="icon ni ni-trash"></em></a>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
