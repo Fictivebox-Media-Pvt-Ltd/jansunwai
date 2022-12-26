@@ -22,7 +22,7 @@
                                 <div class="nk-block nk-block-lg">
                                     <div class="nk-block-head">
                                         <div class="nk-block-head-content">
-                                            <h4 class="nk-block-title">Mahila</h4>
+                                            <h4 class="nk-block-title">News</h4>
                                         </div>
                                     </div>
                                     <div class="card card-preview w-100" style="width: max-content;">

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <?php include_once 'head.php'; ?>
-
 <body class="nk-body bg-lighter npc-default has-sidebar">
     <div class="nk-app-root">
         <!-- main @s -->
@@ -22,7 +21,7 @@
                                 <div class="nk-block nk-block-lg">
                                     <div class="nk-block-head">
                                         <div class="nk-block-head-content">
-                                            <h4 class="nk-block-title">Mahila</h4>
+                                            <h4 class="nk-block-title">Mukhiya</h4>
                                         </div>
                                     </div>
                                     <div class="card card-preview w-100" style="width: max-content;">
@@ -46,7 +45,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3 align-self-end">
-                                                        <button name="import" type="submit" class="btn btn-lg btn-primary">Submit</button>
+                                                        <button name="import" type="submit"
+                                                            class="btn btn-lg btn-primary">Submit</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -70,8 +70,14 @@
                                                                 <td>+91 000 0000 000</td>
                                                                 <td>deepak@gmail.com</td>
                                                                 <td>
-                                                                    <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Edit"><em class="icon ni ni-edit"></em></a>
-                                                                    <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Delete"><em class="icon ni ni-trash"></em></a>
+                                                                    <a href="#!"
+                                                                        class="btn btn-icon btn-trigger btn-tooltip"
+                                                                        title="Edit"><em
+                                                                            class="icon ni ni-edit"></em></a>
+                                                                    <a href="#!"
+                                                                        class="btn btn-icon btn-trigger btn-tooltip"
+                                                                        title="Delete"><em
+                                                                            class="icon ni ni-trash"></em></a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -80,8 +86,14 @@
                                                                 <td>+91 000 0000 000</td>
                                                                 <td>deepak@gmail.com</td>
                                                                 <td>
-                                                                    <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Edit"><em class="icon ni ni-edit"></em></a>
-                                                                    <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Delete"><em class="icon ni ni-trash"></em></a>
+                                                                    <a href="#!"
+                                                                        class="btn btn-icon btn-trigger btn-tooltip"
+                                                                        title="Edit"><em
+                                                                            class="icon ni ni-edit"></em></a>
+                                                                    <a href="#!"
+                                                                        class="btn btn-icon btn-trigger btn-tooltip"
+                                                                        title="Delete"><em
+                                                                            class="icon ni ni-trash"></em></a>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
