@@ -79,7 +79,7 @@ if ($jwt) {
         $rows = mysqli_num_rows($result);
 
         $i = 0;
-        if ($rows > 0) {
+        if($rows > 0){
             $info = array();
             while ($row = mysqli_fetch_array($result)){
                 $i++;
@@ -87,11 +87,18 @@ if ($jwt) {
                     'id' => $row['id'], 'house_no' => $row['house_no'], 'name' => $row['voter_name_hin'], 'age' => $row['voter_age'], 'address' => $row['poling_station_hin'], 'father_husband_name' => $row['father_husband_name_hin'],'survey_status' => true
                 ));
             }
+           $survey_details = array(              
+                 "totel_people" =>200,
+                 "survey" => 300,
+                 "pending" => 120
+              );
             echo json_encode(array(
                 "success" => true,
 	            "message" => "voters List",
+                "survey_details" => $survey_details,
                 "voters_list" => $info), JSON_UNESCAPED_UNICODE);
-        }else {
+        }
+        else{
                 echo json_encode(array("success" => true,
                 "message" => "No data found"),JSON_UNESCAPED_UNICODE);
         }
