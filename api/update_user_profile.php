@@ -63,24 +63,33 @@ if($jwt){
       $aadhar_back = isset($_FILES['aadhar_back']) ? $_FILES['aadhar_back'] : '';
     
         if (!empty($user_image)) {
-            $image_upload = "/admin/images/avatar/".md5(time()).'.'.pathinfo($_FILES['user_image']['name'],PATHINFO_EXTENSION);
+            $target_dir = "../admin/images/avatar/";
+            $image_upload = md5(time()).'.'.pathinfo($_FILES['user_image']['name'],PATHINFO_EXTENSION);
             $imageS = $_FILES['user_image']['size'];
             $ftmp = $_FILES['user_image']['tmp_name'];
-            move_uploaded_file($ftmp,$image_upload);            
+            $store = $target_dir . $image_upload;
+            $imageUpload ="admin/images/avatar/".$image_upload;
+            move_uploaded_file($ftmp, $store);            
         }  
       if (!empty($aadhar_front)) {
-           $aadhar_front ="/admin/images/avatar/".md5(time()).'.'.pathinfo($_FILES['aadhar_front']['name'],PATHINFO_EXTENSION);
+            $target_dir = "../admin/images/documents/";
+            $aadhar_front = md5(time()).'.'.pathinfo($_FILES['aadhar_front']['name'],PATHINFO_EXTENSION);
             $imageS = $_FILES['aadhar_front']['size'];
             $ftmp = $_FILES['aadhar_front']['tmp_name'];
-            move_uploaded_file($ftmp,$aadhar_front);  
+            $store = $target_dir . $aadhar_front;
+            $aadharFront ="admin/images/documents/".$aadhar_front;
+            move_uploaded_file($ftmp, $store);  
       }     
-      if (!empty($aadhar_back)) {         
-            $aadhar_back ="/admin/images/avatar/".md5(time()).'.'.pathinfo($_FILES['aadhar_back']['name'],PATHINFO_EXTENSION);
+      if (!empty($aadhar_back)) {
+            $target_dir = "../admin/images/documents/";
+            $aadhar_back = md5(time()).'.'.pathinfo($_FILES['aadhar_back']['name'],PATHINFO_EXTENSION);
             $imageS = $_FILES['aadhar_back']['size'];
             $ftmp = $_FILES['aadhar_back']['tmp_name'];
-            move_uploaded_file($ftmp,$aadhar_back);            
+            $store = $target_dir . $aadhar_back;
+            $aadharBack ="admin/images/documents/".$aadhar_back;
+            move_uploaded_file($ftmp, $store);            
         }
-      $query = "UPDATE `tbl_admin_users` SET `f_name` = '$f_name',`l_name` = '$l_name',`age` = '$age',`aadhar_no` = '$aadhar_no',`phone_no` = '$phone_no',`user_image` = '$image_upload',`aadhar_front` = '$aadhar_front',`aadhar_back` = '$aadhar_back' WHERE `id` = '$user_id'";
+      $query = "UPDATE `tbl_admin_users` SET `f_name` = '$f_name',`l_name` = '$l_name',`age` = '$age',`aadhar_no` = '$aadhar_no',`phone_no` = '$phone_no',`user_image` = '$imageUpload',`aadhar_front` = '$aadharFront',`aadhar_back` = '$aadharBack' WHERE `id` = '$user_id'";
         mysqli_set_charset($conn,'utf8');
         mysqli_query($conn, $query);
         echo json_encode(array("success" => true,
