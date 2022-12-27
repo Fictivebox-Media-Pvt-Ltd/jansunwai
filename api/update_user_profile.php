@@ -63,19 +63,19 @@ if($jwt){
       $aadhar_back = isset($_FILES['aadhar_back']) ? $_FILES['aadhar_back'] : '';
     
         if (!empty($user_image)) {
-            $image_upload = "../admin/images/avatar/".md5(time()).'.'.pathinfo($_FILES['user_image']['name'],PATHINFO_EXTENSION);
+            $image_upload = "/admin/images/avatar/".md5(time()).'.'.pathinfo($_FILES['user_image']['name'],PATHINFO_EXTENSION);
             $imageS = $_FILES['user_image']['size'];
             $ftmp = $_FILES['user_image']['tmp_name'];
             move_uploaded_file($ftmp,$image_upload);            
         }  
       if (!empty($aadhar_front)) {
-           $aadhar_front ="../admin/images/avatar/".md5(time()).'.'.pathinfo($_FILES['aadhar_front']['name'],PATHINFO_EXTENSION);
+           $aadhar_front ="/admin/images/avatar/".md5(time()).'.'.pathinfo($_FILES['aadhar_front']['name'],PATHINFO_EXTENSION);
             $imageS = $_FILES['aadhar_front']['size'];
             $ftmp = $_FILES['aadhar_front']['tmp_name'];
             move_uploaded_file($ftmp,$aadhar_front);  
       }     
       if (!empty($aadhar_back)) {         
-            $aadhar_back ="../admin/images/avatar/".md5(time()).'.'.pathinfo($_FILES['aadhar_back']['name'],PATHINFO_EXTENSION);
+            $aadhar_back ="/admin/images/avatar/".md5(time()).'.'.pathinfo($_FILES['aadhar_back']['name'],PATHINFO_EXTENSION);
             $imageS = $_FILES['aadhar_back']['size'];
             $ftmp = $_FILES['aadhar_back']['tmp_name'];
             move_uploaded_file($ftmp,$aadhar_back);            
