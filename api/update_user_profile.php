@@ -64,7 +64,7 @@ if($jwt){
     
         if (!empty($user_image)) {
             $target_dir = "../admin/images/avatar/";
-            $image_upload = md5(time()).'.'.pathinfo($_FILES['user_image']['name'],PATHINFO_EXTENSION);
+            $image_upload = md5(time()).$_FILES['user_image']['name'];
             $imageS = $_FILES['user_image']['size'];
             $ftmp = $_FILES['user_image']['tmp_name'];
             $store = $target_dir . $image_upload;
@@ -73,7 +73,7 @@ if($jwt){
         }  
       if (!empty($aadhar_front)) {
             $target_dir = "../admin/images/documents/";
-            $aadhar_front = md5(time()).'.'.pathinfo($_FILES['aadhar_front']['name'],PATHINFO_EXTENSION);
+            $aadhar_front = md5(time()).$_FILES['aadhar_front']['name'];
             $imageS = $_FILES['aadhar_front']['size'];
             $ftmp = $_FILES['aadhar_front']['tmp_name'];
             $store = $target_dir . $aadhar_front;
@@ -82,7 +82,7 @@ if($jwt){
       }     
       if (!empty($aadhar_back)) {
             $target_dir = "../admin/images/documents/";
-            $aadhar_back = md5(time()).'.'.pathinfo($_FILES['aadhar_back']['name'],PATHINFO_EXTENSION);
+            $aadhar_back = md5(time()).$_FILES['aadhar_back']['name'];
             $imageS = $_FILES['aadhar_back']['size'];
             $ftmp = $_FILES['aadhar_back']['tmp_name'];
             $store = $target_dir . $aadhar_back;
