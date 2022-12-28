@@ -18,8 +18,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
  $username = $row['username'];
  $surveyed_by = $row['username'];
- $stmt = $conn->prepare("SELECT id,username, f_name, l_name,aadhar_no,phone_no,email,user_image,(select sum(data.total_survey) as total_survey from ( select count(*) as total_survey from tbl_voter_survey where surveyed_by = ? UNION ALL select count(*) as total_survey from tbl_mumbai_voter_survey where surveyed_by = ? ) data), assigned_loksabha, assigned_vidhansabha FROM tbl_admin_users WHERE username = ?");
- $stmt->bind_param("sss",$surveyed_by,$surveyed_by,$username);
+ $stmt = $conn->prepare("SELECT id,username, f_name, l_name,aadhar_no,phone_no,email,user_image,(select count(DISTINCT voter_id) as total_survey from tbl_survey where surveyed_by = tbl_admin_users.id), assigned_loksabha, assigned_vidhansabha FROM tbl_admin_users WHERE username = ?");
+ $stmt->bind_param("s",$username);
  $stmt->execute();
  $stmt->store_result();
  

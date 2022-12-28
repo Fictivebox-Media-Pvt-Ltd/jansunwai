@@ -14,15 +14,11 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
  $password = md5($_POST['password']); 
 
  
- $stmt = $conn->prepare("SELECT id,username, f_name, l_name,aadhar_no,phone_no,email,user_image,(select sum(data.total_survey) as total_survey from ( select count(*) as total_survey from tbl_voter_survey where surveyed_by = ? UNION ALL select count(*) as total_survey from tbl_mumbai_voter_survey where surveyed_by = ? ) data), assigned_loksabha, assigned_vidhansabha FROM tbl_admin_users WHERE username = ? AND password = ?");
- $stmt->bind_param("ssss",$surveyed_by,$surveyed_by,$username, $password);
- 
- $stmt->execute();
- 
- $stmt->store_result();
- 
- if($stmt->num_rows > 0){
- 
+ $stmt = $conn->prepare("SELECT id,username, f_name, l_name,aadhar_no,phone_no,email,user_image,(select count(DISTINCT voter_id) as total_survey from tbl_survey where surveyed_by = tbl_admin_users.id), assigned_loksabha, assigned_vidhansabha FROM tbl_admin_users WHERE username = ? AND password = ?");
+ $stmt->bind_param("ss",$username,$password); 
+ $stmt->execute(); 
+ $stmt->store_result(); 
+ if($stmt->num_rows > 0){ 
  $stmt->bind_result($id, $username, $f_name,$l_name,$aadhar,$phone,$email,$user_image,$total_survey,$assigned_loksabha,$assigned_vidhansabha);
  $stmt->fetch();
  $user = array(
