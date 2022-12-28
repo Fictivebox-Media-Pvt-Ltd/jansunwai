@@ -3,8 +3,8 @@ include_once '../configs/includes.php';
 include 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-$filter_loksabha = 'चित्तौड़गढ़';
-$mandal_list = get_mandal_list($conn,$filter_loksabha);
+$vidhansabha = 'चित्तौड़गढ़';
+$mandal_list = get_mandal_list($conn,$vidhansabha);
 $category_list = get_category_list($conn);
 
 if(!empty($_POST['data_filter']) && isset($_POST['data_filter'])){
@@ -185,10 +185,10 @@ $sms = get_sms($conn,NULL);
                                                 <div class="form-group" style="margin-top: 15px;">
                                                 <label class="form-label" style="padding-top: 5px;font-size: 17px;margin-bottom:4px;">Apply Data Filters: </label>
                                                 <span class="form-note" style="margin-bottom:10px">`मंडल` to `क्षेणी` filters are highly data-sensitive. Select them from Left to Right order only, after every page load. </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12">
                                         <form method="POST" class="form-validate">
+                                        <div class="col-md-12">
                                             <div class="row g-12">
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
@@ -496,7 +496,7 @@ $sms = get_sms($conn,NULL);
                                         </div>
                                         </form>
                                         <br/>
-                                                <div class="col-md-12">
+                                        <div class="col-md-12">
                                                     <form method="GET" class="form-validate">
                                                     <!-- <div class="row">
                                                         <div>
@@ -521,7 +521,7 @@ $sms = get_sms($conn,NULL);
                                                     <a href="userbase.php" class="btn btn-dim btn-warning">Go to ↦ All Voters</a>
 
                                                     <a href="?filter_pesha=<?php echo $filter_pesha?>&booth_no=<?php echo $booth_no?>&assignedLoksabha=<?php echo $assignedLoksabha ?>&filter_loksabha=<?php echo $filter_loksabha?>&filter_mandal=<?php echo $filter_mandal?>&filter_panchayat=<?php echo $filter_panchayat?>&filter_boothRange=<?php echo $filter_boothRange?>&filter_category=<?php echo $filter_category?>&filter_caste=<?php echo $filter_caste?>&filter_ward=<?php echo $filter_ward?>&filter_pramukh_mudde=<?php echo $filter_pramukh_mudde?>&filter_mojuda_sarkaar=<?php echo $filter_mojuda_sarkaar?>&filter_2019_loksabha=<?php echo $filter_2019_loksabha?>&filter_2018_vidhansabha=<?php echo $filter_2018_vidhansabha?>&filter_partyVsCandidate=<?php echo $filter_partyVsCandidate?>&filter_vichardhara=<?php echo $filter_vichardhara?>&filter_corona=<?php echo $filter_corona?>&filter_local_candidate=<?php echo $filter_local_candidate?>&filter_2023_vidhansabha=<?php echo $filter_2023_vidhansabha?>&filter_ageGroup=<?php echo $filter_ageGroup?>&isExport=TRUE" class="btn btn-dim btn-info">Export Excel File<em style="margin-left: 2px;" class="icon ni ni-growth"></em></a>
-                                                </div>
+                                        </div>
                                                 <!-- <div class="col-md-7">
                                                     <form method="GET" class="form-validate">
                                                     <div class="row g-3">
@@ -611,11 +611,11 @@ $sms = get_sms($conn,NULL);
                                                         <th>Surveyed At</th>
                                                         <th>Action</th>
                                                         <th>
-                                                                <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
                                                                     <input type="checkbox" name='select_all' data-child="chk2" class="custom-control-input" id="selectAllMembers">
                                                                     <label class="custom-control-label" for="selectAllMembers"></label>
-                                                                </div>
-                                                            </th>
+                                                            </div>
+                                                        </th>
                                                     <?php } ?>
                                                         </tr>
                                                     </thead>
@@ -719,7 +719,7 @@ $sms = get_sms($conn,NULL);
         });
     </script>
      <script>
-        $('#selectAllMembers').on('click', function() {
+        $('#selectAllMembers').on('click', function(){
             var childClass = $(this).attr('data-child');
             $('.' + childClass + '').prop('checked', this.checked);
         });
@@ -730,7 +730,6 @@ $sms = get_sms($conn,NULL);
                         "serverSide":false,
                         "order": [],
                         "info":true,
-
                         "columnDefs":[
                                         {
                                             "targets":[1,3,4,5,6],
