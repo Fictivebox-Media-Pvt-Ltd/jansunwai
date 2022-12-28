@@ -16,7 +16,7 @@ if($jwt){
             exit();
     }
 
-    $todaydate = date('Y-m-d',strtotime("-1 days"));
+      $todaydate = date('Y-m-d',strtotime("-1 days"));
       $user_id = $_POST['user_id'];
       $voter="SELECT  DISTINCT voter_id FROM tbl_survey WHERE surveyed_by = '$user_id' AND created_at >'$todaydate'";
       $result=mysqli_query($conn,$voter) or die("Query problem".mysqli_error($conn));
@@ -36,7 +36,7 @@ if($jwt){
       }
 
 
-       if ($row > 0) {
+      if ($allTimeSurvey > 0 || $row > 0) {
           echo json_encode(array(
             "success" => true,
             "message" => "Surveyor details",

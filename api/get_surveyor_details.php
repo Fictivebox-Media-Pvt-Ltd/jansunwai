@@ -34,7 +34,7 @@ else{
   $allTimeSurvey = mysqli_num_rows($result);
 }
 
-       if ($row > 0) {
+       if ($allTimeSurvey > 0 || $row > 0) {
           echo json_encode(array(
             "success" => true,
             "message" => "Surveyor details",
