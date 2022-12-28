@@ -77,7 +77,7 @@ $deptName = get_department_details($conn, $deptId);
                             </li>
                             <li class="nk-menu-item">
                                 <!-- adivasi_voter.php -->
-                                <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span class="nk-menu-text">adivasi
+                                <a href="adivasi_voter.php" class="nk-menu-link"><span class="nk-menu-text">Adivasi Voter
                                     </span></a>
                             </li>
                             <li class="nk-menu-item">
