@@ -4519,10 +4519,10 @@ function  update_voter_survey($conn,$voter_id,$pesha,$mobile_no,$whatsapp_no,$pr
     header("Location: update_voters_survey.php?id=$voter_id");
 }
 
-function get_mandal_list($conn,$loksabha){
-    $query = "SELECT mandal FROM `tbl_mandal_panchayat_mapping` WHERE `loksabha` = '$loksabha' GROUP BY mandal";
-
-    mysqli_set_charset($conn,'utf8');
+function get_mandal_list($conn,$vidhansabha){
+   // $query = "SELECT mandal FROM `tbl_mandal_panchayat_mapping` WHERE `loksabha` = '$loksabha' GROUP BY mandal";
+   $query = "SELECT mandal FROM `tbl_mandal` WHERE `vidhansabha` = '$vidhansabha' GROUP BY mandal"; 
+   mysqli_set_charset($conn,'utf8');
     $value = mysqli_query($conn,$query);
     $result = mysqli_fetch_all($value);
 
