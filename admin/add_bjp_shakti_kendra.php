@@ -36,8 +36,7 @@ if (isset($_POST["import"]))
         $query = "INSERT INTO `bjp_shakti_kendra` (`kram`,`assembly`, `mandal`, `shakti_kendra_name`, `prabhari`, `prabhari_phone_no`, `sanyojak`, `sanyojak_phone_no`,`co_sanyojak`,`co_sanyojak_phone_no`,`dob`) VALUES";
         $sub_query = "";
         $Reader = new SpreadsheetReader($targetPath);
-        $Reader->ChangeSheet(0);   
-
+        $Reader->ChangeSheet(0); 
         foreach ($Reader as $Row){     
             if($counter >= $skipRows){  
                 $kram = ''; // First Name
