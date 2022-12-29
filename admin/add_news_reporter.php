@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
 } else {
     $admin_dir_name = dirname($_SERVER['PHP_SELF']);
     $user_id = $_SESSION['user_id'];
-    $loginUserData = get_user_details($conn,$user_id);
+    $loginUserData = get_user_details($conn, $user_id);
     $adminName = $loginUserData['f_name'] . ' ' . $loginUserData['l_name'];
     $fName = $loginUserData['f_name'];
     $lName = $loginUserData['l_name'];
@@ -15,102 +15,100 @@ if (!isset($_SESSION['user_id'])) {
     $deptId = $loginUserData['department_id'];
     $adminEmail = $loginUserData['email'];
     $userName = $loginUserData['username'];
-    $deptName = get_department_details($conn,$deptId);
+    $deptName = get_department_details($conn, $deptId);
 }
 
-if(( isset($_POST['assembly']) && isset($_POST['name']) && isset($_POST['phone'])&& isset($_POST['vidhansabha_DOB']))){
-    add_bjp_vidhansabha_karyakarini($conn,$_POST['assembly'],$_POST['name'],$_POST['phone'],$_POST['vidhansabha_DOB']);
-  
+if ((isset($_POST['assembly']) && isset($_POST['name']) && isset($_POST['phone']) && isset($_POST['vidhansabha_DOB']))) {
+    add_bjp_vidhansabha_karyakarini($conn, $_POST['assembly'], $_POST['name'], $_POST['phone'], $_POST['vidhansabha_DOB']);
 }
 
-if (isset($_POST["import"]))
-{ 
-  require_once('vendor/excel_reader2.php');
-  require_once('vendor/SpreadsheetReader.php');    
-  $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-  
-  if(in_array($_FILES["file"]["type"],$allowedFileType)){
-        $targetPath = 'doc/'.$_FILES['file']['name'];
+if (isset($_POST["import"])) {
+    require_once('vendor/excel_reader2.php');
+    require_once('vendor/SpreadsheetReader.php');
+    $allowedFileType = ['application/vnd.ms-excel', 'text/xls', 'text/xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+
+    if (in_array($_FILES["file"]["type"], $allowedFileType)) {
+        $targetPath = 'doc/' . $_FILES['file']['name'];
         move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
 
         $query = "INSERT INTO `tbl_news_reporter` (`loksabha`, `vidhansabha`, `mandal`, `panchayat`, `booth`, `name`, `fathers_name`, `age`, `caste`, `mobile`, `address`, `dob`) VALUES";
         $sub_query = "";
         $Reader = new SpreadsheetReader($targetPath);
-        $Reader->ChangeSheet(0);   
+        $Reader->ChangeSheet(0);
 
-        foreach ($Reader as $Row){     
-            if($counter >= $skipRows){
-                $loksabha = ''; 
-                if(isset($Row[$skipColumns+0])) {
-                    $loksabha = $Row[$skipColumns+0];
+        foreach ($Reader as $Row) {
+            if ($counter >= $skipRows) {
+                $loksabha = '';
+                if (isset($Row[$skipColumns + 0])) {
+                    $loksabha = $Row[$skipColumns + 0];
                 }
-                $vidhansabha = ''; 
-                if(isset($Row[$skipColumns+1])) {
-                    $vidhansabha = $Row[$skipColumns+1];
+                $vidhansabha = '';
+                if (isset($Row[$skipColumns + 1])) {
+                    $vidhansabha = $Row[$skipColumns + 1];
                 }
-                $mandal = ''; 
-                if(isset($Row[$skipColumns+2])) {
-                    $mandal = $Row[$skipColumns+2];
+                $mandal = '';
+                if (isset($Row[$skipColumns + 2])) {
+                    $mandal = $Row[$skipColumns + 2];
                 }
-                $panchayat = ''; 
-                if(isset($Row[$skipColumns+3])) {
-                    $panchayat = $Row[$skipColumns+3];
+                $panchayat = '';
+                if (isset($Row[$skipColumns + 3])) {
+                    $panchayat = $Row[$skipColumns + 3];
                 }
-                $booth = ''; 
-                if(isset($Row[$skipColumns+4])) {
-                    $booth = $Row[$skipColumns+4];
+                $booth = '';
+                if (isset($Row[$skipColumns + 4])) {
+                    $booth = $Row[$skipColumns + 4];
                 }
-                $name = ''; 
-                if(isset($Row[$skipColumns+5])) {
-                    $name = $Row[$skipColumns+5];
+                $name = '';
+                if (isset($Row[$skipColumns + 5])) {
+                    $name = $Row[$skipColumns + 5];
                 }
-                $fathers_name = ''; 
-                if(isset($Row[$skipColumns+6])) {
-                    $fathers_name = $Row[$skipColumns+6];
+                $fathers_name = '';
+                if (isset($Row[$skipColumns + 6])) {
+                    $fathers_name = $Row[$skipColumns + 6];
                 }
-                $age = ''; 
-                if(isset($Row[$skipColumns+7])) {
-                    $age = $Row[$skipColumns+7];
+                $age = '';
+                if (isset($Row[$skipColumns + 7])) {
+                    $age = $Row[$skipColumns + 7];
                 }
-                $caste = ''; 
-                if(isset($Row[$skipColumns+8])) {
-                    $caste = $Row[$skipColumns+8];
+                $caste = '';
+                if (isset($Row[$skipColumns + 8])) {
+                    $caste = $Row[$skipColumns + 8];
                 }
-                $mobile = ''; 
-                if(isset($Row[$skipColumns+9])) {
-                    $mobile = $Row[$skipColumns+9];
+                $mobile = '';
+                if (isset($Row[$skipColumns + 9])) {
+                    $mobile = $Row[$skipColumns + 9];
                 }
-                $address = ''; 
-                if(isset($Row[$skipColumns+10])) {
-                    $address = $Row[$skipColumns+10];
+                $address = '';
+                if (isset($Row[$skipColumns + 10])) {
+                    $address = $Row[$skipColumns + 10];
                 }
-                $dob = NULL; 
-                if(isset($Row[$skipColumns+11]) && $Row[$skipColumns+11] != '') {
-                    $dob = $Row[$skipColumns+11];
+                $dob = NULL;
+                if (isset($Row[$skipColumns + 11]) && $Row[$skipColumns + 11] != '') {
+                    $dob = $Row[$skipColumns + 11];
                     $dob = strtotime($dob);
-                    $dob = date('d-m-Y',$dob);
-                } 
-                
-                if($loksabha){
-                    $sub_query = $sub_query." ('$loksabha', '$vidhansabha', '$mandal', '$panchayat', '$booth', '$name', '$fathers_name', '$age', '$caste', '$mobile', '$address', '$dob')\n,";
+                    $dob = date('d-m-Y', $dob);
+                }
+
+                if ($loksabha) {
+                    $sub_query = $sub_query . " ('$loksabha', '$vidhansabha', '$mandal', '$panchayat', '$booth', '$name', '$fathers_name', '$age', '$caste', '$mobile', '$address', '$dob')\n,";
                 }
             }
             $counter++;
         }
-        $query = $query.$sub_query;
-        $query = substr($query, 0, -1).';';
+        $query = $query . $sub_query;
+        $query = substr($query, 0, -1) . ';';
 
         // $file = fopen('bulkupload/bulk_upload.sql','w');
         // fwrite($file,$query);
         // asd($query);
         // die;
-        mysqli_set_charset($conn,'utf8');
+        mysqli_set_charset($conn, 'utf8');
         $result = mysqli_query($conn, $query);
-        
-		unlink($targetPath);
-  }
-}		 	 
-?>	
+
+        unlink($targetPath);
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="zxx" class="js">
@@ -140,7 +138,7 @@ if (isset($_POST["import"]))
                                 <h5 class="card-title">Bulk Upload</h5>
                             </div>
                             <form method="POST" enctype="multipart/form-data" class="gy-3 form-validate">
-      
+
                                 <div class="row g-3 align-center">
                                     <div class="col-lg-5">
                                         <div class="form-group">
@@ -159,26 +157,27 @@ if (isset($_POST["import"]))
                                         </div>
                                     </div>
                                 </div>
-                                
-                                </div>
-                                <div class="row g-3">
-                                    <div class="col-lg-7 offset-lg-5">
-                                        <div class="form-group mt-2">
-                                            <button name="import" type="submit" class="btn btn-lg btn-primary">Upload</button><br><br><br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+
                         </div>
-                    </div>                   
-                    <!-- card -->
-                </div><!-- .nk-block -->
-                <!-- content @e -->
-            </div>
-            <!-- wrap @e -->
+                        <div class="row g-3">
+                            <div class="col-lg-7 offset-lg-5">
+                                <div class="form-group mt-2 mb-5">
+                                    <button name="import" type="submit" class="btn btn-lg btn-primary">Upload</button>
+                                    <a href="" download="" class="btn btn-lg btn-info"> Download Sample File</a>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- card -->
+            </div><!-- .nk-block -->
+            <!-- content @e -->
         </div>
-        <!-- main @e -->
-        <?php include_once 'footer.php'; ?>
+        <!-- wrap @e -->
+    </div>
+    <!-- main @e -->
+    <?php include_once 'footer.php'; ?>
     </div>
     <!-- app-root @e -->
     <!-- JavaScript -->
@@ -213,4 +212,5 @@ if (isset($_POST["import"]))
     <script src="assets/js/scripts.js?ver=2.2.0"></script>
     <script src="assets/js/charts/chart-ecommerce.js?ver=2.2.0"></script>
 </body>
+
 </html>
