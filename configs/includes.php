@@ -121,7 +121,7 @@ function delete_dept($conn,$selected_dept){
 }
 
 function get_user_details($conn,$user_id){
-    $query = "SELECT department_id,f_name,l_name,user_image,email,username,assigned_loksabha FROM tbl_admin_users WHERE id=$user_id";
+    $query = "SELECT department_id,f_name,l_name,user_image,email,username,assigned_loksabha,assigned_vidhansabha FROM tbl_admin_users WHERE id=$user_id";
     mysqli_set_charset($conn,'utf8');
     $loginUser = mysqli_query($conn, $query);
     $loginUserData = mysqli_fetch_assoc($loginUser);
@@ -3327,6 +3327,7 @@ function get_g2($conn,$filters){
         $response[$value[0]] = $value[1];
         $sum += $value[1];
     }
+   //asd($response);
 
     $midResponse = array();
 
@@ -3361,7 +3362,8 @@ function get_g2($conn,$filters){
                 break;
         }
     }
-
+    //asd($response);
+   //asd($midResponse);
     foreach($midResponse as $key => $value){
         $percentage[$i]['name'] = $key;
         $percentage[$i]['y'] = ($value/$sum)*100;
@@ -3372,6 +3374,7 @@ function get_g2($conn,$filters){
         }
         $i++;
     }
+    //asd($percentage);
     
     return $percentage;
 }
