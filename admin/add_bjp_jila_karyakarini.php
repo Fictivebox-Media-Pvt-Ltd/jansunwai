@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
 } else {
     $admin_dir_name = dirname($_SERVER['PHP_SELF']);
     $user_id = $_SESSION['user_id'];
-    $loginUserData = get_user_details($conn,$user_id);
+    $loginUserData = get_user_details($conn, $user_id);
     $adminName = $loginUserData['f_name'] . ' ' . $loginUserData['l_name'];
     $fName = $loginUserData['f_name'];
     $lName = $loginUserData['l_name'];
@@ -15,108 +15,107 @@ if (!isset($_SESSION['user_id'])) {
     $deptId = $loginUserData['department_id'];
     $adminEmail = $loginUserData['email'];
     $userName = $loginUserData['username'];
-    $deptName = get_department_details($conn,$deptId);
+    $deptName = get_department_details($conn, $deptId);
 }
 
-if(( isset($_POST['district']) && isset($_POST['designation']) && isset($_POST['name']) && isset($_POST['father_name']) && isset($_POST['age']) && isset($_POST['cast']) && isset($_POST['phone_no']) && isset($_POST['address'])&& isset($_POST['active_membership_number'])&& isset($_POST['previous_designation'])&& isset($_POST['nivasi_mandal'])&& isset($_POST['karyakarini_DOB']))){
-     add_bjp_jila_karyakarini($conn,$_POST['district'],$_POST['designation'],$_POST['name'],$_POST['father_name'],$_POST['age'],$_POST['cast'],$_POST['phone_no'],$_POST['address'],$_POST['active_membership_number'],$_POST['previous_designation'],$_POST['nivasi_mandal'],$_POST['karyakarini_DOB']);
-     header("Location: bjp_jila_karyakarini.php");
+if ((isset($_POST['district']) && isset($_POST['designation']) && isset($_POST['name']) && isset($_POST['father_name']) && isset($_POST['age']) && isset($_POST['cast']) && isset($_POST['phone_no']) && isset($_POST['address']) && isset($_POST['active_membership_number']) && isset($_POST['previous_designation']) && isset($_POST['nivasi_mandal']) && isset($_POST['karyakarini_DOB']))) {
+    add_bjp_jila_karyakarini($conn, $_POST['district'], $_POST['designation'], $_POST['name'], $_POST['father_name'], $_POST['age'], $_POST['cast'], $_POST['phone_no'], $_POST['address'], $_POST['active_membership_number'], $_POST['previous_designation'], $_POST['nivasi_mandal'], $_POST['karyakarini_DOB']);
+    header("Location: bjp_jila_karyakarini.php");
 }
 
-if (isset($_POST["import"]))
-{ 
-  require_once('vendor/excel_reader2.php');
-  require_once('vendor/SpreadsheetReader.php');    
-  $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-  
-  if(in_array($_FILES["file"]["type"],$allowedFileType)){
-        $targetPath = 'doc/'.$_FILES['file']['name'];
+if (isset($_POST["import"])) {
+    require_once('vendor/excel_reader2.php');
+    require_once('vendor/SpreadsheetReader.php');
+    $allowedFileType = ['application/vnd.ms-excel', 'text/xls', 'text/xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+
+    if (in_array($_FILES["file"]["type"], $allowedFileType)) {
+        $targetPath = 'doc/' . $_FILES['file']['name'];
         move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
 
         $query = "INSERT INTO `bjp_jila_karyakarini` (`district`,`designation`, `name`, `father_name`, `age`, `cast`, `phone_no`, `address`,`active_membership_number`,`previous_designation`,`nivasi_mandal`,`dob`) VALUES";
         $sub_query = "";
         $Reader = new SpreadsheetReader($targetPath);
-        $Reader->ChangeSheet(0);   
+        $Reader->ChangeSheet(0);
 
-        foreach ($Reader as $Row){       
-            if($counter >= $skipRows){
+        foreach ($Reader as $Row) {
+            if ($counter >= $skipRows) {
                 $district = ''; // First Name
-                if(isset($Row[$skipColumns+0])) {
-                    $district = $Row[$skipColumns+0];
+                if (isset($Row[$skipColumns + 0])) {
+                    $district = $Row[$skipColumns + 0];
                 }
                 $designation = ''; // First Name
-                if(isset($Row[$skipColumns+1])) {
-                    $designation = $Row[$skipColumns+1];
+                if (isset($Row[$skipColumns + 1])) {
+                    $designation = $Row[$skipColumns + 1];
                 }
 
                 $name = ''; // Last Name
-                if(isset($Row[$skipColumns+2])) {
-                    $name = $Row[$skipColumns+2];
+                if (isset($Row[$skipColumns + 2])) {
+                    $name = $Row[$skipColumns + 2];
                 }
 
-                $father_name= NULL; // Aadhar No
-                if(isset($Row[$skipColumns+3])) {
-                    $father_name = $Row[$skipColumns+3];
+                $father_name = NULL; // Aadhar No
+                if (isset($Row[$skipColumns + 3])) {
+                    $father_name = $Row[$skipColumns + 3];
                 }
 
                 $age = ""; // Email Id
-                if(isset($Row[$skipColumns+4])) {
-                    $age = $Row[$skipColumns+4];
+                if (isset($Row[$skipColumns + 4])) {
+                    $age = $Row[$skipColumns + 4];
                 }
 
                 $cast = ""; // Phone No
-                if(isset($Row[$skipColumns+5])) {
-                $cast = $Row[$skipColumns+5];
-                }  
+                if (isset($Row[$skipColumns + 5])) {
+                    $cast = $Row[$skipColumns + 5];
+                }
 
                 $phone_no = ""; // Phone No
-                if(isset($Row[$skipColumns+6])) {
-                    $phone_no = $Row[$skipColumns+6];
-                }  
+                if (isset($Row[$skipColumns + 6])) {
+                    $phone_no = $Row[$skipColumns + 6];
+                }
                 $address = ""; // Phone No
-                if(isset($Row[$skipColumns+7])) {
-                    $address = $Row[$skipColumns+7];
-                }  
-            
+                if (isset($Row[$skipColumns + 7])) {
+                    $address = $Row[$skipColumns + 7];
+                }
+
                 $active_membership_number = ""; // Phone No
-                if(isset($Row[$skipColumns+8])) {
-                    $active_membership_number = $Row[$skipColumns+8];
-                } 
+                if (isset($Row[$skipColumns + 8])) {
+                    $active_membership_number = $Row[$skipColumns + 8];
+                }
                 $previous_designation = ""; // previous_designation
-                if(isset($Row[$skipColumns+9])) {
-                    $previous_designation = $Row[$skipColumns+9];
+                if (isset($Row[$skipColumns + 9])) {
+                    $previous_designation = $Row[$skipColumns + 9];
                 }
                 $nivasi_mandal = ""; // nivasi_mandal
-                if(isset($Row[$skipColumns+10])) {
-                    $nivasi_mandal = $Row[$skipColumns+10]; 
-                } 
-             
+                if (isset($Row[$skipColumns + 10])) {
+                    $nivasi_mandal = $Row[$skipColumns + 10];
+                }
+
 
                 $dob = NULL; // DOB
-                if(isset($Row[$skipColumns+11]) && $Row[$skipColumns+11]!='') {
-                    $dob = $Row[$skipColumns+11];
+                if (isset($Row[$skipColumns + 11]) && $Row[$skipColumns + 11] != '') {
+                    $dob = $Row[$skipColumns + 11];
                     $dob = strtotime($dob);
-                    $dob = date('Y-m-d',$dob);
-                } 
-                if($district){
-                    $sub_query = $sub_query." ('$district','$designation','$name','$father_name','$age','$cast','$phone_no','$address','$active_membership_number','$previous_designation','$nivasi_mandal','$dob')\n,";
+                    $dob = date('Y-m-d', $dob);
+                }
+                if ($district) {
+                    $sub_query = $sub_query . " ('$district','$designation','$name','$father_name','$age','$cast','$phone_no','$address','$active_membership_number','$previous_designation','$nivasi_mandal','$dob')\n,";
                 }
             }
             $counter++;
         }
-        $query = $query.$sub_query;
-      
-        $query = substr($query, 0, -1).';';
-       
+        $query = $query . $sub_query;
+
+        $query = substr($query, 0, -1) . ';';
+
         // $file = fopen('bulkupload/bulk_upload.sql','w');
         // fwrite($file,$query);
-        mysqli_set_charset($conn,'utf8');
+        mysqli_set_charset($conn, 'utf8');
         $result = mysqli_query($conn, $query);
-       
-		unlink($targetPath);
-  }
-}		 	 
-?>	
+
+        unlink($targetPath);
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="zxx" class="js">
@@ -146,7 +145,7 @@ if (isset($_POST["import"]))
                                 <h5 class="card-title">Bulk Upload</h5>
                             </div>
                             <form method="POST" enctype="multipart/form-data" class="gy-3 form-validate">
-      
+
                                 <div class="row g-3 align-center">
                                     <div class="col-lg-5">
                                         <div class="form-group">
@@ -165,29 +164,30 @@ if (isset($_POST["import"]))
                                         </div>
                                     </div>
                                 </div>
-                                
-                                </div>
-                                <div class="row g-3">
-                                    <div class="col-lg-7 offset-lg-5">
-                                        <div class="form-group mt-2">
-                                            <button name="import" type="submit" class="btn btn-lg btn-primary">Upload</button><br><br><br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+
                         </div>
+                        <div class="row g-3">
+                            <div class="col-lg-7 offset-lg-5">
+                                <div class="form-group mt-2 mb-5">
+                                    <button name="import" type="submit" class="btn btn-lg btn-primary">Upload</button>
+                                    <a href="" download="" class="btn btn-lg btn-info"> Download Sample File</a>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
                     </div>
-                    
-                    <div class="nk-block nk-block-lg">
-                  
+                </div>
+
+                <div class="nk-block nk-block-lg">
+
                     <div class="card">
                         <div class="card-inner">
                             <div class="card-head">
                                 <h5 class="card-title">Add Jila Karyakarini </h5>
                             </div>
                             <form method="POST" enctype="multipart/form-data" class="gy-3 form-validate">
-                           
-                            <div class="row g-3 align-center">
+
+                                <div class="row g-3 align-center">
                                     <div class="col-lg-5">
                                         <div class="form-group">
                                             <label class="form-label">District</label>
@@ -196,7 +196,7 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter district" name="district"  required>
+                                                <input type="text" class="form-control" placeholder="Enter district" name="district" required>
                                             </div>
                                         </div>
                                     </div>
@@ -211,7 +211,7 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter designation" name="designation"  required>
+                                                <input type="text" class="form-control" placeholder="Enter designation" name="designation" required>
                                             </div>
                                         </div>
                                     </div>
@@ -225,7 +225,7 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter name" name="name" onkeypress="return AvoidSpace(event)">
+                                                <input type="text" class="form-control" placeholder="Enter name" name="name" onkeypress="return AvoidSpace(event)">
                                             </div>
                                         </div>
                                     </div>
@@ -239,12 +239,12 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter Father Name" name="father_name" required>
+                                                <input type="text" class="form-control" placeholder="Enter Father Name" name="father_name" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                               
+
                                 <div class="row g-3 align-center">
                                     <div class="col-lg-5">
                                         <div class="form-group">
@@ -253,8 +253,8 @@ if (isset($_POST["import"]))
                                     </div>
                                     <div class="col-lg-7">
                                         <div class="form-group">
-                                            <div class="form-control-wrap">                                            
-                                            <input type="number" class="form-control" placeholder="Enter age" name="age"  required>
+                                            <div class="form-control-wrap">
+                                                <input type="number" class="form-control" placeholder="Enter age" name="age" required>
                                             </div>
                                         </div>
                                     </div>
@@ -268,7 +268,7 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter Cast" name="cast"  required>
+                                                <input type="text" class="form-control" placeholder="Enter Cast" name="cast" required>
                                             </div>
                                         </div>
                                     </div>
@@ -282,8 +282,8 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="number" class="form-control" placeholder="Enter Phone No." name="phone_no" required>
-                                           </div>
+                                                <input type="number" class="form-control" placeholder="Enter Phone No." name="phone_no" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -296,8 +296,8 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter Address" name="address" required>
-                                           </div>
+                                                <input type="text" class="form-control" placeholder="Enter Address" name="address" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -310,8 +310,8 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="number" class="form-control" placeholder="Enter Active Membership Number" name="active_membership_number" required>
-                                           </div>
+                                                <input type="number" class="form-control" placeholder="Enter Active Membership Number" name="active_membership_number" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -324,8 +324,8 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter Previous Designation" name="previous_designation" required>
-                                           </div>
+                                                <input type="text" class="form-control" placeholder="Enter Previous Designation" name="previous_designation" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -338,8 +338,8 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter Nivasi Mandal" name="nivasi_mandal" required>
-                                           </div>
+                                                <input type="text" class="form-control" placeholder="Enter Nivasi Mandal" name="nivasi_mandal" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -352,37 +352,37 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input style="max-height: 35px;" type="text" name="karyakarini_DOB" placeholder="Enter birthday date" class="form-control form-control-xl form-control-outlined date-picker disableKeyPress" id="outlined-date-picker" required data-date-format="yyyy-mm-dd">
+                                                <input style="max-height: 35px;" type="text" name="karyakarini_DOB" placeholder="Enter birthday date" class="form-control form-control-xl form-control-outlined date-picker disableKeyPress" id="outlined-date-picker" required data-date-format="yyyy-mm-dd">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                          
-                        
-                                </div>
-                                <div class="row g-3">
-                                    <div class="col-lg-7 offset-lg-5">
-                                        <div class="form-group mt-2">
-                                            <button type="submit" class="btn btn-lg btn-primary">Save</button><br><br><br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+
+
                         </div>
+                        <div class="row g-3">
+                            <div class="col-lg-7 offset-lg-5">
+                                <div class="form-group mt-2">
+                                    <button type="submit" class="btn btn-lg btn-primary">Save</button><br><br><br>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
                     </div>
-                    
-                    
-                    
-                    
-                    
-                    <!-- card -->
-                </div><!-- .nk-block -->
-                <!-- content @e -->
-            </div>
-            <!-- wrap @e -->
+                </div>
+
+
+
+
+
+                <!-- card -->
+            </div><!-- .nk-block -->
+            <!-- content @e -->
         </div>
-        <!-- main @e -->
-        <?php include_once 'footer.php'; ?>
+        <!-- wrap @e -->
+    </div>
+    <!-- main @e -->
+    <?php include_once 'footer.php'; ?>
     </div>
     <!-- app-root @e -->
     <!-- JavaScript -->
@@ -417,4 +417,5 @@ if (isset($_POST["import"]))
     <script src="assets/js/scripts.js?ver=2.2.0"></script>
     <script src="assets/js/charts/chart-ecommerce.js?ver=2.2.0"></script>
 </body>
+
 </html>

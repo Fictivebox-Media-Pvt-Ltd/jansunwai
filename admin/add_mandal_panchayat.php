@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
 } else {
     $admin_dir_name = dirname($_SERVER['PHP_SELF']);
     $user_id = $_SESSION['user_id'];
-    $loginUserData = get_user_details($conn,$user_id);
+    $loginUserData = get_user_details($conn, $user_id);
     $adminName = $loginUserData['f_name'] . ' ' . $loginUserData['l_name'];
     $fName = $loginUserData['f_name'];
     $lName = $loginUserData['l_name'];
@@ -15,65 +15,64 @@ if (!isset($_SESSION['user_id'])) {
     $deptId = $loginUserData['department_id'];
     $adminEmail = $loginUserData['email'];
     $userName = $loginUserData['username'];
-    $deptName = get_department_details($conn,$deptId);
+    $deptName = get_department_details($conn, $deptId);
 }
 
-if (isset($_POST["import"]))
-{ 
-  require_once('vendor/excel_reader2.php');
-  require_once('vendor/SpreadsheetReader.php');    
-  $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-  
-  if(in_array($_FILES["file"]["type"],$allowedFileType)){
-        $targetPath = 'doc/'.$_FILES['file']['name'];
+if (isset($_POST["import"])) {
+    require_once('vendor/excel_reader2.php');
+    require_once('vendor/SpreadsheetReader.php');
+    $allowedFileType = ['application/vnd.ms-excel', 'text/xls', 'text/xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+
+    if (in_array($_FILES["file"]["type"], $allowedFileType)) {
+        $targetPath = 'doc/' . $_FILES['file']['name'];
         move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
         $query = "INSERT INTO `tbl_mandal_panchayat_mapping` (`loksabha`, `vidhansabha`, `mandal`, `panchayat`, `booth_range`, `created_at`) VALUES";
         $sub_query = "";
         $Reader = new SpreadsheetReader($targetPath);
-        $Reader->ChangeSheet(0);   
+        $Reader->ChangeSheet(0);
 
-        foreach ($Reader as $Row){       
-            if($counter >= $skipRows){
+        foreach ($Reader as $Row) {
+            if ($counter >= $skipRows) {
 
-                $loksabha = ''; 
-                if(isset($Row[$skipColumns+0])) {
-                    $loksabha = $Row[$skipColumns+0];
-                }
-                
-                $vidhansabha = ''; 
-                if(isset($Row[$skipColumns+1])) {
-                    $vidhansabha = $Row[$skipColumns+1];
+                $loksabha = '';
+                if (isset($Row[$skipColumns + 0])) {
+                    $loksabha = $Row[$skipColumns + 0];
                 }
 
-                $mandal = ''; 
-                if(isset($Row[$skipColumns+2])) {
-                    $mandal = $Row[$skipColumns+2];
+                $vidhansabha = '';
+                if (isset($Row[$skipColumns + 1])) {
+                    $vidhansabha = $Row[$skipColumns + 1];
                 }
 
-                $panchayat= ''; 
-                if(isset($Row[$skipColumns+3])) {
-                    $panchayat = $Row[$skipColumns+3];
+                $mandal = '';
+                if (isset($Row[$skipColumns + 2])) {
+                    $mandal = $Row[$skipColumns + 2];
                 }
 
-                $booth_range= ''; 
-                if(isset($Row[$skipColumns+4])) {
-                    $booth_range = $Row[$skipColumns+4];
+                $panchayat = '';
+                if (isset($Row[$skipColumns + 3])) {
+                    $panchayat = $Row[$skipColumns + 3];
                 }
 
-                $sub_query = $sub_query." ('$loksabha','$vidhansabha','$mandal','$panchayat','$booth_range',now())\n,";
+                $booth_range = '';
+                if (isset($Row[$skipColumns + 4])) {
+                    $booth_range = $Row[$skipColumns + 4];
+                }
+
+                $sub_query = $sub_query . " ('$loksabha','$vidhansabha','$mandal','$panchayat','$booth_range',now())\n,";
             }
             $counter++;
         }
-        $query = $query.$sub_query;
-        $query = substr($query, 0, -1).';';
-        $file = fopen('bulkupload/bulk_upload.sql','w');
+        $query = $query . $sub_query;
+        $query = substr($query, 0, -1) . ';';
+        $file = fopen('bulkupload/bulk_upload.sql', 'w');
         // fwrite($file,$query);
         // mysqli_set_charset($conn,'utf8');
         $result = mysqli_query($conn, $query);
-		unlink($targetPath);
-  }
-}		 	 
-?>	
+        unlink($targetPath);
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="zxx" class="js">
@@ -103,7 +102,7 @@ if (isset($_POST["import"]))
                                 <h5 class="card-title">Bulk Upload</h5>
                             </div>
                             <form method="POST" enctype="multipart/form-data" class="gy-3 form-validate">
-      
+
                                 <div class="row g-3 align-center">
                                     <div class="col-lg-5">
                                         <div class="form-group">
@@ -122,18 +121,19 @@ if (isset($_POST["import"]))
                                         </div>
                                     </div>
                                 </div>
-                                
-                                </div>
                                 <div class="row g-3">
                                     <div class="col-lg-7 offset-lg-5">
-                                        <div class="form-group mt-2">
-                                            <button name="import" type="submit" class="btn btn-lg btn-primary">Upload</button><br><br><br>
+                                        <div class="form-group mt-2 mb-5">
+                                            <button name="import" type="submit" class="btn btn-lg btn-primary">Upload</button>
+                                            <a href="" download="" class="btn btn-lg btn-info"> Download Sample File</a>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
+
                     </div>
+                </div>
                 <!-- content @e -->
             </div>
             <!-- wrap @e -->
@@ -147,4 +147,5 @@ if (isset($_POST["import"]))
     <script src="assets/js/scripts.js?ver=2.2.0"></script>
     <script src="assets/js/charts/chart-ecommerce.js?ver=2.2.0"></script>
 </body>
+
 </html>
