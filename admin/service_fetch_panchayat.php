@@ -1,8 +1,9 @@
 <?php
 include_once '../configs/includes.php';
 $mandal = $_POST['mandal'];
+//$query = "SELECT panchayat FROM `tbl_mandal_panchayat_mapping` WHERE `mandal` = '$mandal' GROUP BY panchayat";
 
-$query = "SELECT panchayat FROM `tbl_mandal_panchayat_mapping` WHERE `mandal` = '$mandal' GROUP BY panchayat";
+$query = "SELECT panchayat FROM `tbl_panchayat` WHERE `mandal` = '$mandal' GROUP BY panchayat";
 
 mysqli_set_charset($conn,'utf8');
 $value = mysqli_query($conn,$query);

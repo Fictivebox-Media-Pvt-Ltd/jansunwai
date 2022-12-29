@@ -2,7 +2,7 @@
 include_once '../configs/includes.php';
 $panchayat = $_POST['panchayat'];
 
-$query = "SELECT booth_range FROM `tbl_mandal_panchayat_mapping` WHERE `panchayat` = '$panchayat' GROUP BY booth_range";
+$query = "SELECT booth_range FROM `tbl_panchayat` WHERE `panchayat` = '$panchayat' GROUP BY booth_range";
 
 mysqli_set_charset($conn,'utf8');
 $value = mysqli_query($conn,$query);

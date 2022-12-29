@@ -512,9 +512,7 @@ $deptName = get_department_details($conn, $deptId);
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
                                 <!-- News_media.php -->
-                                <a href="javascript:void(0)" class="nk-menu-link"
-                                    style="opacity: .5;color: #526484 !important;"><span
-                                        class="nk-menu-text">News</span></a>
+                                <a href="News_media.php" class="nk-menu-link"><span class="nk-menu-text">News</span></a>
                             </li>
                             <li class="nk-menu-item">
                                 <!-- Youtube_media.php -->

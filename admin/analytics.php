@@ -400,8 +400,6 @@ function myFunction() {
     $('#loksabha').prop('selectedIndex',0);
 }
 </script>
-
-
     <script type="text/javascript">
 
         
@@ -413,7 +411,7 @@ function myFunction() {
                 type: 'post',
                 data: {loksabha:loksabha},
                 dataType: 'json',
-                success:function(response){
+                 success:function(response){
                     var len = response.length;
                     $("#vidhansabha_list").empty();
                     $("#vidhansabha_list").append('<option value="" selected disabled hidden>विधानसभा</option>');

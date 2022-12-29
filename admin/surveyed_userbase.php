@@ -3,10 +3,6 @@ include_once '../configs/includes.php';
 include 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-$vidhansabha = 'चित्तौड़गढ़';
-$mandal_list = get_mandal_list($conn,$vidhansabha);
-$category_list = get_category_list($conn);
-
 if(!empty($_POST['data_filter']) && isset($_POST['data_filter'])){
     $filter_mandal = $_POST['mandal'];
     $filter_panchayat = $_POST['panchayat'];
@@ -37,8 +33,18 @@ if (!isset($_SESSION['user_id'])) {
     $email = $loginUserData['email'];
     $deptId = $loginUserData['department_id'];
     $assignedLoksabha = $loginUserData['assigned_loksabha'];
+    $assignedVidhansabha = $loginUserData['assigned_vidhansabha'];
     $deptName = get_department_details($conn, $deptId);
 }
+
+if($assignedVidhansabha != ''){
+    $assignedVidhansabha = $assignedVidhansabha;
+}else{
+    $assignedVidhansabha = 'वल्लभनगर';
+}
+
+$mandal_list = get_mandal_list($conn,$assignedVidhansabha);
+$category_list = get_category_list($conn);
 
     $booth_no = '';
     $selected_ward = '';
