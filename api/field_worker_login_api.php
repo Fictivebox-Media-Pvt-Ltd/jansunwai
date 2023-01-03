@@ -36,7 +36,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 $secret_Key  = '68V0zWFrS72GbpPreidkQFLfj4v9m3Ti+DXc8OB0gcM=';
 $date   = new DateTimeImmutable();
-$expire_at     = $date->modify('+2 minutes')->getTimestamp();      // Add 60 seconds
+$expire_at     = $date->modify('+2880 minutes')->getTimestamp();      // Add 60 seconds
 $domainName = "https://surveyapp.fictivebox.com";                  // Retrieved from filtered POST data
 $request_data = [
     'iat'  => $date->getTimestamp(),         // Issued at: time when the token was generated
