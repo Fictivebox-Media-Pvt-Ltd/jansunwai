@@ -66,7 +66,13 @@ foreach($response as $row)
     $sub_array[] = $row['option8'];
     $sub_array[] = $row['option9'];
     $sub_array[] = $row['option10'];
-    $sub_array[] = $row['status'];
+
+    if($row['status'] == 1){
+        $sub_array[] ='<a href="?changeStatus='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Edit this Question"><em class="icon ni ni-trash"></em> Active </a>';
+    }
+    else{
+        $sub_array[] ='<a href="?changeStatus='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Edit this Question"><em class="icon ni ni-trash"></em> Inactive</a>';
+    }
     $sub_array[] = '<a href="?del='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Delete This Question.!"><em class="icon ni ni-trash"></em></a>'.
         '<a href="edit_question.php?id='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Edit this Question"><em class="icon ni ni-edit"></em></a>';
     $data[] = $sub_array;

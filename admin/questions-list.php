@@ -4,6 +4,9 @@ include_once '../configs/includes.php';
 if (isset($_GET['del'])) {
     deleteQuestion($conn, $_GET['del']);
 }
+if (isset($_GET['changeStatus'])) {
+    updateQuestionStatus($conn, $_GET['changeStatus']);
+}
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
