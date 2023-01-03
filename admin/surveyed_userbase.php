@@ -670,12 +670,18 @@ $sms = get_sms($conn,NULL);
                 data: {panchayat:panchayat},
                 dataType: 'json',
                 success:function(response){
-                    var len = response.length;
+                    var len = response.length;                   
                     $("#booth_range").empty();
                     $("#booth_range").append('<option value="" selected disabled hidden>बूथ रेंज</option>');
-                    for( var i = 0; i<len; i++){
+                    for(var i = 0; i<len; i++){
                         var name = response[i];
-                        $("#booth_range").append("<option value='"+name+"'>"+name+"</option>");
+                        var boothresponse = name[0].split(",");
+                        var boothlen = boothresponse.length;
+                        for( var i = 0; i<boothlen; i++){
+                            var boothname = boothresponse[i];
+                         // console.log(boothname);
+                        $("#booth_range").append("<option value='"+boothname+"'>"+boothname+"</option>");
+                        }
                     }
                 }
             });

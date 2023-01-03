@@ -47,7 +47,6 @@ use Firebase\JWT\Key;
 					echo json_encode(array("success" => true,
 						"message" => "No data found"),JSON_UNESCAPED_UNICODE);
 				}
-
 			}
 			catch (Exception $e){
 				http_response_code(401);
