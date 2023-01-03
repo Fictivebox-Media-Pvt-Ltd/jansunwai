@@ -39,18 +39,18 @@ if($jwt){
 					));
 					exit();
 			}
-      if(empty($_FILES['aadhar_front'])){
-				echo json_encode(array(
-					"message" => "aadhar front field is required."
-					));
-					exit();
-			}
-      if(empty($_FILES['aadhar_back'])){
-				echo json_encode(array(
-					"message" => "aadhar back field is required."
-					));
-					exit();
-			}
+      // if(empty($_FILES['aadhar_front'])){
+			// 	echo json_encode(array(
+			// 		"message" => "aadhar front field is required."
+			// 		));
+			// 		exit();
+			// }
+      // if(empty($_FILES['aadhar_back'])){
+			// 	echo json_encode(array(
+			// 		"message" => "aadhar back field is required."
+			// 		));
+			// 		exit();
+			// }
       if (isset($_FILES['user_image']) || isset($_POST['f_name']) || isset($_POST['l_name']) || isset($_POST['admin_email'])) {
       $user_image = isset($_FILES['user_image']) ? $_FILES['user_image'] : '';
       $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : '';
