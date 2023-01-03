@@ -213,6 +213,21 @@ function deleteQuestion($conn,$id){
     mysqli_query($conn, $query);
     return;
 }
+function updateQuestionStatus($conn,$id){
+    $query = "SELECT status FROM tbl_survey_questions where id = '$id'";
+    $result = mysqli_query($conn,$query);
+    $row = mysqli_fetch_array($result); 
+    $status = $row['status'];
+    if($status == 1){       
+        $query = "UPDATE`tbl_survey_questions` SET status = '0' WHERE `id` = $id";
+        mysqli_query($conn, $query);
+        return;
+    }else{
+        $query = "UPDATE `tbl_survey_questions` SET status = '1' WHERE `id` = $id";
+        mysqli_query($conn, $query);
+        return;
+    }
+}
 function deletePanchayat($conn,$id){
     $query = "DELETE FROM `tbl_panchayat` WHERE `id` = $id";
     mysqli_query($conn, $query);
@@ -302,7 +317,6 @@ function get_page_content($conn,$page_name){
     else
         return $response;
 }
-
 
 function get_users($conn){
     $response = array();
@@ -2819,7 +2833,7 @@ function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$questionHe
    $option7 = !empty($question_option[7]) ? "$question_option[7]" : NULL;
    $option8 = !empty($question_option[8]) ? "$question_option[8]" : NULL;
    $option9 = !empty($question_option[9]) ? "$question_option[9]" : NULL;
-    $query = "INSERT INTO tbl_survey_questions(loksabha,vidhansabha,question,question_heading,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,status,created_at) VALUES ('$selected_loksabha','$vidhansabha','$question','$questionHeading','$option','$option1','$option2','$option3','$option4','$option5','$option6','$option7','$option8','$option9','$headingStatus',now())";
+   $query = "INSERT INTO tbl_survey_questions(loksabha,vidhansabha,question,question_heading,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,status,created_at) VALUES ('$selected_loksabha','$vidhansabha','$question','$questionHeading','$option','$option1','$option2','$option3','$option4','$option5','$option6','$option7','$option8','$option9','$headingStatus',now())";
 //    print_r($query);
 //    die;
     try{
