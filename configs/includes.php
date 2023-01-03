@@ -2808,7 +2808,7 @@ function delete_voters_data($conn,$id){
     return;
 }
 
-function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$question_option){
+function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$questionHeading,$headingStatus,$question_option){
    $option = !empty($question_option[0]) ? "$question_option[0]" : NULL;
    $option1 = !empty($question_option[1]) ? "$question_option[1]" : NULL;
    $option2 = !empty($question_option[2]) ? "$question_option[2]" : NULL;
@@ -2819,7 +2819,7 @@ function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$question_o
    $option7 = !empty($question_option[7]) ? "$question_option[7]" : NULL;
    $option8 = !empty($question_option[8]) ? "$question_option[8]" : NULL;
    $option9 = !empty($question_option[9]) ? "$question_option[9]" : NULL;
-    $query = "INSERT INTO tbl_survey_questions(loksabha,vidhansabha,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,created_at) VALUES ('$selected_loksabha','$vidhansabha','$question','$option','$option1','$option2','$option3','$option4','$option5','$option6','$option7','$option8','$option9',now())";
+    $query = "INSERT INTO tbl_survey_questions(loksabha,vidhansabha,question,question_heading,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,status,created_at) VALUES ('$selected_loksabha','$vidhansabha','$question','$questionHeading','$option','$option1','$option2','$option3','$option4','$option5','$option6','$option7','$option8','$option9','$headingStatus',now())";
 //    print_r($query);
 //    die;
     try{
