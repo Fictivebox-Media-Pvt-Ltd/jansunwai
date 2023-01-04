@@ -46,6 +46,9 @@ if($assignedVidhansabha != ''){
 $mandal_list = get_mandal_list($conn,$assignedVidhansabha);
 $category_list = get_category_list($conn);
 
+
+$getFilterQuestionList = getFilterQuestionList($conn,$assignedVidhansabha);
+
     $booth_no = '';
     $selected_ward = '';
     $voter_name = '';
@@ -242,18 +245,49 @@ $sms = get_sms($conn,NULL);
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                
+                                                                
+                                                                                
+                                            <?php if(!empty($getFilterQuestionList)){ ?>
+                                                <?php foreach($getFilterQuestionList as $key => $value){
+                                                  //  print_r($value);
+                                                     ?>
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
+                                                        <select name="category" class="form-control" id="category" >
+                                                        <option value="" selected disabled hidden><?php echo $value[0];?></option>
+                                                            <?php for($i=1;$i<=11;$i++){
+                                                              if($value[$i]!=NULL){
+                                                                ?>
+                                                                <option value="<?php echo $value[$i]?>"><?php echo $value[$i]?></option>
+                                                              <?php }
+                                                            } ?>
+                                                        </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php } ?>
+                                                <?php }?>
+
+
+
+
+
+
+                                                <!-- <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <div class="form-control-wrap">
                                                         <select name="category" class="form-control" id="category">
-                                                            <?php if(!empty($filter_category)){ ?>
-                                                                <option value="<?php echo $filter_category?>" selected><?php echo $filter_category.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_category)){ ?>
+                                                                <option value="<!?php echo $filter_category?>" selected><!?php echo $filter_category.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>क्षेणी</option>
-                                                            <?php }?> 
-                                                            <?php foreach($category_list as $key => $value){ ?>
-                                                                <option value="<?php echo $value[0]?>"><?php echo $value[0]?></option>
-                                                            <?php } ?>
+                                                            <!?php }?> 
+                                                            <!?php foreach($category_list as $key => $value){ ?>
+                                                                <option value="<!?php echo $value[0]?>"><!?php echo $value[0]?></option>
+                                                            <!?php } ?>
                                                         </select>
                                                         </div>
                                                     </div>
@@ -262,24 +296,24 @@ $sms = get_sms($conn,NULL);
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                         <select name="caste" class="form-control" id="caste_list">
-                                                            <?php if(!empty($filter_caste)){ ?>
-                                                                <option value="<?php echo $filter_caste?>" selected><?php echo $filter_caste.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_caste)){ ?>
+                                                                <option value="<!?php echo $filter_caste?>" selected><!?php echo $filter_caste.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>जाति</option>
-                                                            <?php }?> 
+                                                            <!?php }?> 
                                                         </select>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-2">
+                                                </div> -->
+                                                <!-- <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                         <select name="pesha" class="form-control" id="pesha_list">
-                                                            <?php if(!empty($filter_pesha)){ ?>
-                                                                <option value="<?php echo $filter_pesha?>" selected ><?php echo $filter_pesha.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_pesha)){ ?>
+                                                                <option value="<!?php echo $filter_pesha?>" selected ><!?php echo $filter_pesha.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>पेशा</option>
-                                                            <?php }?>        
+                                                            <!?php }?>        
                                                                 <option value="किसान">किसान</option>
                                                                 <option value="व्यवसाय">व्यवसाय</option>
                                                                 <option value="पानी सप्लाई">पानी सप्लाई</option>
@@ -293,21 +327,21 @@ $sms = get_sms($conn,NULL);
                                                         </select>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
-                                        <br>
-                                        <div class="col-md-12">
+                                        <!-- <br> -->
+                                        <!-- <div class="col-md-12">
                                             <div class="row g-12">
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select name="pramukh_mudde" class="form-control">
-                                                            <?php if(!empty($filter_pramukh_mudde)){ ?>
-                                                                <option value="<?php echo $filter_pramukh_mudde?>" selected><?php echo $filter_pramukh_mudde.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_pramukh_mudde)){ ?>
+                                                                <option value="<!?php echo $filter_pramukh_mudde?>" selected><!?php echo $filter_pramukh_mudde.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>प्रमुख मुद्दे</option>
-                                                            <?php }?>      
+                                                            <!?php }?>      
                                                                 <option value="सड़क">सड़क</option>
                                                                 <option value="बिजली">बिजली</option>
                                                                 <option value="पानी सप्लाई">पानी सप्लाई</option>
@@ -326,11 +360,11 @@ $sms = get_sms($conn,NULL);
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select name="mojuda_sarkaar" class="form-control">
-                                                            <?php if(!empty($filter_mojuda_sarkaar)){ ?>
-                                                                <option value="<?php echo $filter_mojuda_sarkaar?>" selected><?php echo $filter_mojuda_sarkaar.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_mojuda_sarkaar)){ ?>
+                                                                <option value="<!?php echo $filter_mojuda_sarkaar?>" selected><!?php echo $filter_mojuda_sarkaar.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>मौजूदा सरकार</option>
-                                                            <?php }?>      
+                                                            <!?php }?>      
                                                                 <option value="बढ़िया">बढ़िया</option>
                                                                 <option value="संतोषजनक">संतोषजनक</option>
                                                                 <option value="बुरा">बुरा</option>
@@ -342,11 +376,11 @@ $sms = get_sms($conn,NULL);
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select name="2019_loksabha" class="form-control">
-                                                            <?php if(!empty($filter_2019_loksabha)){ ?>
-                                                                <option value="<?php echo $filter_2019_loksabha?>" selected><?php echo $filter_2019_loksabha.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_2019_loksabha)){ ?>
+                                                                <option value="<!?php echo $filter_2019_loksabha?>" selected><!?php echo $filter_2019_loksabha.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>2019 लोकसभा</option>
-                                                            <?php }?>      
+                                                            <!?php }?>      
                                                                 <option value="कांग्रेस">कांग्रेस</option>
                                                                 <option value="भारतीय जनता पार्टी">भारतीय जनता पार्टी</option>
                                                                 <option value="जनता सेना">जनता सेना</option>
@@ -361,11 +395,11 @@ $sms = get_sms($conn,NULL);
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select name="2018_vidhansabha" class="form-control">
-                                                            <?php if(!empty($filter_2018_vidhansabha)){ ?>
-                                                                <option value="<?php echo $filter_2018_vidhansabha?>" selected><?php echo $filter_2018_vidhansabha.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_2018_vidhansabha)){ ?>
+                                                                <option value="<!?php echo $filter_2018_vidhansabha?>" selected><!?php echo $filter_2018_vidhansabha.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>2018 विधानसभा</option>
-                                                            <?php }?>      
+                                                            <!?php }?>      
                                                                 <option value="कांग्रेस">कांग्रेस</option>
                                                                 <option value="भारतीय जनता पार्टी">भारतीय जनता पार्टी</option>
                                                                 <option value="जनता सेना">जनता सेना</option>
@@ -380,11 +414,11 @@ $sms = get_sms($conn,NULL);
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select name="partyVsCandidate" class="form-control">
-                                                            <?php if(!empty($filter_partyVsCandidate)){ ?>
-                                                                <option value="<?php echo $filter_partyVsCandidate?>" selected><?php echo $filter_partyVsCandidate.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_partyVsCandidate)){ ?>
+                                                                <option value="<!?php echo $filter_partyVsCandidate?>" selected><!?php echo $filter_partyVsCandidate.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>पार्टी / सदस्य</option>
-                                                            <?php }?>      
+                                                            <!?php }?>      
                                                                 <option value="पार्टी">पार्टी</option>
                                                                 <option value="उम्मीदवार">उम्मीदवार</option>
                                                             </select>
@@ -395,11 +429,11 @@ $sms = get_sms($conn,NULL);
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select name="vichardhara" class="form-control">
-                                                            <?php if(!empty($filter_vichardhara)){ ?>
-                                                                <option value="<?php echo $filter_vichardhara?>" selected><?php echo $filter_vichardhara.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_vichardhara)){ ?>
+                                                                <option value="<!?php echo $filter_vichardhara?>" selected><!?php echo $filter_vichardhara.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>विचारधारा</option>
-                                                            <?php }?>      
+                                                            <!?php }?>      
                                                                 <option value="राम मंदिर">राम मंदिर</option>
                                                                 <option value="किसान आंदोलन">किसान आंदोलन</option>
                                                                 <option value="धारा 370">धारा 370 (कश्मीर)</option>
@@ -408,19 +442,19 @@ $sms = get_sms($conn,NULL);
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <br>
-                                        <div class="col-md-12">
+                                        </div> -->
+                                        <!-- <br> -->
+                                        <!-- <div class="col-md-12">
                                             <div class="row g-12">
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select name="corona" class="form-control">
-                                                            <?php if(!empty($filter_corona)){ ?>
-                                                                <option value="<?php echo $filter_corona?>" selected><?php echo $filter_corona.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_corona)){ ?>
+                                                                <option value="<!?php echo $filter_corona?>" selected><!?php echo $filter_corona.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>कोरोना</option>
-                                                            <?php }?>      
+                                                            <!?php }?>      
                                                                 <option value="अशोक गहलोत सरकार">अशोक गहलोत सरकार</option>
                                                                 <option value="मोदी सरकार">मोदी सरकार</option>
                                                             </select>
@@ -431,11 +465,11 @@ $sms = get_sms($conn,NULL);
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select name="local_candidate" class="form-control">
-                                                            <?php if(!empty($filter_local_candidate)){ ?>
-                                                                <option value="<?php echo $filter_local_candidate?>" selected><?php echo $filter_local_candidate.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_local_candidate)){ ?>
+                                                                <option value="<!?php echo $filter_local_candidate?>" selected><!?php echo $filter_local_candidate.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>लोकल कार्यकर्ता</option>
-                                                            <?php }?>      
+                                                            <!?php }?>      
                                                                 <option value="कांग्रेस">कांग्रेस</option>
                                                                 <option value="भारतीय जनता पार्टी">भारतीय जनता पार्टी</option>
                                                                 <option value="जनता सेना">जनता सेना</option>
@@ -450,11 +484,11 @@ $sms = get_sms($conn,NULL);
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select name="2023_vidhansabha" class="form-control">
-                                                            <?php if(!empty($filter_2023_vidhansabha)){ ?>
-                                                                <option value="<?php echo $filter_2023_vidhansabha?>" selected><?php echo $filter_2023_vidhansabha.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_2023_vidhansabha)){ ?>
+                                                                <option value="<!?php echo $filter_2023_vidhansabha?>" selected><!?php echo $filter_2023_vidhansabha.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>2023 विधानसभा</option>
-                                                            <?php }?>      
+                                                            <!?php }?>      
                                                                 <option value="कांग्रेस">कांग्रेस</option>
                                                                 <option value="भारतीय जनता पार्टी">भारतीय जनता पार्टी</option>
                                                                 <option value="जनता सेना">जनता सेना</option>
@@ -469,11 +503,11 @@ $sms = get_sms($conn,NULL);
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                         <select name="ageGroup" class="form-control">
-                                                            <?php if(!empty($filter_ageGroup)){ ?>
-                                                                <option value="<?php echo $filter_ageGroup?>" selected><?php echo $filter_ageGroup.'✓'?></option>
-                                                            <?php }else{ ?>
+                                                            <!?php if(!empty($filter_ageGroup)){ ?>
+                                                                <option value="<!?php echo $filter_ageGroup?>" selected><!?php echo $filter_ageGroup.'✓'?></option>
+                                                            <!?php }else{ ?>
                                                                 <option value="" selected disabled hidden>Age Group</option>
-                                                            <?php }?>    
+                                                            <!?php }?>    
                                                             <option value="25~30">25 ~ 30</option>
                                                             <option value="31~35">31 ~ 35</option>
                                                             <option value="36~40">36 ~ 40</option>
@@ -499,7 +533,7 @@ $sms = get_sms($conn,NULL);
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         </form>
                                         <br/>
                                         <div class="col-md-12">

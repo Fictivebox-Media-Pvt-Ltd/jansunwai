@@ -4545,5 +4545,13 @@ function get_mandal_list($conn,$vidhansabha){
 
     return $result;
 }
+function getFilterQuestionList($conn,$vidhansabha){
+    $query = "SELECT question_heading,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM `tbl_survey_questions` WHERE `vidhansabha` = '$vidhansabha' AND status = '1'"; 
+    mysqli_set_charset($conn,'utf8');
+     $value = mysqli_query($conn,$query);
+     $result = mysqli_fetch_all($value);
+ 
+     return $result;
+ }
 
 ?>

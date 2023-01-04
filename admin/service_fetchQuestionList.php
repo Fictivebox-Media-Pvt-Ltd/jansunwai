@@ -68,10 +68,10 @@ foreach($response as $row)
     $sub_array[] = $row['option10'];
 
     if($row['status'] == 1){
-        $sub_array[] ='<a href="?changeStatus='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Edit this Question"><em class="icon ni ni-trash"></em> Active </a>';
+        $sub_array[] ='<a href="?changeStatus='.$row['id'].'" class="" title="Edit this Question"><em class="icon ni ni-toggle-on h4"></em> </a>';
     }
     else{
-        $sub_array[] ='<a href="?changeStatus='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Edit this Question"><em class="icon ni ni-trash"></em> Inactive</a>';
+        $sub_array[] ='<a href="?changeStatus='.$row['id'].'" class="" title="Edit this Question"><em class="icon ni ni-toggle-off h4"></em> </a>';
     }
     $sub_array[] = '<a href="?del='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Delete This Question.!"><em class="icon ni ni-trash"></em></a>'.
         '<a href="edit_question.php?id='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Edit this Question"><em class="icon ni ni-edit"></em></a>';
