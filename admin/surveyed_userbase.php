@@ -203,8 +203,7 @@ $sms = get_sms($conn,NULL);
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select name="mandal" class="form-control" id="mandal_list">
-                                                            <option value="" selected disabled hidden>मंडल</option>
-                                                            
+                                                            <option value="" selected disabled hidden>मंडल</option>                                                            
                                                             <?php if(!empty($filter_mandal)){ ?>
                                                                 <option value="<?php echo $filter_mandal?>" selected><?php echo $filter_mandal.'✓'?></option>
                                                                 <?php foreach($mandal_list as $key => $value){ ?>
@@ -244,9 +243,7 @@ $sms = get_sms($conn,NULL);
                                                         </select>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                
+                                                </div>                                               
                                                                 
                                                                                 
                                             <?php if(!empty($getFilterQuestionList)){ ?>
@@ -270,8 +267,6 @@ $sms = get_sms($conn,NULL);
                                                 </div>
                                                 <?php } ?>
                                                 <?php }?>
-
-
 
 
 
