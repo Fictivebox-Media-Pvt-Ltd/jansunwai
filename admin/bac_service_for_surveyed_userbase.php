@@ -124,7 +124,36 @@ if(isset($_GET['filter_category']) && $_GET['filter_category'] != '' && $_GET['f
 if(isset($_GET['filter_caste']) && $_GET['filter_caste'] != '' && $_GET['filter_caste'] != NULL){
     $query .= " AND tbl_voter_survey.caste LIKE '%".trim($_GET['filter_caste'])."%'";
 }
-
+if(isset($_GET['filter_pesha']) && $_GET['filter_pesha'] != '' && $_GET['filter_pesha'] != NULL){
+    $query .= " AND tbl_voter_survey.pesha LIKE '%".trim($_GET['filter_pesha'])."%'";
+}
+if(isset($_GET['filter_pramukh_mudde']) && $_GET['filter_pramukh_mudde'] != '' && $_GET['filter_pramukh_mudde'] != NULL){
+    $query .= " AND tbl_voter_survey.pramukh_mudde LIKE '%".trim($_GET['filter_pramukh_mudde'])."%'";
+}
+if(isset($_GET['filter_mojuda_sarkaar']) && $_GET['filter_mojuda_sarkaar'] != '' && $_GET['filter_mojuda_sarkaar'] != NULL){
+    $query .= " AND tbl_voter_survey.rating_current_govt LIKE '%".trim($_GET['filter_mojuda_sarkaar'])."%'";
+}
+if(isset($_GET['filter_2019_loksabha']) && $_GET['filter_2019_loksabha'] != '' && $_GET['filter_2019_loksabha'] != NULL){
+    $query .= " AND tbl_voter_survey.voted_2019_loksabha LIKE '%".trim($_GET['filter_2019_loksabha'])."%'";
+}
+if(isset($_GET['filter_2018_vidhansabha']) && $_GET['filter_2018_vidhansabha'] != '' && $_GET['filter_2018_vidhansabha'] != NULL){
+    $query .= " AND tbl_voter_survey.voted_2018_vidhansabha LIKE '%".trim($_GET['filter_2018_vidhansabha'])."%'";
+}
+if(isset($_GET['filter_partyVsCandidate']) && $_GET['filter_partyVsCandidate'] != '' && $_GET['filter_partyVsCandidate'] != NULL){
+    $query .= " AND tbl_voter_survey.vote_reason_2018 LIKE '%".trim($_GET['filter_partyVsCandidate'])."%'";
+}
+if(isset($_GET['filter_vichardhara']) && $_GET['filter_vichardhara'] != '' && $_GET['filter_vichardhara'] != NULL){
+    $query .= " AND tbl_voter_survey.vichardhahra LIKE '%".trim($_GET['filter_vichardhara'])."%'";
+}
+if(isset($_GET['filter_corona']) && $_GET['filter_corona'] != '' && $_GET['filter_corona'] != NULL){
+    $query .= " AND tbl_voter_survey.corona LIKE '%".trim($_GET['filter_corona'])."%'";
+}
+if(isset($_GET['filter_local_candidate']) && $_GET['filter_local_candidate'] != '' && $_GET['filter_local_candidate'] != NULL){
+    $query .= " AND tbl_voter_survey.active_karyakarta LIKE '%".trim($_GET['filter_local_candidate'])."%'";
+}
+if(isset($_GET['filter_2023_vidhansabha']) && $_GET['filter_2023_vidhansabha'] != '' && $_GET['filter_2023_vidhansabha'] != NULL){
+    $query .= " AND tbl_voter_survey.vidhansabha_2023 LIKE '%".trim($_GET['filter_2023_vidhansabha'])."%'";
+}
 
 if(isset($_POST["order"]))
 {
@@ -268,7 +297,40 @@ function get_total_all_records($conn,$voter_ids){
     if(isset($_GET['filter_category']) && $_GET['filter_category'] != '' && $_GET['filter_category'] != NULL){
         $query .= " AND tbl_voter_survey.caste_categories LIKE '%".$_GET['filter_category']."%'";
     }
-  
+    if(isset($_GET['filter_caste']) && $_GET['filter_caste'] != '' && $_GET['filter_caste'] != NULL){
+        $query .= " AND tbl_voter_survey.caste LIKE '%".trim($_GET['filter_caste'])."%'";
+    }
+    if(isset($_GET['filter_pesha']) && $_GET['filter_pesha'] != '' && $_GET['filter_pesha'] != NULL){
+        $query .= " AND tbl_voter_survey.pesha LIKE '%".trim($_GET['filter_pesha'])."%'";
+    }
+    if(isset($_GET['filter_pramukh_mudde']) && $_GET['filter_pramukh_mudde'] != '' && $_GET['filter_pramukh_mudde'] != NULL){
+        $query .= " AND tbl_voter_survey.pramukh_mudde LIKE '%".trim($_GET['filter_pramukh_mudde'])."%'";
+    }
+    if(isset($_GET['filter_mojuda_sarkaar']) && $_GET['filter_mojuda_sarkaar'] != '' && $_GET['filter_mojuda_sarkaar'] != NULL){
+        $query .= " AND tbl_voter_survey.rating_current_govt LIKE '%".trim($_GET['filter_mojuda_sarkaar'])."%'";
+    }
+    if(isset($_GET['filter_2019_loksabha']) && $_GET['filter_2019_loksabha'] != '' && $_GET['filter_2019_loksabha'] != NULL){
+        $query .= " AND tbl_voter_survey.voted_2019_loksabha LIKE '%".trim($_GET['filter_2019_loksabha'])."%'";
+    }
+    if(isset($_GET['filter_2018_vidhansabha']) && $_GET['filter_2018_vidhansabha'] != '' && $_GET['filter_2018_vidhansabha'] != NULL){
+        $query .= " AND tbl_voter_survey.voted_2018_vidhansabha LIKE '%".trim($_GET['filter_2018_vidhansabha'])."%'";
+    }
+    if(isset($_GET['filter_partyVsCandidate']) && $_GET['filter_partyVsCandidate'] != '' && $_GET['filter_partyVsCandidate'] != NULL){
+        $query .= " AND tbl_voter_survey.vote_reason_2018 LIKE '%".trim($_GET['filter_partyVsCandidate'])."%'";
+    }
+    if(isset($_GET['filter_vichardhara']) && $_GET['filter_vichardhara'] != '' && $_GET['filter_vichardhara'] != NULL){
+        $query .= " AND tbl_voter_survey.vichardhahra LIKE '%".trim($_GET['filter_vichardhara'])."%'";
+    }
+    if(isset($_GET['filter_corona']) && $_GET['filter_corona'] != '' && $_GET['filter_corona'] != NULL){
+        $query .= " AND tbl_voter_survey.corona LIKE '%".trim($_GET['filter_corona'])."%'";
+    }
+    if(isset($_GET['filter_local_candidate']) && $_GET['filter_local_candidate'] != '' && $_GET['filter_local_candidate'] != NULL){
+        $query .= " AND tbl_voter_survey.active_karyakarta LIKE '%".trim($_GET['filter_local_candidate'])."%'";
+    }
+    if(isset($_GET['filter_2023_vidhansabha']) && $_GET['filter_2023_vidhansabha'] != '' && $_GET['filter_2023_vidhansabha'] != NULL){
+        $query .= " AND tbl_voter_survey.vidhansabha_2023 LIKE '%".trim($_GET['filter_2023_vidhansabha'])."%'";
+    }
+    
     $value= mysqli_query($conn,$query);
     $result = mysqli_fetch_assoc($value)['total_users'];
     return $result;
