@@ -19,7 +19,7 @@
                     <div class="container-fluid">
                         <div class="nk-content-inner">
                             <div class="nk-content-body">
-                                <div class="nk-block nk-block-lg">  
+                                <div class="nk-block nk-block-lg">
                                     <div class="nk-block-head">
                                         <div class="nk-block-head-content">
                                             <h4 class="nk-block-title">Youtube</h4>
@@ -27,7 +27,7 @@
                                     </div>
                                     <div class="card card-preview w-100" style="width: max-content;">
                                         <div class="card-inner">
-                                            <form method="POST" class="gy-3">
+                                            <!-- <form method="POST" class="gy-3">
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
@@ -49,24 +49,27 @@
                                                         <button name="import" type="submit" class="btn btn-lg btn-primary">Submit</button>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </form> -->
                                             <div class="row">
                                                 <div class="col-md-12 mt-4">
                                                     <table class="table" id="panchayatList">
                                                         <thead>
                                                             <tr>
                                                                 <th>S.No.</th>
-                                                                <th>Name</th>
+                                                                <th>Channels</th>
+                                                                <th>Youtuber</th>
+                                                                <th>Address</th>
                                                                 <th>Phone</th>
                                                                 <th>Email</th>
                                                                 <th>Action</th>
-
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
                                                                 <td>1</td>
+                                                                <td>XYZ</td>
                                                                 <td>Deepak</td>
+                                                                <td>Sec-32 Noida</td>
                                                                 <td>+91 000 0000 000</td>
                                                                 <td>deepak@gmail.com</td>
                                                                 <td>
@@ -75,8 +78,10 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>1</td>
+                                                                <td>2</td>
+                                                                <td>XYZ</td>
                                                                 <td>Deepak</td>
+                                                                <td>Sec-32 Noida</td>
                                                                 <td>+91 000 0000 000</td>
                                                                 <td>deepak@gmail.com</td>
                                                                 <td>
