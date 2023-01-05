@@ -46,7 +46,6 @@ if($assignedVidhansabha != ''){
 $mandal_list = get_mandal_list($conn,$assignedVidhansabha);
 $category_list = get_category_list($conn);
 
-
 $getFilterQuestionList = getFilterQuestionList($conn,$assignedVidhansabha);
 
     $booth_no = '';
@@ -439,9 +438,9 @@ $sms = get_sms($conn,NULL);
                                             </div>
                                         </div> -->
                                         <!-- <br> -->
-                                        <!-- <div class="col-md-12">
+                                        <div class="col-md-12">
                                             <div class="row g-12">
-                                                <div class="col-lg-2">
+                                                <!-- <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select name="corona" class="form-control">
@@ -511,7 +510,7 @@ $sms = get_sms($conn,NULL);
                                                         </select>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
@@ -528,7 +527,7 @@ $sms = get_sms($conn,NULL);
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> -->
+                                        </div>
                                         </form>
                                         <br/>
                                         <div class="col-md-12">
@@ -542,7 +541,7 @@ $sms = get_sms($conn,NULL);
                                                         <div class="col-lg-2">
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" placeholder="Enter Booth No." value="<?php if(!empty($_GET['booth_no'])) echo $_GET['booth_no']?>" name="booth_no">
+                                                                    <input type="text" class="form-control" placeholder="Enter Booth No." value="<!?php if(!empty($_GET['booth_no'])) echo $_GET['booth_no']?>" name="booth_no">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -628,7 +627,16 @@ $sms = get_sms($conn,NULL);
                                                         <th>Ward</th>
                                                         <!-- <th style="text-align: center;">Action</th> -->
                                                     <?php if(strtolower($deptName) != 'field worker department'){?>
-                                                        <th>पेशा</th>
+
+                                                        <?php if(!empty($getFilterQuestionList)){ ?>
+                                                <?php foreach($getFilterQuestionList as $key => $value){
+                                                  //  print_r($value);
+                                                     ?>
+                                               <th><?php echo $value[0];?></th>
+                                                <?php } ?>
+                                                <?php }?>
+                                                      
+                                                        <!-- <th>पेशा</th>
                                                         <th>मोबाइल न०</th>
                                                         <th>व्हाट्सएप्प न०</th>
                                                         <th>प्रमुख मुद्दे</th>
@@ -641,7 +649,7 @@ $sms = get_sms($conn,NULL);
                                                         <th>लोकल कार्यकर्ता</th>
                                                         <th>2023 विधानसभा</th>
                                                         <th>जाति</th>
-                                                        <th>श्रेणी</th>
+                                                        <th>श्रेणी</th> -->
                                                         <th>Surveyed By</th>
                                                         <th>Surveyed At</th>
                                                         <th>Action</th>
@@ -743,7 +751,7 @@ $sms = get_sms($conn,NULL);
                     "order": [],
                     "info":true,
                     "ajax":{
-                        url:"service_for_surveyed_userbase.php?filter_pesha=<?php echo $filter_pesha?>&booth_no=<?php echo $booth_no?>&assignedLoksabha=<?php echo $assignedLoksabha ?>&filter_loksabha=<?php echo $filter_loksabha?>&filter_mandal=<?php echo $filter_mandal?>&filter_panchayat=<?php echo $filter_panchayat?>&filter_boothRange=<?php echo $filter_boothRange?>&filter_category=<?php echo $filter_category?>&filter_caste=<?php echo $filter_caste?>&filter_ward=<?php echo $filter_ward?>&filter_pramukh_mudde=<?php echo $filter_pramukh_mudde?>&filter_mojuda_sarkaar=<?php echo $filter_mojuda_sarkaar?>&filter_2019_loksabha=<?php echo $filter_2019_loksabha?>&filter_2018_vidhansabha=<?php echo $filter_2018_vidhansabha?>&filter_partyVsCandidate=<?php echo $filter_partyVsCandidate?>&filter_vichardhara=<?php echo $filter_vichardhara?>&filter_corona=<?php echo $filter_corona?>&filter_local_candidate=<?php echo $filter_local_candidate?>&filter_2023_vidhansabha=<?php echo $filter_2023_vidhansabha?>&filter_ageGroup=<?php echo $filter_ageGroup?>",
+                        url:"service_for_surveyed_userbase.php?booth_no=<?php echo $filter_boothRange?>&assignedLoksabha=<?php echo $assignedLoksabha ?>&filter_panchayat=<?php echo $filter_panchayat?>&filter_boothRange=<?php echo $filter_boothRange?>",
                         type:"POST"
                         },
                     "ordering": false,
