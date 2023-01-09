@@ -4537,8 +4537,15 @@ function  update_voter_survey($conn,$voter_id,$pesha,$mobile_no,$whatsapp_no,$pr
 }
 
 function get_mandal_list($conn,$vidhansabha){
+if(!empty($vidhansabha)){
+    $query = "SELECT mandal FROM `tbl_mandal` WHERE `vidhansabha` = '$vidhansabha' GROUP BY mandal"; 
+  
+}else{
+    $query = "SELECT mandal FROM `tbl_mandal` GROUP BY mandal"; 
+  
+}
+
    // $query = "SELECT mandal FROM `tbl_mandal_panchayat_mapping` WHERE `loksabha` = '$loksabha' GROUP BY mandal";
-   $query = "SELECT mandal FROM `tbl_mandal` WHERE `vidhansabha` = '$vidhansabha' GROUP BY mandal"; 
    mysqli_set_charset($conn,'utf8');
     $value = mysqli_query($conn,$query);
     $result = mysqli_fetch_all($value);
@@ -4546,7 +4553,17 @@ function get_mandal_list($conn,$vidhansabha){
     return $result;
 }
 function getFilterQuestionList($conn,$vidhansabha){
+
+//asd($vidhansabha);
+if(!empty($vidhansabha)){
     $query = "SELECT question_heading,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM `tbl_survey_questions` WHERE `vidhansabha` = '$vidhansabha' AND status = '1'"; 
+
+}else{
+    $query = "SELECT question_heading,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM `tbl_survey_questions` WHERE  status = '1'"; 
+
+}
+    
+
     mysqli_set_charset($conn,'utf8');
      $value = mysqli_query($conn,$query);
      $result = mysqli_fetch_all($value);

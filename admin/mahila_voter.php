@@ -144,13 +144,11 @@
                                                                 <option value="पानी सप्लाई">पानी सप्लाई</option>
                                                                 <option value="रोज़गार">रोज़गार</option>
                                                                 <option value="शिक्षा">शिक्षा</option>
-                                                                <option value="स्वास्थ्य सुविधएँ">स्वास्थ्य सुविधएँ
-                                                                </option>
+                                                                <option value="स्वास्थ्य सुविधएँ">स्वास्थ्य सुविधएँ</option>
                                                                 <option value="जल निकासी">जल निकासी</option>
                                                                 <option value="स्ट्रीट लाइट">स्ट्रीट लाइट</option>
                                                                 <option value="कचरा प्रबंधन">कचरा प्रबंधन</option>
-                                                                <option value="लोकल ट्रांसपोर्ट">लोकल ट्रांसपोर्ट
-                                                                </option>
+                                                                <option value="लोकल ट्रांसपोर्ट">लोकल ट्रांसपोर्ट</option>
                                                             </select>
                                                         </div>
                                                     </div>
