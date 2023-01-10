@@ -10,21 +10,23 @@ $output = array();
 function get_voter_ids($conn,$filters){
     $response = array();
     $booths = array();
-    $queryForVoterIds = "SELECT `id` FROM `tbl_voters` ";
+    $query = "SELECT `tv.id` FROM tbl_voters as tv JOIN tbl_survey ON tbl_survey.voter_id=tau.department_id where tv.is_surveyed =1  ";
+   
+    $queryForVoterIds = "SELECT `id` FROM `tbl_voters` WHERE `is_surveyed` = 1 ";
    // asd($filters);
 
 
     if(!empty($filters['loksabha'])){
         $loksabha = $filters['loksabha'];
-        $queryForVoterIds .= "WHERE loksabha = '$loksabha' ";
+        $queryForVoterIds .= "AND tv.loksabha = '$loksabha' ";
     }    
     if(!empty($filters['vidhansabha'])){
         $vidhansabha = $filters['vidhansabha'];
-        $queryForVoterIds .= "AND vidhansabha = '$vidhansabha' ";
+        $queryForVoterIds .= "AND tv.vidhansabha = '$vidhansabha' ";
     }
     if(!empty($filters['boothRange'])){
         $booth_range = $filters['boothRange'];
-        $queryForVoterIds .= "AND `booth_no` = $booth_range";
+        $queryForVoterIds .= "AND `tv.booth_no` = $booth_range";
     }
     else if(!empty($filters['mandal']) && empty($filters['panchayat'])){
         $mandal  = $filters['mandal'];
@@ -73,15 +75,14 @@ function get_voter_ids($conn,$filters){
         $queryForVoterIds .= "AND `voter_age` BETWEEN $ageGroup[0] AND $ageGroup[1] ";
     }
 
-    $queryForVoterIds .= " AND is_surveyed = 1";
 
-    $total_value= mysqli_query($conn,$queryForVoterIds);
+   $total_value= mysqli_query($conn,$queryForVoterIds);
     $result= mysqli_fetch_all($total_value);
 
     foreach($result as $key => $value){
         $response[] = $value[0];
     }
-  // asd($queryForVoterIds);
+   asd($queryForVoterIds);
     return implode(', ', $response);;
 }
 

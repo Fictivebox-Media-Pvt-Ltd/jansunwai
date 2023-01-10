@@ -185,13 +185,14 @@ tr > th, tr > td {
 
                                                     <?php if(!empty($getFilterQuestionList)){ ?>
                                                 <?php foreach($getFilterQuestionList as $key => $value){
-                                                  //  print_r($value);
+                                                // print_r($value);
+                                                // die;
                                                      ?>
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
-                                                        <select name="category" class="form-control" id="category" >
-                                                        <option value="" selected disabled hidden><?php echo $value[0];?></option>
-                                                            <?php for($i=1;$i<=11;$i++){
+                                                        <select name="<?php echo $value[0];?>[]" class="form-control" id="optionFilters" >
+                                                        <option value="" selected disabled hidden><?php echo $value[1];?></option>
+                                                            <?php for($i=2;$i<=12;$i++){
                                                               if($value[$i]!=NULL){
                                                                 ?>
                                                                 <option value="<?php echo $value[$i]?>"><?php echo $value[$i]?></option>
@@ -370,6 +371,8 @@ tr > th, tr > td {
             });
         });
         $(document).ready(function() {
+            // var panchayat = $('#optionFilters').val();
+            // alert(panchayat);
                 NioApp.DataTable('#adivasiVoterTable', {
                     "lengthMenu": [100, 250, 500],
                     "searching": false,
