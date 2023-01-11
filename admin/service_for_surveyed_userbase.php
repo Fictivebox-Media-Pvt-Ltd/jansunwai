@@ -76,8 +76,8 @@ else{
     $queryQuestionOption = "SELECT `id`,`question_heading` FROM `tbl_survey_questions`  WHERE `question_heading` != '' AND status = '1' ";   
 }
 
-$value = mysqli_query($conn,$queryQuestionOption);
-$queryQuestionOptionResult = mysqli_fetch_all($value);
+$valueQuestionOption = mysqli_query($conn,$queryQuestionOption);
+$queryQuestionOptionResult = mysqli_fetch_all($valueQuestionOption);
 //asd($result);
 
 $voter_ids = get_voter_ids($conn,$filters);
@@ -185,9 +185,13 @@ foreach($response as $row)
     // $sub_array[] = '<a href="voter_survey.php?id='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Do Survey"><button type="button" class="btn btn-primary btn-sm">Survey</button></a>';
     
     if(strtolower($deptName) != 'field worker'){
+        $voterId = $row['id'];
+        $querysurvayerdetail = "SELECT survey_date,username FROM tbl_survey AS ts JOIN tbl_admin_users AS tau ON ts.surveyed_by = tau.id WHERE ts.voter_id = $voterId";   
+        $valuequerysurvayerdetail = mysqli_query($conn,$querysurvayerdetail);
+        $resultsurveyerdetials = mysqli_fetch_row($valuequerysurvayerdetail); 
         foreach($queryQuestionOptionResult as $key => $questionoption){
            // $voterId =10284;
-            $voterId = $row['id'];
+           
             $questionId = $questionoption[0]; 
             $questionHeading = $questionoption[1]; 
            $querySurvayAnswer = "SELECT `selected_options` FROM `tbl_survey`  WHERE `voter_id` = $voterId  AND 
@@ -197,8 +201,9 @@ foreach($response as $row)
            $resultSurvayAnswer = mysqli_fetch_row($value);
            $sub_array[] = $resultSurvayAnswer;
   
-    
-      }
+       }
+       $sub_array[] = $resultsurveyerdetials[1];
+       $sub_array[] = $resultsurveyerdetials[0];
 
     $sub_array[] = '<a target="_blank" href="update_voters_survey.php?id='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Update Survey"><em class="icon ni ni-edit"></em</a>';
         $sub_array[] = '<div class="custom-control custom-control-sm custom-checkbox notext">
