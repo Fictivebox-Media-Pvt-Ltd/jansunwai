@@ -2973,20 +2973,23 @@ function export_surveyed_userbase($conn,$assignedLoksabha,$assignedVidhansabha,$
     $value = mysqli_query($conn,$query);
     $result = mysqli_fetch_all($value);
 
-    if(!empty($_GET['assignedLoksabha'])){
-        $assignedLoksabha = $_GET['assignedLoksabha'];
-        $queryQuestionOption = "SELECT `id`,`question_heading` FROM `tbl_survey_questions` WHERE loksabha = '$assignedLoksabha' AND `question_heading` != '' AND status = '1' ";
-    
+    if(!empty($assignedLoksabha)){      
+        $queryQuestionOption = "SELECT `id`,`question_heading` FROM `tbl_survey_questions` WHERE vidhansabha = '$assignedVidhansabha' AND `question_heading` != '' AND status = '1' ";
     }
-    else{
+    else{   
         $queryQuestionOption = "SELECT `id`,`question_heading` FROM `tbl_survey_questions`  WHERE `question_heading` != '' AND status = '1' ";   
     }    
     $optionvalue = mysqli_query($conn,$queryQuestionOption);
     $queryQuestionOptionResult = mysqli_fetch_all($optionvalue);
+    // echo count($queryQuestionOptionResult);
+    // die;
     $i = 1;
     $response = array();        
     foreach($result as $key => $value){  
         $voterId = $value[0];
+        $querysurvayerdetail = "SELECT survey_date,username FROM tbl_survey AS ts JOIN tbl_admin_users AS tau ON ts.surveyed_by = tau.id WHERE ts.voter_id = $voterId";   
+        $valuequerysurvayerdetail = mysqli_query($conn,$querysurvayerdetail);
+        $resultsurveyerdetials = mysqli_fetch_row($valuequerysurvayerdetail); 
       //  asd($value[0]);
        // foreach($value as $innerKey => $innerValue){           
            $resultData['s_no'] = $i;
@@ -3009,12 +3012,14 @@ function export_surveyed_userbase($conn,$assignedLoksabha,$assignedVidhansabha,$
            $resultData['father_husband_name_en'] = $value[17];
            $resultData['gender_en'] = $value[18];
            $resultData['ward_en'] = $value[19];
-           
-            foreach($queryQuestionOptionResult as $k => $questionoption){
-              
+           $resultData['surveyed_by'] = $resultsurveyerdetials[1];
+           $resultData['surveyed_at'] = $resultsurveyerdetials[0];
+    
+
+            foreach($queryQuestionOptionResult as $k => $questionoption){              
                  $questionId = $questionoption[0]; 
                  $questionHeading = $questionoption[1]; 
-                 $querySurvayAnswer = "SELECT `selected_options` FROM `tbl_survey` WHERE `voter_id` = $voterId AND `question_id` = $questionId";   
+                 $querySurvayAnswer = "SELECT `selected_options` FROM `tbl_survey` WHERE `voter_id` = $voterId AND `question_id` = $questionId";
 
                 $valueSurvayAnswer = mysqli_query($conn,$querySurvayAnswer);
                 $resultSurvayAnswer = mysqli_fetch_row($valueSurvayAnswer);
@@ -3026,7 +3031,7 @@ function export_surveyed_userbase($conn,$assignedLoksabha,$assignedVidhansabha,$
         $i++;
         // asd($response);
     }
-    //asd($response);
+   // asd($response);
  return $response;
 }
 

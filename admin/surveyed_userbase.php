@@ -9,31 +9,11 @@ if(!empty($_POST['data_filter']) && isset($_POST['data_filter'])){
     $filter_boothRange = str_replace(' ', '', $_POST['boothRange']);
 
     $optionFilter = $_POST['optionFilters'];
-    $optionFilters = implode (",", $optionFilter) ; 
+    $optionFilters = implode (",", $optionFilter); 
  
     $filter_category = $_POST['category'];
     $filter_caste = $_POST['caste'];
-    
-    $filter_pesha = $_POST['pesha'];
-    $filter_pramukh_mudde = $_POST['pramukh_mudde'];
-    $filter_mojuda_sarkaar = $_POST['mojuda_sarkaar'];
-    $filter_2019_loksabha = $_POST['2019_loksabha'];
-    $filter_2018_vidhansabha = $_POST['2018_vidhansabha'];
-    $filter_partyVsCandidate = $_POST['partyVsCandidate'];
-    $filter_vichardhara = $_POST['vichardhara'];
-    $filter_corona = $_POST['corona'];
-    $filter_local_candidate = $_POST['local_candidate'];
-    $filter_2023_vidhansabha = $_POST['2023_vidhansabha'];
     $filter_ageGroup = $_POST['ageGroup'];
-
-
-   
-   $assignedLoksabha;
-   $filter_panchayat;
-   $filter_boothRange;
-   $optionFilters;
-
-
 
 }
 
@@ -51,13 +31,7 @@ if (!isset($_SESSION['user_id'])) {
     $assignedVidhansabha = $loginUserData['assigned_vidhansabha'];
     $deptName = get_department_details($conn, $deptId);
 }
-
-if($assignedVidhansabha != ''){
-    $assignedVidhansabha = $assignedVidhansabha;
-}else{
-    $assignedVidhansabha = 'वल्लभनगर';
-}
-
+ 
 $mandal_list = get_mandal_list($conn,$assignedVidhansabha);
 $category_list = get_category_list($conn);
 
@@ -83,7 +57,6 @@ $getFilterQuestionList = getFilterQuestionList($conn,$assignedVidhansabha);
         $voter_name = $_GET['voter_name'];
     }    
     
-    $range = 20;    
     if(isset($_GET['isExport']) && $_GET['isExport'] != '' && $_GET['isExport'] != NULL && $_GET['isExport'] == TRUE){
       
         $optionFilters = $_GET['optionFilters'];
@@ -113,17 +86,23 @@ $getFilterQuestionList = getFilterQuestionList($conn,$assignedVidhansabha);
         $objPHPExcel->getActiveSheet()->SetCellValue('R1', 'Father / Husband Name');
         $objPHPExcel->getActiveSheet()->SetCellValue('S1', 'Gender');
         $objPHPExcel->getActiveSheet()->SetCellValue('T1', 'Ward');
+        $objPHPExcel->getActiveSheet()->SetCellValue('U1', 'Surveyed By');
+        $objPHPExcel->getActiveSheet()->SetCellValue('V1', 'Surveyed At');
+
         if(!empty($getFilterQuestionList)){ 
+            $range = 22;    
+   
                 foreach($getFilterQuestionList as $k => $data){
-                   // echo $range;
-                    $objPHPExcel->getActiveSheet()->SetCellValue($alphabet[$range].'1',$data[1]);
+                    if($range>25){
+                        $newrange = $range - 25;
+                        $objPHPExcel->getActiveSheet()->SetCellValue('A'.$alphabet[$newrange].'1',$data[1]);
+                      }
+                      else{
+                        $objPHPExcel->getActiveSheet()->SetCellValue($alphabet[$range].'1',$data[1]);
+                      }
                     $range++;
                 } 
         }       
-        $objPHPExcel->getActiveSheet()->SetCellValue('AI1', 'Surveyed By');
-        $objPHPExcel->getActiveSheet()->SetCellValue('AJ1', 'Surveyed At');
-
-        //$alphabet = range('A', 'Z');
         $rowCount   =   2;      
        foreach($export_surveyed_userbase as $key => $value){
 
@@ -147,12 +126,15 @@ $getFilterQuestionList = getFilterQuestionList($conn,$assignedVidhansabha);
         $objPHPExcel->getActiveSheet()->SetCellValue('R'.$rowCount, $value['father_husband_name_en'],'UTF-8');
         $objPHPExcel->getActiveSheet()->SetCellValue('S'.$rowCount, $value['gender_en'],'UTF-8');
         $objPHPExcel->getActiveSheet()->SetCellValue('T'.$rowCount, $value['ward_en'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('U'.$rowCount, $value['surveyed_by'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('V'.$rowCount, $value['surveyed_at'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('U'.$rowCount, $value['surveyed_by'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('V'.$rowCount, $value['surveyed_at'],'UTF-8');
+       
+       
         if(!empty($getFilterQuestionList)){ 
-            $tworange = 20;
+            $tworange = 22;
             foreach($getFilterQuestionList as $ke => $row){ 
-            //    print_r($value[$row[1]]);
-            //   echo $row[1];
-            
               if($tworange>25){
                 $newrange = $tworange - 25;
                 $objPHPExcel->getActiveSheet()->SetCellValue('A'.$alphabet[$newrange].$rowCount,$value[$row[1]]);
@@ -164,13 +146,9 @@ $getFilterQuestionList = getFilterQuestionList($conn,$assignedVidhansabha);
                 $tworange++;
             } 
         }
-        $objPHPExcel->getActiveSheet()->SetCellValue('AI'.$rowCount, $value['surveyed_by'],'UTF-8');
-        $objPHPExcel->getActiveSheet()->SetCellValue('AJ'.$rowCount, $value['surveyed_at'],'UTF-8');
         $rowCount++;
         }
-       // die;
-        
-        $objPHPExcel->getActiveSheet()->getStyle("A1:AJ1")->getFont()->setBold(true);
+         $objPHPExcel->getActiveSheet()->getStyle("A1:AJ1")->getFont()->setBold(true);
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($file, 'Xlsx');
         $file_name = 'Surveyed-Voters.xlsx';
         $writer->save($file_name);
