@@ -178,27 +178,9 @@ if (!isset($_SESSION['user_id'])) {
                                                         <th>Father / Husband Name</th>
                                                         <th>Gender</th>
                                                         <th>Ward</th>
-                                                        <th>Trash</th>
-                                                    <?php if($assignedLoksabha != 'मुंबई साउथ'){?>    
+                                                        <th>Trash</th>    
                                                         <th style="text-align: center;">Action</th>
-                                                    <?php if(strtolower($deptName) != 'field worker department'){?>
-                                                        <th>पेशा</th>
-                                                        <th>मोबाइल न०</th>
-                                                        <th>व्हाट्सएप्प न०</th>
-                                                        <th>प्रमुख मुद्दे</th>
-                                                        <th>Rating Current Govt</th>
-                                                        <th>Voted in 2019 लोकसभा</th>
-                                                        <th>Voted in 2018 विधानसभा</th>
-                                                        <th>2018 (पार्टी/सदस्य)</th>
-                                                        <th>विचारधारा</th>
-                                                        <th>कोरोना</th>
-                                                        <th>लोकल कार्यकर्ता</th>
-                                                        <th>2023 विधानसभा</th>
-                                                        <th>जाति</th>
-                                                        <th>श्रेणी</th>
-                                                    <?php }
-                                                    } ?>
-                                                        </tr>
+                                                     </tr>
                                                     </thead>
                                                 </table>
                                             </div>

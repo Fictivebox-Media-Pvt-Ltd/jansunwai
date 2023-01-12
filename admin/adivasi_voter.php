@@ -7,19 +7,14 @@ if(!empty($_POST['data_filter']) && isset($_POST['data_filter'])){
     $filter_mandal = $_POST['mandal'];
     $filter_panchayat = $_POST['panchayat'];
     $filter_boothRange = str_replace(' ', '', $_POST['boothRange']);
+
+    $optionFilter = $_POST['optionFilters'];
+    $optionFilters = implode (",", $optionFilter); 
+ 
     $filter_category = $_POST['category'];
     $filter_caste = $_POST['caste'];
-    $filter_pesha = $_POST['pesha'];
-    $filter_pramukh_mudde = $_POST['pramukh_mudde'];
-    $filter_mojuda_sarkaar = $_POST['mojuda_sarkaar'];
-    $filter_2019_loksabha = $_POST['2019_loksabha'];
-    $filter_2018_vidhansabha = $_POST['2018_vidhansabha'];
-    $filter_partyVsCandidate = $_POST['partyVsCandidate'];
-    $filter_vichardhara = $_POST['vichardhara'];
-    $filter_corona = $_POST['corona'];
-    $filter_local_candidate = $_POST['local_candidate'];
-    $filter_2023_vidhansabha = $_POST['2023_vidhansabha'];
     $filter_ageGroup = $_POST['ageGroup'];
+
 }
 
 if (!isset($_SESSION['user_id'])) {
@@ -36,13 +31,7 @@ if (!isset($_SESSION['user_id'])) {
     $assignedVidhansabha = $loginUserData['assigned_vidhansabha'];
     $deptName = get_department_details($conn, $deptId);
 }
-
-// if($assignedVidhansabha != ''){
-//     $assignedVidhansabha = $assignedVidhansabha;
-// }else{
-//     $assignedVidhansabha = 'वल्लभनगर';
-// }
-
+ 
 $mandal_list = get_mandal_list($conn,$assignedVidhansabha);
 $category_list = get_category_list($conn);
 
@@ -66,32 +55,116 @@ $getFilterQuestionList = getFilterQuestionList($conn,$assignedVidhansabha);
     }
     if(isset($_GET['voter_name'])){
         $voter_name = $_GET['voter_name'];
+    }    
+    
+    if(isset($_GET['isExport']) && $_GET['isExport'] != '' && $_GET['isExport'] != NULL && $_GET['isExport'] == TRUE){
+      
+        $optionFilters = $_GET['optionFilters'];
+ 
+        $export_surveyed_userbase = export_surveyed_userbase($conn,$assignedLoksabha,$assignedVidhansabha,$_GET['mandal'],$_GET['panchayat'],$_GET['boothRange'],$optionFilters);
+        $file = new Spreadsheet();
+        $objPHPExcel = $file;
+        $alphabet = range('A', 'Z');
+             
+        $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'S. No.');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B1', 'File ID');
+        $objPHPExcel->getActiveSheet()->SetCellValue('C1', 'लोकसभा');
+        $objPHPExcel->getActiveSheet()->SetCellValue('D1', 'विधानसभा');
+        $objPHPExcel->getActiveSheet()->SetCellValue('E1', 'बूथ');
+        $objPHPExcel->getActiveSheet()->SetCellValue('F1', 'सेक्शन सं');
+        $objPHPExcel->getActiveSheet()->SetCellValue('G1', 'मकान सं');
+        $objPHPExcel->getActiveSheet()->SetCellValue('H1', 'नाम');
+        $objPHPExcel->getActiveSheet()->SetCellValue('I1', 'उम');
+        $objPHPExcel->getActiveSheet()->SetCellValue('J1', 'पिता / पति का नाम');
+        $objPHPExcel->getActiveSheet()->SetCellValue('K1', 'सम्बन्ध');
+        $objPHPExcel->getActiveSheet()->SetCellValue('L1', 'लिंग');
+        $objPHPExcel->getActiveSheet()->SetCellValue('M1', 'वार्ड');
+        $objPHPExcel->getActiveSheet()->SetCellValue('N1', 'आई डी क्रमांक');
+        $objPHPExcel->getActiveSheet()->SetCellValue('O1', 'पोलिंग स्टेशन का नाम');
+        $objPHPExcel->getActiveSheet()->SetCellValue('P1', 'Poling Station Name');
+        $objPHPExcel->getActiveSheet()->SetCellValue('Q1', 'Name');
+        $objPHPExcel->getActiveSheet()->SetCellValue('R1', 'Father / Husband Name');
+        $objPHPExcel->getActiveSheet()->SetCellValue('S1', 'Gender');
+        $objPHPExcel->getActiveSheet()->SetCellValue('T1', 'Ward');
+        $objPHPExcel->getActiveSheet()->SetCellValue('U1', 'Surveyed By');
+        $objPHPExcel->getActiveSheet()->SetCellValue('V1', 'Surveyed At');
+
+        if(!empty($getFilterQuestionList)){ 
+            $range = 22;    
+   
+                foreach($getFilterQuestionList as $k => $data){
+                    if($range>25){
+                        $newrange = $range - 25;
+                        $objPHPExcel->getActiveSheet()->SetCellValue('A'.$alphabet[$newrange].'1',$data[1]);
+                      }
+                      else{
+                        $objPHPExcel->getActiveSheet()->SetCellValue($alphabet[$range].'1',$data[1]);
+                      }
+                    $range++;
+                } 
+        }       
+        $rowCount   =   2;      
+       foreach($export_surveyed_userbase as $key => $value){
+
+        $objPHPExcel->getActiveSheet()->SetCellValue('A'.$rowCount, $value['s_no'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B'.$rowCount, $value['file_id'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('C'.$rowCount, $value['loksabha'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('D'.$rowCount, $value['vidhansabha'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('E'.$rowCount, $value['booth_no'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('F'.$rowCount, $value['section_no'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('G'.$rowCount, $value['house_no'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('H'.$rowCount, $value['voter_name_hin'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('I'.$rowCount, $value['voter_age'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('J'.$rowCount, $value['father_husband_name_hin'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('K'.$rowCount, $value['sambandh'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('L'.$rowCount, $value['gender_hin'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('M'.$rowCount, $value['ward_hin'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('N'.$rowCount, $value['id_no'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('O'.$rowCount, $value['poling_station_hin'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('P'.$rowCount, $value['poling_station_en'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('Q'.$rowCount, $value['voter_name_en'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('R'.$rowCount, $value['father_husband_name_en'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('S'.$rowCount, $value['gender_en'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('T'.$rowCount, $value['ward_en'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('U'.$rowCount, $value['surveyed_by'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('V'.$rowCount, $value['surveyed_at'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('U'.$rowCount, $value['surveyed_by'],'UTF-8');
+        $objPHPExcel->getActiveSheet()->SetCellValue('V'.$rowCount, $value['surveyed_at'],'UTF-8');
+       
+       
+        if(!empty($getFilterQuestionList)){ 
+            $tworange = 22;
+            foreach($getFilterQuestionList as $ke => $row){ 
+              if($tworange>25){
+                $newrange = $tworange - 25;
+                $objPHPExcel->getActiveSheet()->SetCellValue('A'.$alphabet[$newrange].$rowCount,$value[$row[1]]);
+              }
+              else{
+                $objPHPExcel->getActiveSheet()->SetCellValue($alphabet[$tworange].$rowCount,$value[$row[1]]);
+              }
+               
+                $tworange++;
+            } 
+        }
+        $rowCount++;
+        }
+         $objPHPExcel->getActiveSheet()->getStyle("A1:AJ1")->getFont()->setBold(true);
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($file, 'Xlsx');
+        $file_name = 'Surveyed-Voters.xlsx';
+        $writer->save($file_name);
+        header('Content-Type: application/x-www-form-urlencoded');
+        header('Content-Transfer-Encoding: Binary');
+        header("Content-disposition: attachment; filename=\"".$file_name."\"");
+        readfile($file_name);
+        unlink($file_name);
+        exit;
     }
-    // echo count($getFilterQuestionList);
-    // die;
+
 $sms = get_sms($conn,NULL);
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <?php include_once 'head.php'; ?>
-
-<style>
-.card .table tr:first-child th,
-.card .table tr:first-child td {
-    white-space: nowrap;
-}
-
-.form-group {
-    position: relative;
-    margin-bottom: 1.25rem !important;
-}
-tr > th, tr > td {
-    display: table-cell !important;
-}
-</style>
 
 <body class="nk-body bg-lighter npc-default has-sidebar">
     <div class="nk-app-root">
@@ -110,40 +183,21 @@ tr > th, tr > td {
                     <div class="container-fluid">
                         <div class="nk-content-inner">
                             <div class="nk-content-body">
-                                <div class="nk-block nk-block-lg">
-                                    <div class="nk-block-head">
-                                        <div class="nk-block-head-content">
-                                            <div class="row">
-                                                <div class="col-md-6 ">
-                                                    <nav aria-label="breadcrumb">
-                                                        <ol class="breadcrumb">
-                                                            <li class="breadcrumb-item"><a href="userbase.php">List of all
-                                                                    voters</a></li>
-                                                            <li class="breadcrumb-item active" aria-current="page">
-                                                                Adivasi voters List</li>
-                                                        </ol>
-                                                    </nav>
-                                                    <h4 class="nk-block-title">Adivasi voters List</h4>
-                                                </div>
-                                                <div class="col-md-6 text-right">
-                                                    <button type="submit" name="submit"
-                                                        class="btn btn-lg btn-warning justify-content-center" title=""
-                                                        data-original-title="Export Excel
-                                                        File">Export Excel File</button>
-                                                    <button type="submit" name="submit"
-                                                        class="btn btn-lg btn-info justify-content-center" title=""
-                                                        data-original-title="Import Excel
-                                                        File">Import Excel File</button>
+                               <div class="nk-block nk-block-lg">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content">
+                                                <h4 class="nk-block-title">Voter List</h4>
+                                                <div class="form-group" style="margin-top: 15px;">
+                                                <label class="form-label" style="padding-top: 5px;font-size: 17px;margin-bottom:4px;">Apply Data Filters: </label>
+                                                <span class="form-note" style="margin-bottom:10px">`मंडल` to `क्षेणी` filters are highly data-sensitive. Select them from Left to Right order only, after every page load. </span>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="card card-preview w-100" style="width: max-content;">
-                                        <div class="card-inner">
-                                            <form method="POST" class="gy-3">
-                                                <div class="row">
-                                                    <div class="col-md-2">
-                                                        <div class="form-group"> 
+                                        <form method="POST" class="form-validate">
+                                        <div class="col-md-12">
+                                            <div class="row g-12">
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <div class="form-control-wrap">
                                                             <select name="mandal" class="form-control" id="mandal_list">
                                                             <option value="" selected disabled hidden>मंडल</option>                                                            
                                                             <?php if(!empty($filter_mandal)){ ?>
@@ -159,8 +213,10 @@ tr > th, tr > td {
                                                         </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-2">
-                                                        <div class="form-group">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <div class="form-control-wrap">
                                                         <select name="panchayat" class="form-control" id="panchayat_list">
                                                             <?php if(!empty($filter_panchayat)){ ?>
                                                                 <option value="<?php echo $filter_panchayat?>" selected><?php echo $filter_panchayat.'✓'?></option>
@@ -168,11 +224,12 @@ tr > th, tr > td {
                                                                 <option value="" selected disabled hidden>पंचायत</option>
                                                             <?php }?>
                                                         </select>
-                                                           
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-2">
-                                                        <div class="form-group">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <div class="form-control-wrap">
                                                         <select name="boothRange" class="form-control" id="booth_range">
                                                             <?php if(!empty($filter_boothRange)){ ?>
                                                                 <option value="<?php echo $filter_boothRange?>" selected><?php echo $filter_boothRange.'✓'?></option>
@@ -182,70 +239,104 @@ tr > th, tr > td {
                                                         </select>
                                                         </div>
                                                     </div>
-
-                                                    <?php if(!empty($getFilterQuestionList)){ ?>
+                                                </div>                                               
+                                                                
+                                                                                
+                                            <?php if(!empty($getFilterQuestionList)){ ?>
                                                 <?php foreach($getFilterQuestionList as $key => $value){
-                                                // print_r($value);
-                                                // die;
-                                                     ?>
+                                                ?>
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
-                                                        <select name="<?php echo $value[0];?>[]" class="form-control" id="optionFilters" >
+                                                        <div class="form-control-wrap">
+                                                        <select name="optionFilters[]" class="form-control" id="optionFilters" >
                                                         <option value="" selected disabled hidden><?php echo $value[1];?></option>
-                                                            <?php for($i=2;$i<=12;$i++){
+                                                            <?php for($i=1;$i<=12;$i++){
                                                               if($value[$i]!=NULL){
                                                                 ?>
                                                                 <option value="<?php echo $value[$i]?>"><?php echo $value[$i]?></option>
                                                               <?php }
                                                             } ?>
                                                         </select>
-                                                       
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <?php } ?>
                                                 <?php }?>
 
-                                                    <div class="col-md-2">
-                                                        <button name="import" type="submit"
-                                                            class="btn btn-lg btn-primary w-100 justify-content-center">Appy</button>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <button name="import" type="submit"
-                                                            class="btn btn-lg btn-danger w-100 justify-content-center">Reset</button>
-                                                    </div>
-                                                    <div class="col-md-12 text-right mt-3">
-                                                        <button name="import" type="submit"
-                                                            class="btn btn-lg btn-light justify-content-center py-1 px-3 btn-tooltip"
-                                                            data-original-title="Click to send an Whatsapp SMS"
-                                                            title=""><em class="icon ni ni-emails"></em>&nbsp;Send
-                                                            SMS</button>
-                                                        <select name="sms" class="btn btn-lg btn-light py-1 px-3"
-                                                            data-original-title="" title="">
-                                                            <option>--Send SMS--</option>
-                                                            <option
-                                                                value="कोरोना आपदा की इस घड़ी में मैं ईश्वर से प्रार्थना करता हूँ कि हम सभी को सुख शांति एवं उत्तम स्वास्थ्य का आशीर्वाद दें। आप सभी घरों में रहें व स्वस्थ रहें और मेरे योग्य किसी भी प्रकार की सहायता के लिए संपर्क करें। हिम्मत सिंह झाला एसआरएम ग्रुप 9414197766 8003394949">
-                                                                Corona</option>
-                                                            <option
-                                                                value="आप सभी को शक्ति उपासना के महापर्व नवरात्रि की हार्दिक शुभकामनाएं। हिम्मत सिंह झाला भाजपा प्रत्याशी, वल्लभनगर विधानसभा।">
-                                                                Navrati Puja</option>
-                                                            <option
-                                                                value="भारतीय जनता पार्टी के शीर्ष नेतृत्व, वरिष्ठ पदाधिकारीगण एवं सभी कार्यकर्ताओं का मुझ पर विश्वास जताने के लिए एवं अवसर देने के लिए आप सब का आभार व्यक्त करता हूँ। मैं आपको विश्वास दिलाता हूं कि वल्लभनगर विधानसभा एवं भाजपा की आन बान शान के लिए हरसंभव प्रयास करता रहूँगा। हिम्मत सिंह झाला, भाजपा प्रत्याशी वल्लभनगर विधानसभा।">
-                                                                Puja In</option>
+                                            </div>
+                                        </div>
+                                       
+                                        <!-- <br> -->
+                                        <div class="col-md-12">
+                                            <div class="row g-12">
+                                             
+                                                <!--<div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <div class="form-control-wrap">
+                                                        <select name="ageGroup" class="form-control">
+                                                            <!?php if(!empty($filter_ageGroup)){ ?>
+                                                                <option value="<!?php echo $filter_ageGroup?>" selected><!?php echo $filter_ageGroup.'✓'?></option>
+                                                            <!?php }else{ ?>
+                                                                <option value="" selected disabled hidden>Age Group</option>
+                                                            <!?php }?>    
+                                                            <option value="25~30">25 ~ 30</option>
+                                                            <option value="31~35">31 ~ 35</option>
+                                                            <option value="36~40">36 ~ 40</option>
+                                                            <option value="40~45">40 ~ 45</option>
+                                                            <option value="45~50">45 ~ 50</option>
                                                         </select>
-                                                        <button name="import" type="submit"
-                                                            class="btn btn-lg btn-light justify-content-center py-1 px-3 btn-tooltip"
-                                                            data-original-title="Click to send an Whatsapp SMS"
-                                                            title=""><em
-                                                                class="icon ni ni-call-alt"></em>&nbsp;Whatsapp</button>
-
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                                
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <div class="form-control-wrap">
+                                                            <button style="min-width:-webkit-fill-available;justify-content:center" type="submit" name="data_filter" value="applied" class=" btn-outline-primary">Apply</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </form>
-                                            <table class="table table-bordered table-responsive mt-3"
-                                                id="adivasiVoterTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>S.No.</th>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <div class="form-control-wrap">
+                                                            <input style="min-width:-webkit-fill-available;justify-content:center" type="reset" class=" btn-outline-warning">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </form>
+                                        <br/>
+                                        <div class="col-md-12">
+                                                    <form method="GET" class="form-validate">                                                 
+                                                    </form><br/>
+                                                    <a href="userbase.php" class="btn btn-dim btn-warning">Go to ↦ All Voters</a>
+                                                    <a href="?booth_no=<?php echo $filter_boothRange?>&assignedLoksabha=<?php echo $assignedLoksabha ?>&filter_panchayat=<?php echo $filter_panchayat?>&filter_boothRange=<?php echo $filter_boothRange?>&optionFilters=<?php echo $optionFilters?>&isExport=TRUE" class="btn btn-dim btn-info">Export Excel File<em style="margin-left: 2px;" class="icon ni ni-growth"></em></a>
+
+                                        </div>
+                                               
+                                            </div>
+                                        </div> <br>
+                                        <form action="surveyed_userbase_sms.php" method="post">
+                                            <div style="text-align:right;">
+
+                                                    <button type="submit" name="submit" class="btn-outline-info btn-tooltip" title="Click to send an SMS"><em class="icon ni ni-emails"></em>&nbsp;Send SMS</button>
+                                                    <select name="sms" class="btn-outline-info btn-tooltip text-left">
+                                                    <option>--Send SMS--</option>
+                                                    <?php
+                                                        foreach ($sms as $key => $value) {
+                                                    ?>
+                                                    <option value="<?php echo $value['sms']; ?>"><?php echo $value['sms_type']; ?></option>
+                                                    <?php } ?>
+                                                   </select>
+                                                    <button href="#" class="btn-outline-success btn-tooltip" title="Click to send an Whatsapp SMS"><em class="icon ni ni-call-alt"></em>&nbsp;Whatsapp</button>
+                                                </div>
+                                        <div class="card card-preview" style="width: max-content;">
+                                            <div class="card-inner">
+                                                <table class="table" id="voter-list">
+                                                    <thead>
+                                                        <tr>
+                                                        <th style="width:80px;">S. No.</th>
                                                         <th>File ID</th>
                                                         <th>लोकसभा</th>
                                                         <th>विधानसभा</th>
@@ -265,39 +356,34 @@ tr > th, tr > td {
                                                         <th>Father / Husband Name</th>
                                                         <th>Gender</th>
                                                         <th>Ward</th>
-                                                        <?php if(strtolower($deptName) != 'field worker department'){?>
+                                                    
+                                                    <?php if(strtolower($deptName) != 'field worker department'){?>
 
-                                                                <?php if(!empty($getFilterQuestionList)){ ?>
-                                                                  
-                                                                <?php foreach($getFilterQuestionList as $key => $value){
-                                                                //  print_r($value);
-                                                                ?>
-                                                                <th><?php echo $value[0];?></th>
-                                                                <?php } ?>
-                                                                <?php }?>
-
-                                                                <th>Surveyed By</th>
-                                                                <th>Surveyed At</th>
-                                                                
-                                                                <th>Action</th>
-                                                                <th>
-                                                                <div
-                                                                class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" name="select_all"
-                                                                    data-child="chk2" class="custom-control-input"
-                                                                    id="selectAllMembers">
-                                                                <label class="custom-control-label"
-                                                                    for="selectAllMembers"></label>
+                                                        <?php if(!empty($getFilterQuestionList)){ ?>
+                                                <?php foreach($getFilterQuestionList as $key => $value){
+                                                  //  print_r($value);
+                                                     ?>
+                                               <th><?php echo $value[1];?></th>
+                                                <?php } ?>
+                                                <?php }?>
+                                                  
+                                                        <th>Surveyed By</th>
+                                                        <th>Surveyed At</th>
+                                                        <th>Action</th>
+                                                        <th>
+                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                    <input type="checkbox" name='select_all' data-child="chk2" class="custom-control-input" id="selectAllMembers">
+                                                                    <label class="custom-control-label" for="selectAllMembers"></label>
                                                             </div>
                                                         </th>
                                                     <?php } ?>
-                                                    </tr>
-                                                </thead>
-                           
-                                            </table>
-                                        </div>
-                                    </div><!-- .card-preview -->
-                                </div> <!-- nk-block -->
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div><!-- .card-preview -->
+                                        </form>
+                                    </div> <!-- nk-block -->
                             </div>
                         </div>
                     </div>
@@ -309,6 +395,8 @@ tr > th, tr > td {
         <!-- main @e -->
         <?php include_once 'footer.php'; ?>
     </div>
+    <!-- app-root @e -->
+    <!-- JavaScript -->
     <script>
         $("#mandal_list").click(function(){
             var mandal = $(this).val();
@@ -371,9 +459,7 @@ tr > th, tr > td {
             });
         });
         $(document).ready(function() {
-            // var panchayat = $('#optionFilters').val();
-            // alert(panchayat);
-                NioApp.DataTable('#adivasiVoterTable', {
+                NioApp.DataTable('#voter-list', {
                     "lengthMenu": [100, 250, 500],
                     "searching": false,
                     "paging":true,
@@ -382,7 +468,7 @@ tr > th, tr > td {
                     "order": [],
                     "info":true,
                     "ajax":{
-                        url:"service_for_adivasi_voters.php?booth_no=<?php echo $filter_boothRange?>&assignedLoksabha=<?php echo $assignedLoksabha ?>&filter_panchayat=<?php echo $filter_panchayat?>&filter_boothRange=<?php echo $filter_boothRange?>",
+                        url:"service_for_surveyed_userbase.php?booth_no=<?php echo $filter_boothRange?>&assignedLoksabha=<?php echo $assignedLoksabha ?>&filter_mandal=<?php echo $filter_mandal?>&filter_panchayat=<?php echo $filter_panchayat?>&filter_boothRange=<?php echo $filter_boothRange?>&optionFilters=<?php echo $optionFilters?>",
                         type:"POST"
                         },
                     "ordering": false,
@@ -397,11 +483,50 @@ tr > th, tr > td {
             var childClass = $(this).attr('data-child');
             $('.' + childClass + '').prop('checked', this.checked);
         });
+                $(document).ready(function() {
+                    NioApp.DataTable('#karyakartas', {
+                        "paging":true,
+                        "processing":true,
+                        "serverSide":false,
+                        "order": [],
+                        "info":true,
+                        "columnDefs":[
+                                        {
+                                            "targets":[1,3,4,5,6],
+                                            "orderable":false,
+                                        },
+                                    ],
+                        responsive: {
+                            details: true
+                        }
+                    });
+                    $('.sms-success').on("click", function(e){
+                        Swal.fire(
+                            "SMS Sent Successfully!",
+                            "",
+                            "success"
+                        );
+                        e.preventDefault();
+                    });
+
+                    $('.ivr-call-success').on("click", function(e){
+                        Swal.fire(
+                            "Inititated IVR Call Successfully!",
+                            "",
+                            "success"
+                        );
+                        e.preventDefault();
+                    });
+
+                    var checkBoxes = $('.custom-control-input');
+                    checkBoxes.change(function () {
+                        $('.btn').prop('disabled', checkBoxes.filter(':checked').length < 1);
+                    });
+                    $('.custom-control-input').change();
+            });
     </script>
-    <!-- app-root @e -->
     <script src="assets/js/bundle.js?ver=2.2.0"></script>
     <script src="assets/js/scripts.js?ver=2.2.0"></script>
     <script src="assets/js/charts/chart-ecommerce.js?ver=2.2.0"></script>
 </body>
-
 </html>

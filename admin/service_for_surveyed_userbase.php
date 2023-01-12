@@ -12,12 +12,6 @@ function get_voter_ids($conn,$filters){
     $booths = array();
     $queryForVoterIds = "SELECT `voter_id` FROM `tbl_voters` JOIN `tbl_survey` ON tbl_survey.voter_id = 
       tbl_voters.id where tbl_voters.is_surveyed = 1 ";
-
-  
-    //$queryForVoterIds = "SELECT `id` FROM `tbl_voters` ";
-   // asd($filters);
-
-
     if(!empty($filters['loksabha'])){
         $loksabha = $filters['loksabha'];
         $queryForVoterIds .= " AND tbl_voters.loksabha = '$loksabha'";
@@ -44,16 +38,12 @@ function get_voter_ids($conn,$filters){
         $optionFilters = $filters['optionFilters'];
         $queryForVoterIds .= " AND find_in_set(tbl_survey.selected_options,'$optionFilters')";
     }
-
-    //$queryForVoterIds .= " AND is_surveyed = 1";
-
     $total_value= mysqli_query($conn,$queryForVoterIds);
     $result= mysqli_fetch_all($total_value);
 
     foreach($result as $key => $value){
         $response[] = $value[0];
     }
-   //asd($queryForVoterIds);
     return implode(', ', $response);;
 }
 
@@ -63,9 +53,6 @@ $filters['optionFilters'] = isset($_GET['optionFilters']) ? $_GET['optionFilters
 $filters['boothRange'] = isset($_GET['filter_boothRange']) ? $_GET['filter_boothRange'] : '';
 $filters['filter_panchayat'] = isset($_GET['filter_panchayat']) ? $_GET['filter_panchayat'] : '';
 $filters['filter_mandal'] = isset($_GET['filter_mandal']) ? $_GET['filter_mandal'] : '';
-// $filters['ward'] = '';
-// $filters['gender'] = '';
-// $filters['ageGroup'] = isset($_GET['filter_ageGroup']) ? $_GET['filter_ageGroup'] : '';
 
 if(!empty($_GET['assignedLoksabha'])){
     $assignedLoksabha = $_GET['assignedLoksabha'];
