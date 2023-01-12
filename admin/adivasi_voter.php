@@ -248,7 +248,7 @@ $sms = get_sms($conn,NULL);
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
-                                                        <select name="optionFilters[]" class="form-control" id="optionFilters" >
+                                                        <select name="optionFilters[]" class="form-control mb-3" id="optionFilters" >
                                                         <option value="" selected disabled hidden><?php echo $value[1];?></option>
                                                             <?php for($i=1;$i<=12;$i++){
                                                               if($value[$i]!=NULL){
