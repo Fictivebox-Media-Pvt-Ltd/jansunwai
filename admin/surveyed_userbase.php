@@ -248,7 +248,7 @@ $sms = get_sms($conn,NULL);
                                                 <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
-                                                        <select name="optionFilters[]" class="form-control" id="optionFilters" >
+                                                        <select name="optionFilters[]" class="form-control mb-3" id="optionFilters" >
                                                         <option value="" selected disabled hidden><?php echo $value[1];?></option>
                                                             <?php for($i=1;$i<=12;$i++){
                                                               if($value[$i]!=NULL){
@@ -313,7 +313,7 @@ $sms = get_sms($conn,NULL);
                                                     <a href="userbase.php" class="btn btn-dim btn-warning">Go to ↦ All Voters</a>
                                                     <a href="?booth_no=<?php echo $filter_boothRange?>&assignedLoksabha=<?php echo $assignedLoksabha ?>&filter_panchayat=<?php echo $filter_panchayat?>&filter_boothRange=<?php echo $filter_boothRange?>&optionFilters=<?php echo $optionFilters?>&isExport=TRUE" class="btn btn-dim btn-info">Export Excel File<em style="margin-left: 2px;" class="icon ni ni-growth"></em></a>
 
-                                                </div>
+                                        </div>
                                                
                                             </div>
                                         </div> <br>
