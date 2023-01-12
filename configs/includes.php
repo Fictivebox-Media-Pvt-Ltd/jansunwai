@@ -488,8 +488,8 @@ function add_single_voter_deprecated($conn,$profile_image,$f_name,$l_name,$voter
     return;
 }
 
-function add_single_voter($conn,$file_id,$loksabha,$vidhansabha,$booth_no,$house_no,$voter_name_hin,$voter_age,$father_husband_name_hin,$gender_hin,$ward_hin,$cast_hin,$phone_no,$pesha_hin,$voter_name_en,$father_husband_name_en,$gender_en,$ward_en,$cast_en,$pesha_en){
-    $query = "INSERT INTO `tbl_voters` (`file_id`, `loksabha`, `vidhansabha`, `booth_no`, `house_no`, `voter_name_hin`, `voter_age`, `father_husband_name_hin`, `gender_hin`, `ward_hin`, `voter_name_en`, `father_husband_name_en`, `gender_en`, `ward_en`, `created_at`) VALUES ('$file_id','$loksabha','$vidhansabha','$booth_no','$house_no','$voter_name_hin','$voter_age','$father_husband_name_hin','$gender_hin','$ward_hin','$voter_name_en','$father_husband_name_en','$gender_en','$ward_en', now())";
+function add_single_voter($conn,$file_id,$loksabha,$vidhansabha,$mandal,$panchayat,$booth_no,$house_no,$voter_name_hin,$voter_age,$father_husband_name_hin,$gender_hin,$ward_hin,$cast_hin,$phone_no,$pesha_hin,$voter_name_en,$father_husband_name_en,$gender_en,$ward_en,$cast_en,$pesha_en){
+    $query = "INSERT INTO `tbl_voters` (`file_id`, `loksabha`, `vidhansabha`,`mandal`,`panchayat`, `booth_no`, `house_no`, `voter_name_hin`, `voter_age`, `father_husband_name_hin`, `gender_hin`, `ward_hin`, `voter_name_en`, `father_husband_name_en`, `gender_en`, `ward_en`, `created_at`) VALUES ('$file_id','$loksabha','$vidhansabha','$mandal','$panchayat','$booth_no','$house_no','$voter_name_hin','$voter_age','$father_husband_name_hin','$gender_hin','$ward_hin','$voter_name_en','$father_husband_name_en','$gender_en','$ward_en', now())";
     mysqli_set_charset($conn,'utf8');
     mysqli_query($conn, $query);
     return;
