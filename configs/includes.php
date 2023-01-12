@@ -2845,7 +2845,7 @@ function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$questionHe
     header("Location:questions.php");
 }
 
-function  updateQuestion($conn,$questionId,$selected_loksabha,$vidhansabha,$question,$question_option){
+function  updateQuestion($conn,$questionId,$selected_loksabha,$vidhansabha,$question,$question_heading,$question_option,$status){
 
     $option =  !empty($question_option[0]) ? "$question_option[0]" : NULL;
     $option1 = !empty($question_option[1]) ? "$question_option[1]" : NULL;
@@ -2861,8 +2861,9 @@ function  updateQuestion($conn,$questionId,$selected_loksabha,$vidhansabha,$ques
 
     $query = "UPDATE `tbl_survey_questions` SET 
         `loksabha`	=	'$selected_loksabha',
-        `vidhansabha`	=	'$vidhansabha',
+        `vidhansabha`	=	'$vidhansabha',       
         `question`	=	'$question',
+        `question_heading`	='$question_heading',
         `option1`	=	'$option',
         `option2`	=	'$option1',
         `option3`	=	'$option2',
@@ -2873,6 +2874,7 @@ function  updateQuestion($conn,$questionId,$selected_loksabha,$vidhansabha,$ques
         `option8`	=	'$option7',
         `option9`	=	'$option8',
         `option10`	=	'$option9',
+        `status`	=	'$status',
         `updated_at`	=	now()
      WHERE `id` = $questionId";
 
@@ -3837,7 +3839,7 @@ function get_sms($conn,$sms_id){
 
 function getSurveyQuestion($conn,$questionid){
     $response = array();
-    $query = "SELECT id,loksabha,vidhansabha,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM tbl_survey_questions";
+    $query = "SELECT id,loksabha,vidhansabha,question,question_heading,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,status FROM tbl_survey_questions";
     $query = isset($questionid) ? $query." where id = $questionid" : $query;
     mysqli_set_charset($conn,'utf8');
     $value= mysqli_query($conn,$query);
@@ -3847,11 +3849,12 @@ function getSurveyQuestion($conn,$questionid){
             $response['loksabha'] = $value[1];
             $response['vidhansabha'] = $value[2];
             $response['question'] = $value[3];
-            $response['option'] = array('option1' => $value[4], 'option2' => $value[5], 'option3' => $value[6], 'option4' => $value[7],'option5' => $value[8],'option6' => $value[9],'option7' =>$value[10],'option8' => $value[11],'option9' => $value[12],'option10' => $value[13]);
-
+            $response['question_heading'] = $value[4];
+            $response['option'] = array('option1' => $value[5], 'option2' => $value[6], 'option3' => $value[7], 'option4' => $value[8],'option5' => $value[9],'option6' => $value[10],'option7' =>$value[11],'option8' => $value[12],'option9' => $value[13],'option10' => $value[14]);
+            $response['status'] = $value[15];
     }
 
-  // asd($response);
+ //asd($response);
     return $response;
 }
 

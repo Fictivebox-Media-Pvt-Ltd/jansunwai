@@ -2,7 +2,7 @@
 include_once '../configs/includes.php';
 if(isset($_POST['submit'])){
 
-    updateQuestion($conn,$_GET['id'],$_POST['selected_loksabha'],$_POST['vidhansabha'],$_POST['question'],$_POST['question_option']);
+    updateQuestion($conn,$_GET['id'],$_POST['selected_loksabha'],$_POST['vidhansabha'],$_POST['question'],$_POST['questionHeading'],$_POST['question_option'],$_POST['headingStatus']);
     
 }
 if (!isset($_SESSION['user_id'])) {
@@ -79,6 +79,18 @@ $all_loksabhas = get_all_loksabha($conn);
                                                 </div>
                                             </div>
                                             <div class="row">
+                                            <div class="col-md-6 align-self-center">
+                                                        <div class="form-group">
+                                                            <label class="fw-medium text-dark mb-0" for="">Questions Heading</label>
+                                                            <input type="text" class="form-control" value="<?php echo $details['question_heading'];?>" id="" name="questionHeading" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 align-self-center">
+                                                        <div class="custom-control custom-switch">
+                                                            <input type="checkbox" class="custom-control-input" value="1" name="headingStatus" id="customSwitch1" <?php if ($details['status'] == 1) { echo "checked='checked'"; } ?>>
+                                                            <label class="custom-control-label" for="customSwitch1">Status</label>
+                                                        </div>
+                                                    </div>
                                                 <div class="col-md-12 align-self-end">
                                                     <div class="form-group mb-3">
                                                         <label class="form-label">Question</label>
