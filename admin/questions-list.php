@@ -4,6 +4,9 @@ include_once '../configs/includes.php';
 if (isset($_GET['del'])) {
     deleteQuestion($conn, $_GET['del']);
 }
+if (isset($_GET['changeStatus'])) {
+    updateQuestionStatus($conn, $_GET['changeStatus']);
+}
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -57,6 +60,7 @@ if (!isset($_SESSION['user_id'])) {
                                                                 <th>S.No.</th>
                                                                 <th>Loksabha</th>
                                                                 <th>Vidhansabha</th>
+                                                                <th>Question Heading</th>
                                                                 <th>Question</th>
                                                                 <th>Option 1</th>
                                                                 <th>Option 2</th>
@@ -68,6 +72,7 @@ if (!isset($_SESSION['user_id'])) {
                                                                 <th>Option 8</th>
                                                                 <th>Option 9</th>
                                                                 <th>Option 10</th>
+                                                                <th>Status</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>

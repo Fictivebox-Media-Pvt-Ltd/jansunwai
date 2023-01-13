@@ -10,150 +10,93 @@ $output = array();
 function get_voter_ids($conn,$filters){
     $response = array();
     $booths = array();
-    $queryForVoterIds = "SELECT `id` FROM `tbl_voters` ";
-
+    $queryForVoterIds = "SELECT `voter_id` FROM `tbl_voters` JOIN `tbl_survey` ON tbl_survey.voter_id = 
+      tbl_voters.id where tbl_voters.is_surveyed = 1 ";
     if(!empty($filters['loksabha'])){
         $loksabha = $filters['loksabha'];
-        $queryForVoterIds .= "WHERE loksabha = '$loksabha' ";
+        $queryForVoterIds .= " AND tbl_voters.loksabha = '$loksabha'";
     }    
     if(!empty($filters['vidhansabha'])){
         $vidhansabha = $filters['vidhansabha'];
-        $queryForVoterIds .= "AND vidhansabha = '$vidhansabha' ";
+        $queryForVoterIds .= " AND tbl_voters.vidhansabha = '$vidhansabha'";
     }
+    if(!empty($filters['filter_mandal'])){
+        $filter_mandal = $filters['filter_mandal'];
+        $queryForVoterIds .= " AND tbl_voters.mandal = $filter_mandal";
+    }
+    if(!empty($filters['filter_panchayat'])){
+        $filter_panchayat = $filters['filter_panchayat'];
+        $queryForVoterIds .= " AND tbl_voters.panchayat = $filter_panchayat";
+    }
+
     if(!empty($filters['boothRange'])){
         $booth_range = $filters['boothRange'];
-        $booth_range = explode('~',$booth_range);
-        $queryForVoterIds .= "AND `booth_no` BETWEEN $booth_range[0] AND $booth_range[1] ";
-    }else if(!empty($filters['mandal']) && empty($filters['panchayat'])){
-        $mandal  = $filters['mandal'];
-        $query = "SELECT `booth_range` FROM `tbl_mandal_panchayat_mapping` WHERE `mandal` = '$mandal'";
-        $total_booths = mysqli_query($conn,$query);
-        $values= mysqli_fetch_all($total_booths);
-        foreach($values as $key => $value){
-            $values[$key] = explode('~',str_replace(' ', '', $value[0]));
-        }
-        foreach($values as $k => $v){
-            foreach($v as $kv => $vv){
-                $booth[] = $vv;
-            }
-        }
-        $min_booth = MIN($booth);
-        $max_booth = MAX($booth);
-        $queryForVoterIds .= "AND `booth_no` BETWEEN $min_booth AND $max_booth ";
-    }else if(!empty($filters['panchayat'])){
-        $panchayat  = $filters['panchayat'];
-        $query = "SELECT `booth_range` FROM `tbl_mandal_panchayat_mapping` WHERE `panchayat` = '$panchayat'";
-        $total_booths = mysqli_query($conn,$query);
-        $values= mysqli_fetch_all($total_booths);
-        foreach($values as $key => $value){
-            $values[$key] = explode('~',str_replace(' ', '', $value[0]));
-        }
-        foreach($values as $k => $v){
-            foreach($v as $kv => $vv){
-                $booth[] = $vv;
-            }
-        }
-        $min_booth = MIN($booth);
-        $max_booth = MAX($booth);
-        $queryForVoterIds .= "AND `booth_no` BETWEEN $min_booth AND $max_booth ";
-    }
-    if(!empty($filters['ward'])){
-        $ward = $filters['ward'];
-        $queryForVoterIds .= "AND ward_hin LIKE '%$ward%' ";
-    }
-    if(!empty($filters['gender'])){
-        $gender = $filters['gender'];
-        $queryForVoterIds .= "AND gender_hin = '$gender' ";
-    }
-    if(!empty($filters['ageGroup'])){
-        $ageGroup = $filters['ageGroup'];
-        $ageGroup = explode('~',$ageGroup);
-        $queryForVoterIds .= "AND `voter_age` BETWEEN $ageGroup[0] AND $ageGroup[1] ";
+        $queryForVoterIds .= " AND tbl_voters.booth_no = $booth_range";
     }
 
-    $queryForVoterIds .= " AND is_surveyed = 1";
-
+    if(!empty($filters['optionFilters'])){
+        $optionFilters = $filters['optionFilters'];
+        $queryForVoterIds .= " AND find_in_set(tbl_survey.selected_options,'$optionFilters')";
+    }
     $total_value= mysqli_query($conn,$queryForVoterIds);
     $result= mysqli_fetch_all($total_value);
 
     foreach($result as $key => $value){
         $response[] = $value[0];
     }
-    // asd(count($response));
     return implode(', ', $response);;
 }
 
-$filters['loksabha'] = isset($_GET['filter_loksabha']) ? $_GET['filter_loksabha'] : '';
-$filters['vidhansabha'] = '';
+$filters['loksabha'] = isset($_GET['assignedLoksabha']) ? $_GET['assignedLoksabha'] : '';
+$filters['optionFilters'] = isset($_GET['optionFilters']) ? $_GET['optionFilters'] : '';
+// $filters['vidhansabha'] = '';
 $filters['boothRange'] = isset($_GET['filter_boothRange']) ? $_GET['filter_boothRange'] : '';
-$filters['mandal'] = isset($_GET['filter_mandal']) ? $_GET['filter_mandal'] : '';
-$filters['panchayat'] = isset($_GET['filter_panchayat']) ? $_GET['filter_panchayat'] : '';
-$filters['ward'] = '';
-$filters['gender'] = '';
-$filters['ageGroup'] = isset($_GET['filter_ageGroup']) ? $_GET['filter_ageGroup'] : '';
+$filters['filter_panchayat'] = isset($_GET['filter_panchayat']) ? $_GET['filter_panchayat'] : '';
+$filters['filter_mandal'] = isset($_GET['filter_mandal']) ? $_GET['filter_mandal'] : '';
+
+if(!empty($_GET['assignedLoksabha'])){
+    $assignedLoksabha = $_GET['assignedLoksabha'];
+    $queryQuestionOption = "SELECT `id`,`question_heading` FROM `tbl_survey_questions` WHERE loksabha = '$assignedLoksabha' AND `question_heading` != '' AND status = '1' ";
+
+}
+else{
+    $queryQuestionOption = "SELECT `id`,`question_heading` FROM `tbl_survey_questions`  WHERE `question_heading` != '' AND status = '1' ";   
+}
+
+$valueQuestionOption = mysqli_query($conn,$queryQuestionOption);
+$queryQuestionOptionResult = mysqli_fetch_all($valueQuestionOption);
+//asd($result);
 
 $voter_ids = get_voter_ids($conn,$filters);
+$query .= "SELECT tbl_voters.id,tbl_voters.file_id,tbl_voters.loksabha,tbl_voters.vidhansabha,tbl_voters.booth_no, tbl_voters.section_no,tbl_voters.house_no,tbl_voters.voter_name_hin,tbl_voters.voter_age, tbl_voters.father_husband_name_hin,tbl_voters.sambandh,tbl_voters.gender_hin,tbl_voters.ward_hin,tbl_voters.id_no, tbl_voters.poling_station_hin,tbl_voters.poling_station_en,tbl_voters.voter_name_en, tbl_voters.father_husband_name_en,tbl_voters.gender_en,tbl_voters.ward_en FROM tbl_voters JOIN tbl_survey ON tbl_survey.voter_id = 
+tbl_voters.id WHERE tbl_voters.is_surveyed = 1 ";
 
-$query .= "SELECT tbl_voters.id AS 'id', `file_id`, `loksabha`, `vidhansabha`, `booth_no`, `section_no`, `house_no`, `voter_name_hin`, `voter_age`, `father_husband_name_hin`, `sambandh`, `gender_hin`, `ward_hin`, `id_no`, `poling_station_hin`, `poling_station_en`, `voter_name_en`, `father_husband_name_en`, `gender_en`, `ward_en`, `pesha`, `mobile_no`, `whatsapp_no`, `pramukh_mudde`, `rating_current_govt`, `voted_2019_loksabha`, `voted_2018_vidhansabha`, `vote_reason_2018`, `vichardhahra`, `corona`, `active_karyakarta`, `vidhansabha_2023`, `caste`, `caste_categories`, `surveyed_by`, tbl_voter_survey.created_at AS surveyed_at FROM tbl_voter_survey INNER JOIN tbl_voters ON tbl_voter_survey.voter_id = tbl_voters.id";
-// if($_GET['booth_no'] != '' && $_GET['selected_ward'] != '' && $_GET['voter_name'] != ''){
-//     $query .= ' WHERE booth_no = '."'".$_GET['booth_no']."'".' AND ward_hin = '."'".$_GET['selected_ward']."' AND voter_name_hin ".' LIKE "%'.$_GET['voter_name'].'%" ';
-// }else if(isset($_GET['booth_no']) && $_GET['booth_no'] != '' && $_GET['voter_name'] != ''){
-//     $query .= ' WHERE booth_no = '."'".$_GET['booth_no']."'AND voter_name_hin ".' LIKE "%'.$_GET['voter_name'].'%" ';
-// }else if(isset($_GET['booth_no']) && $_GET['booth_no'] != '' && $_GET['selected_ward'] != ''){
-//     $query .= ' WHERE booth_no = '."'".$_GET['booth_no']."'".' AND ward_hin = '."'".$_GET['selected_ward']."'";
-// }else if(isset($_GET['booth_no']) && $_GET['booth_no'] != ''){
-//     $query .= ' WHERE booth_no = '."'".$_GET['booth_no']."'";
-// }
-
-$query .= " WHERE tbl_voters.is_surveyed = 1";
-
-if(isset($_GET['assignedLoksabha']) && $_GET['assignedLoksabha'] != '' && $_GET['assignedLoksabha'] != NULL && isset($_GET['booth_no']) && $_GET['booth_no'] != ''){
-    $query .= ' AND tbl_voters.loksabha = '."'".$_GET['assignedLoksabha']."'".' AND tbl_voters.booth_no = '."'".$_GET['booth_no']."'";
-}else if(isset($_GET['assignedLoksabha']) && $_GET['assignedLoksabha'] != '' && $_GET['assignedLoksabha'] != NULL){
-    $query .= ' AND tbl_voters.loksabha = '."'".$_GET['assignedLoksabha']."'";
-}else if(isset($_GET['booth_no']) && $_GET['booth_no'] != '' && $_GET['booth_no'] != NULL){
-    $query .= ' AND tbl_voters.booth_no = '."'".$_GET['booth_no']."'";
+if(!empty($filters['loksabha'])){
+    $loksabha = $filters['loksabha'];
+    $query .= " AND tbl_voters.loksabha = '$loksabha'";
+}    
+if(!empty($filters['vidhansabha'])){
+    $vidhansabha = $filters['vidhansabha'];
+    $query .= " AND tbl_voters.vidhansabha = '$vidhansabha'";
+}
+if(!empty($filters['filter_mandal'])){
+    $filter_mandal = $filters['filter_mandal'];
+    $query .= " AND tbl_voters.mandal = $filter_mandal";
+}
+if(!empty($filters['filter_panchayat'])){
+    $filter_panchayat = $filters['filter_panchayat'];
+    $query .= " AND tbl_voters.panchayat = $filter_panchayat";
+}
+if(!empty($filters['boothRange'])){
+    $booth_range = $filters['boothRange'];
+    $query .= " AND tbl_voters.booth_no = $booth_range";
 }
 
-if(isset($voter_ids) && $voter_ids != '' && $voter_ids != NULL){
-    $query .= " AND tbl_voters.id IN ($voter_ids)";
+if(!empty($filters['optionFilters'])){
+    $optionFilters = $filters['optionFilters'];
+    $query .= " AND find_in_set(tbl_survey.selected_options,'$optionFilters')";
 }
-if(isset($_GET['filter_category']) && $_GET['filter_category'] != '' && $_GET['filter_category'] != NULL){
-    $query .= " AND tbl_voter_survey.caste_categories LIKE '%".$_GET['filter_category']."%'";
-}
-if(isset($_GET['filter_caste']) && $_GET['filter_caste'] != '' && $_GET['filter_caste'] != NULL){
-    $query .= " AND tbl_voter_survey.caste LIKE '%".trim($_GET['filter_caste'])."%'";
-}
-if(isset($_GET['filter_pesha']) && $_GET['filter_pesha'] != '' && $_GET['filter_pesha'] != NULL){
-    $query .= " AND tbl_voter_survey.pesha LIKE '%".trim($_GET['filter_pesha'])."%'";
-}
-if(isset($_GET['filter_pramukh_mudde']) && $_GET['filter_pramukh_mudde'] != '' && $_GET['filter_pramukh_mudde'] != NULL){
-    $query .= " AND tbl_voter_survey.pramukh_mudde LIKE '%".trim($_GET['filter_pramukh_mudde'])."%'";
-}
-if(isset($_GET['filter_mojuda_sarkaar']) && $_GET['filter_mojuda_sarkaar'] != '' && $_GET['filter_mojuda_sarkaar'] != NULL){
-    $query .= " AND tbl_voter_survey.rating_current_govt LIKE '%".trim($_GET['filter_mojuda_sarkaar'])."%'";
-}
-if(isset($_GET['filter_2019_loksabha']) && $_GET['filter_2019_loksabha'] != '' && $_GET['filter_2019_loksabha'] != NULL){
-    $query .= " AND tbl_voter_survey.voted_2019_loksabha LIKE '%".trim($_GET['filter_2019_loksabha'])."%'";
-}
-if(isset($_GET['filter_2018_vidhansabha']) && $_GET['filter_2018_vidhansabha'] != '' && $_GET['filter_2018_vidhansabha'] != NULL){
-    $query .= " AND tbl_voter_survey.voted_2018_vidhansabha LIKE '%".trim($_GET['filter_2018_vidhansabha'])."%'";
-}
-if(isset($_GET['filter_partyVsCandidate']) && $_GET['filter_partyVsCandidate'] != '' && $_GET['filter_partyVsCandidate'] != NULL){
-    $query .= " AND tbl_voter_survey.vote_reason_2018 LIKE '%".trim($_GET['filter_partyVsCandidate'])."%'";
-}
-if(isset($_GET['filter_vichardhara']) && $_GET['filter_vichardhara'] != '' && $_GET['filter_vichardhara'] != NULL){
-    $query .= " AND tbl_voter_survey.vichardhahra LIKE '%".trim($_GET['filter_vichardhara'])."%'";
-}
-if(isset($_GET['filter_corona']) && $_GET['filter_corona'] != '' && $_GET['filter_corona'] != NULL){
-    $query .= " AND tbl_voter_survey.corona LIKE '%".trim($_GET['filter_corona'])."%'";
-}
-if(isset($_GET['filter_local_candidate']) && $_GET['filter_local_candidate'] != '' && $_GET['filter_local_candidate'] != NULL){
-    $query .= " AND tbl_voter_survey.active_karyakarta LIKE '%".trim($_GET['filter_local_candidate'])."%'";
-}
-if(isset($_GET['filter_2023_vidhansabha']) && $_GET['filter_2023_vidhansabha'] != '' && $_GET['filter_2023_vidhansabha'] != NULL){
-    $query .= " AND tbl_voter_survey.vidhansabha_2023 LIKE '%".trim($_GET['filter_2023_vidhansabha'])."%'";
-}
+
 
 if(isset($_POST["order"]))
 {
@@ -161,21 +104,22 @@ if(isset($_POST["order"]))
 }
 else
 {
-	$query .= ' ORDER BY tbl_voter_survey.id DESC ';
+	$query .= ' ORDER BY id DESC ';
 }
 if($_POST["length"] != -1)
 {
 	$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 }
-// asd($query);
+   // asd($query);
 mysqli_set_charset($conn,'utf8');
 $value = mysqli_query($conn,$query);
 $result = mysqli_fetch_all($value);
 
 $data = array();
 $filtered_rows = count($result);
-
+//asd($query);
 foreach($result as $key => $value){
+  // asd($value);
     foreach($value as $innerKey => $innerValue){
         $response[$key]['id'] = $value[0];
         $response[$key]['file_id'] = $value[1];
@@ -198,28 +142,9 @@ foreach($result as $key => $value){
         $response[$key]['gender_en'] = $value[18];
         $response[$key]['ward_en'] = $value[19];
 
-     if(strtolower($deptName) != 'field worker'){
-        $response[$key]['pesha'] = $value[20];
-        $response[$key]['mobile_no'] = $value[21];
-        $response[$key]['whatsapp_no'] = $value[22];
-        $response[$key]['pramukh_mudde'] = $value[23];
-        $response[$key]['rating_current_govt'] = $value[24];
-        $response[$key]['voted_2019_loksabha'] = $value[25];
-        $response[$key]['voted_2018_vidhansabha'] = $value[26];
-        $response[$key]['vote_reason_2018'] = $value[27];
-        $response[$key]['vichardhahra'] = $value[28];
-        $response[$key]['corona'] = $value[29];
-        $response[$key]['active_karyakarta'] = $value[30];
-        $response[$key]['vidhansabha_2023'] = $value[31];
-        $response[$key]['caste'] = $value[32];
-        $response[$key]['caste_categories'] = $value[33];
-        $response[$key]['surveyed_by'] = $value[34];
-        $response[$key]['surveyed_at'] = $value[35];
-     }
-
     }
 }
-
+//asd($response);
 $i = 1;
 foreach($response as $row)
 {
@@ -247,23 +172,27 @@ foreach($response as $row)
     // $sub_array[] = '<a href="voter_survey.php?id='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Do Survey"><button type="button" class="btn btn-primary btn-sm">Survey</button></a>';
     
     if(strtolower($deptName) != 'field worker'){
-        $sub_array[] = $row['pesha'];
-        $sub_array[] = $row['mobile_no'];
-        $sub_array[] = $row['whatsapp_no'];
-        $sub_array[] = $row['pramukh_mudde'];
-        $sub_array[] = $row['rating_current_govt'];
-        $sub_array[] = $row['voted_2019_loksabha'];
-        $sub_array[] = $row['voted_2018_vidhansabha'];
-        $sub_array[] = $row['vote_reason_2018'];
-        $sub_array[] = $row['vichardhahra'];
-        $sub_array[] = $row['corona'];
-        $sub_array[] = $row['active_karyakarta'];
-        $sub_array[] = $row['vidhansabha_2023'];
-        $sub_array[] = $row['caste'];
-        $sub_array[] = $row['caste_categories'];
-        $sub_array[] = $row['surveyed_by'];
-        $sub_array[] = $row['surveyed_at'];
-        $sub_array[] = '<a target="_blank" href="update_voters_survey.php?id='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Update Survey"><em class="icon ni ni-edit"></em</a>';
+        $voterId = $row['id'];
+        $querysurvayerdetail = "SELECT survey_date,username FROM tbl_survey AS ts JOIN tbl_admin_users AS tau ON ts.surveyed_by = tau.id WHERE ts.voter_id = $voterId";   
+        $valuequerysurvayerdetail = mysqli_query($conn,$querysurvayerdetail);
+        $resultsurveyerdetials = mysqli_fetch_row($valuequerysurvayerdetail); 
+        foreach($queryQuestionOptionResult as $key => $questionoption){
+           // $voterId =10284;
+           
+            $questionId = $questionoption[0]; 
+            $questionHeading = $questionoption[1]; 
+           $querySurvayAnswer = "SELECT `selected_options` FROM `tbl_survey`  WHERE `voter_id` = $voterId  AND 
+                `question_id` =$questionId";   
+           
+           $value = mysqli_query($conn,$querySurvayAnswer);
+           $resultSurvayAnswer = mysqli_fetch_row($value);
+           $sub_array[] = $resultSurvayAnswer;
+  
+       }
+       $sub_array[] = $resultsurveyerdetials[1];
+       $sub_array[] = $resultsurveyerdetials[0];
+
+    $sub_array[] = '<a target="_blank" href="update_voters_survey.php?id='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Update Survey"><em class="icon ni ni-edit"></em</a>';
         $sub_array[] = '<div class="custom-control custom-control-sm custom-checkbox notext">
                                                                     <input type="checkbox" class="custom-control-input chk2" name="mobile[]" id="'.$row['id'].'" value="'.$row['mobile_no'].'" >
                                                                     <label class="custom-control-label" for="'.$row['id'].'"></label>
@@ -280,8 +209,9 @@ $output = array(
 	"recordsFiltered"	=>	get_total_all_records($conn,$voter_ids),
 	"data"				=>	$data
 );
-
+//asd($voter_ids);
 function get_total_all_records($conn,$voter_ids){
+    //asd($voter_ids);
     $query = "SELECT count(tbl_voters.id) as total_users FROM tbl_voters INNER JOIN tbl_voter_survey ON tbl_voters.id = tbl_voter_survey.voter_id ";
     $query .= " WHERE tbl_voters.is_surveyed = 1";
     if(isset($_GET['assignedLoksabha']) && $_GET['assignedLoksabha'] != '' && $_GET['assignedLoksabha'] != NULL && isset($_GET['booth_no']) && $_GET['booth_no'] != ''){
@@ -297,40 +227,8 @@ function get_total_all_records($conn,$voter_ids){
     if(isset($_GET['filter_category']) && $_GET['filter_category'] != '' && $_GET['filter_category'] != NULL){
         $query .= " AND tbl_voter_survey.caste_categories LIKE '%".$_GET['filter_category']."%'";
     }
-    if(isset($_GET['filter_caste']) && $_GET['filter_caste'] != '' && $_GET['filter_caste'] != NULL){
-        $query .= " AND tbl_voter_survey.caste LIKE '%".trim($_GET['filter_caste'])."%'";
-    }
-    if(isset($_GET['filter_pesha']) && $_GET['filter_pesha'] != '' && $_GET['filter_pesha'] != NULL){
-        $query .= " AND tbl_voter_survey.pesha LIKE '%".trim($_GET['filter_pesha'])."%'";
-    }
-    if(isset($_GET['filter_pramukh_mudde']) && $_GET['filter_pramukh_mudde'] != '' && $_GET['filter_pramukh_mudde'] != NULL){
-        $query .= " AND tbl_voter_survey.pramukh_mudde LIKE '%".trim($_GET['filter_pramukh_mudde'])."%'";
-    }
-    if(isset($_GET['filter_mojuda_sarkaar']) && $_GET['filter_mojuda_sarkaar'] != '' && $_GET['filter_mojuda_sarkaar'] != NULL){
-        $query .= " AND tbl_voter_survey.rating_current_govt LIKE '%".trim($_GET['filter_mojuda_sarkaar'])."%'";
-    }
-    if(isset($_GET['filter_2019_loksabha']) && $_GET['filter_2019_loksabha'] != '' && $_GET['filter_2019_loksabha'] != NULL){
-        $query .= " AND tbl_voter_survey.voted_2019_loksabha LIKE '%".trim($_GET['filter_2019_loksabha'])."%'";
-    }
-    if(isset($_GET['filter_2018_vidhansabha']) && $_GET['filter_2018_vidhansabha'] != '' && $_GET['filter_2018_vidhansabha'] != NULL){
-        $query .= " AND tbl_voter_survey.voted_2018_vidhansabha LIKE '%".trim($_GET['filter_2018_vidhansabha'])."%'";
-    }
-    if(isset($_GET['filter_partyVsCandidate']) && $_GET['filter_partyVsCandidate'] != '' && $_GET['filter_partyVsCandidate'] != NULL){
-        $query .= " AND tbl_voter_survey.vote_reason_2018 LIKE '%".trim($_GET['filter_partyVsCandidate'])."%'";
-    }
-    if(isset($_GET['filter_vichardhara']) && $_GET['filter_vichardhara'] != '' && $_GET['filter_vichardhara'] != NULL){
-        $query .= " AND tbl_voter_survey.vichardhahra LIKE '%".trim($_GET['filter_vichardhara'])."%'";
-    }
-    if(isset($_GET['filter_corona']) && $_GET['filter_corona'] != '' && $_GET['filter_corona'] != NULL){
-        $query .= " AND tbl_voter_survey.corona LIKE '%".trim($_GET['filter_corona'])."%'";
-    }
-    if(isset($_GET['filter_local_candidate']) && $_GET['filter_local_candidate'] != '' && $_GET['filter_local_candidate'] != NULL){
-        $query .= " AND tbl_voter_survey.active_karyakarta LIKE '%".trim($_GET['filter_local_candidate'])."%'";
-    }
-    if(isset($_GET['filter_2023_vidhansabha']) && $_GET['filter_2023_vidhansabha'] != '' && $_GET['filter_2023_vidhansabha'] != NULL){
-        $query .= " AND tbl_voter_survey.vidhansabha_2023 LIKE '%".trim($_GET['filter_2023_vidhansabha'])."%'";
-    }
-    
+  //asd($query);
+
     $value= mysqli_query($conn,$query);
     $result = mysqli_fetch_assoc($value)['total_users'];
     return $result;

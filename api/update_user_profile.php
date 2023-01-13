@@ -39,28 +39,32 @@ if($jwt){
 					));
 					exit();
 			}
-      if(empty($_FILES['aadhar_front'])){
-				echo json_encode(array(
-					"message" => "aadhar front field is required."
-					));
-					exit();
-			}
-      if(empty($_FILES['aadhar_back'])){
-				echo json_encode(array(
-					"message" => "aadhar back field is required."
-					));
-					exit();
-			}
+      // if(empty($_FILES['aadhar_front'])){
+			// 	echo json_encode(array(
+			// 		"message" => "aadhar front field is required."
+			// 		));
+			// 		exit();
+			// }
+      // if(empty($_FILES['aadhar_back'])){
+			// 	echo json_encode(array(
+			// 		"message" => "aadhar back field is required."
+			// 		));
+			// 		exit();
+			// }
       if (isset($_FILES['user_image']) || isset($_POST['f_name']) || isset($_POST['l_name']) || isset($_POST['admin_email'])) {
-      $user_image = isset($_FILES['user_image']) ? $_FILES['user_image'] : '';
       $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : '';
+      $userQuery="SELECT user_image,aadhar_front,aadhar_back FROM tbl_admin_users WHERE id = '$user_id'";
+      $result=mysqli_query($conn,$userQuery) or die("Query problem".mysqli_error($conn));
+      $row = mysqli_num_rows($result);
+      
+      $user_image = isset($_FILES['user_image']) ? $_FILES['user_image'] : $row['user_image'];
       $f_name = isset($_POST['f_name']) ? $_POST['f_name'] : '';
       $l_name = isset($_POST['l_name']) ? $_POST['l_name'] : '';
       $age = isset($_POST['age']) ? $_POST['age'] : '';
       $aadhar_no = isset($_POST['aadhar_no']) ? $_POST['aadhar_no'] : '';
       $phone_no = isset($_POST['phone_no']) ? $_POST['phone_no'] : '';
-      $aadhar_front = isset($_FILES['aadhar_front']) ? $_FILES['aadhar_front'] : '';
-      $aadhar_back = isset($_FILES['aadhar_back']) ? $_FILES['aadhar_back'] : '';
+      $aadhar_front = isset($_FILES['aadhar_front']) ? $_FILES['aadhar_front'] : $row['aadhar_front'];
+      $aadhar_back = isset($_FILES['aadhar_back']) ? $_FILES['aadhar_back'] : $row['aadhar_back'];
     
         if (!empty($user_image)) {
             $target_dir = "../admin/images/avatar/";

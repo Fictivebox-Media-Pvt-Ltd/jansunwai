@@ -7,16 +7,8 @@ $deptId = $loginUserData['department_id'];
 $deptName = get_department_details($conn, $deptId);
 $query = '';
 $output = array();
-$query .= "SELECT tbl_voters.id AS 'id', `file_id`, `loksabha`, `vidhansabha`, `booth_no`, `section_no`, `house_no`, `voter_name_hin`, `voter_age`, `father_husband_name_hin`, `sambandh`, `gender_hin`, `ward_hin`, `id_no`, `poling_station_hin`, `poling_station_en`, `voter_name_en`, `father_husband_name_en`, `gender_en`, `ward_en`, `pesha`, `mobile_no`, `whatsapp_no`, `pramukh_mudde`, `rating_current_govt`, `voted_2019_loksabha`, `voted_2018_vidhansabha`, `vote_reason_2018`, `vichardhahra`, `corona`, `active_karyakarta`, `vidhansabha_2023`, `caste`, `caste_categories` FROM tbl_voters LEFT JOIN tbl_voter_survey ON tbl_voters.id = tbl_voter_survey.voter_id";
-// if($_GET['booth_no'] != '' && $_GET['selected_ward'] != '' && $_GET['voter_name'] != ''){
-//     $query .= ' WHERE booth_no = '."'".$_GET['booth_no']."'".' AND ward_hin = '."'".$_GET['selected_ward']."' AND voter_name_hin ".' LIKE "%'.$_GET['voter_name'].'%" ';
-// }else if(isset($_GET['booth_no']) && $_GET['booth_no'] != '' && $_GET['voter_name'] != ''){
-//     $query .= ' WHERE booth_no = '."'".$_GET['booth_no']."'AND voter_name_hin ".' LIKE "%'.$_GET['voter_name'].'%" ';
-// }else if(isset($_GET['booth_no']) && $_GET['booth_no'] != '' && $_GET['selected_ward'] != ''){
-//     $query .= ' WHERE booth_no = '."'".$_GET['booth_no']."'".' AND ward_hin = '."'".$_GET['selected_ward']."'";
-// }else if(isset($_GET['booth_no']) && $_GET['booth_no'] != ''){
-//     $query .= ' WHERE booth_no = '."'".$_GET['booth_no']."'";
-// }
+$query .= "SELECT tbl_voters.id AS 'id', `file_id`, `loksabha`, `vidhansabha`, `booth_no`, `section_no`, `house_no`, `voter_name_hin`, `voter_age`, `father_husband_name_hin`, `sambandh`, `gender_hin`, `ward_hin`, `id_no`, `poling_station_hin`, `poling_station_en`, `voter_name_en`, `father_husband_name_en`, `gender_en`, `ward_en` FROM tbl_voters";
+
 if(isset($_GET['assignedLoksabha']) && $_GET['assignedLoksabha'] != '' && $_GET['assignedLoksabha'] != NULL && isset($_GET['booth_no']) && $_GET['booth_no'] != ''){
     $query .= ' WHERE tbl_voters.loksabha = '."'".$_GET['assignedLoksabha']."'".' AND tbl_voters.booth_no = '."'".$_GET['booth_no']."'";
 }else if(isset($_GET['assignedLoksabha']) && $_GET['assignedLoksabha'] != '' && $_GET['assignedLoksabha'] != NULL){
@@ -25,27 +17,6 @@ if(isset($_GET['assignedLoksabha']) && $_GET['assignedLoksabha'] != '' && $_GET[
     $query .= ' WHERE tbl_voters.booth_no = '."'".$_GET['booth_no']."'";
 }
 
-// if(isset($_POST["search"]["value"]) && !isset($_GET['selected_ward']) && !isset($_GET['booth_no']))
-// {
-// 	$query .= ' WHERE file_id LIKE "%'.$_POST["search"]["value"].'%" ';
-// 	$query .= 'OR'." vidhansabha".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." booth_no".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." house_no".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." voter_name_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." voter_age".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." father_husband_name_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." gender_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." ward_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." cast_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." phone_no".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." pesha_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." voter_name_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." father_husband_name_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." gender_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." ward_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." cast_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-//     $query .= 'OR'." pesha_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-// }
 if(isset($_POST["order"]))
 {
 	$query .= ' ORDER BY '.($_POST['order']['0']['column']+1).' '.$_POST['order']['0']['dir'].' ';
@@ -89,22 +60,6 @@ foreach($result as $key => $value){
         $response[$key]['gender_en'] = $value[18];
         $response[$key]['ward_en'] = $value[19];
 
-     if(strtolower($deptName) != 'field worker'){
-        $response[$key]['pesha'] = $value[20];
-        $response[$key]['mobile_no'] = $value[21];
-        $response[$key]['whatsapp_no'] = $value[22];
-        $response[$key]['pramukh_mudde'] = $value[23];
-        $response[$key]['rating_current_govt'] = $value[24];
-        $response[$key]['voted_2019_loksabha'] = $value[25];
-        $response[$key]['voted_2018_vidhansabha'] = $value[26];
-        $response[$key]['vote_reason_2018'] = $value[27];
-        $response[$key]['vichardhahra'] = $value[28];
-        $response[$key]['corona'] = $value[29];
-        $response[$key]['active_karyakarta'] = $value[30];
-        $response[$key]['vidhansabha_2023'] = $value[31];
-        $response[$key]['caste'] = $value[32];
-        $response[$key]['caste_categories'] = $value[33];
-     }
 
     }
 }
@@ -134,27 +89,9 @@ foreach($response as $row)
     $sub_array[] = $row['gender_en'];
     $sub_array[] = $row['ward_en'];
     $sub_array[] =  '<a href="?del='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Delete This Voter.!"><em class="icon ni ni-trash"></em></a>';
-    if($assignedLoksabha != 'मुंबई साउथ'){
+
         $sub_array[] = '<a href="voter_survey.php?id='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Do Survey"><button type="button" class="btn btn-primary btn-sm">Survey</button></a>';
-    
-    if(strtolower($deptName) != 'field worker'){
-        $sub_array[] = $row['pesha'];
-        $sub_array[] = $row['mobile_no'];
-        $sub_array[] = $row['whatsapp_no'];
-        $sub_array[] = $row['pramukh_mudde'];
-        $sub_array[] = $row['rating_current_govt'];
-        $sub_array[] = $row['voted_2019_loksabha'];
-        $sub_array[] = $row['voted_2018_vidhansabha'];
-        $sub_array[] = $row['vote_reason_2018'];
-        $sub_array[] = $row['vichardhahra'];
-        $sub_array[] = $row['corona'];
-        $sub_array[] = $row['active_karyakarta'];
-        $sub_array[] = $row['vidhansabha_2023'];
-        $sub_array[] = $row['caste'];
-        $sub_array[] = $row['caste_categories'];
-        }
-        
-    }
+
 	$data[] = $sub_array;
     $i++;
 }
@@ -175,27 +112,6 @@ function get_total_all_records($conn){
         $query .= ' WHERE tbl_voters.booth_no = '."'".$_GET['booth_no']."'";
     }
 
-    // if(isset($_POST["search"]["value"]))
-    // {
-    //     $query .= ' WHERE file_id LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." vidhansabha".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." booth_no".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." house_no".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." voter_name_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." voter_age".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." father_husband_name_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." gender_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." ward_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." cast_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." phone_no".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." pesha_hin".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." voter_name_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." father_husband_name_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." gender_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." ward_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." cast_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    //     $query .= 'OR'." pesha_en".' LIKE "%'.$_POST["search"]["value"].'%" ';
-    // }
     $value= mysqli_query($conn,$query);
     $result = mysqli_fetch_assoc($value)['total_users'];
     return $result;

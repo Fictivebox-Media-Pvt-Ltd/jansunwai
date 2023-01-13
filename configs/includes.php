@@ -213,6 +213,21 @@ function deleteQuestion($conn,$id){
     mysqli_query($conn, $query);
     return;
 }
+function updateQuestionStatus($conn,$id){
+    $query = "SELECT status FROM tbl_survey_questions where id = '$id'";
+    $result = mysqli_query($conn,$query);
+    $row = mysqli_fetch_array($result); 
+    $status = $row['status'];
+    if($status == 1){       
+        $query = "UPDATE`tbl_survey_questions` SET status = '0' WHERE `id` = $id";
+        mysqli_query($conn, $query);
+        return;
+    }else{
+        $query = "UPDATE `tbl_survey_questions` SET status = '1' WHERE `id` = $id";
+        mysqli_query($conn, $query);
+        return;
+    }
+}
 function deletePanchayat($conn,$id){
     $query = "DELETE FROM `tbl_panchayat` WHERE `id` = $id";
     mysqli_query($conn, $query);
@@ -302,7 +317,6 @@ function get_page_content($conn,$page_name){
     else
         return $response;
 }
-
 
 function get_users($conn){
     $response = array();
@@ -474,8 +488,8 @@ function add_single_voter_deprecated($conn,$profile_image,$f_name,$l_name,$voter
     return;
 }
 
-function add_single_voter($conn,$file_id,$loksabha,$vidhansabha,$booth_no,$house_no,$voter_name_hin,$voter_age,$father_husband_name_hin,$gender_hin,$ward_hin,$cast_hin,$phone_no,$pesha_hin,$voter_name_en,$father_husband_name_en,$gender_en,$ward_en,$cast_en,$pesha_en){
-    $query = "INSERT INTO `tbl_voters` (`file_id`, `loksabha`, `vidhansabha`, `booth_no`, `house_no`, `voter_name_hin`, `voter_age`, `father_husband_name_hin`, `gender_hin`, `ward_hin`, `voter_name_en`, `father_husband_name_en`, `gender_en`, `ward_en`, `created_at`) VALUES ('$file_id','$loksabha','$vidhansabha','$booth_no','$house_no','$voter_name_hin','$voter_age','$father_husband_name_hin','$gender_hin','$ward_hin','$voter_name_en','$father_husband_name_en','$gender_en','$ward_en', now())";
+function add_single_voter($conn,$file_id,$loksabha,$vidhansabha,$mandal,$panchayat,$booth_no,$house_no,$voter_name_hin,$voter_age,$father_husband_name_hin,$gender_hin,$ward_hin,$cast_hin,$phone_no,$pesha_hin,$voter_name_en,$father_husband_name_en,$gender_en,$ward_en,$cast_en,$pesha_en){
+    $query = "INSERT INTO `tbl_voters` (`file_id`, `loksabha`, `vidhansabha`,`mandal`,`panchayat`, `booth_no`, `house_no`, `voter_name_hin`, `voter_age`, `father_husband_name_hin`, `gender_hin`, `ward_hin`, `voter_name_en`, `father_husband_name_en`, `gender_en`, `ward_en`, `created_at`) VALUES ('$file_id','$loksabha','$vidhansabha','$mandal','$panchayat','$booth_no','$house_no','$voter_name_hin','$voter_age','$father_husband_name_hin','$gender_hin','$ward_hin','$voter_name_en','$father_husband_name_en','$gender_en','$ward_en', now())";
     mysqli_set_charset($conn,'utf8');
     mysqli_query($conn, $query);
     return;
@@ -2808,7 +2822,7 @@ function delete_voters_data($conn,$id){
     return;
 }
 
-function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$question_option){
+function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$questionHeading,$headingStatus,$question_option){
    $option = !empty($question_option[0]) ? "$question_option[0]" : NULL;
    $option1 = !empty($question_option[1]) ? "$question_option[1]" : NULL;
    $option2 = !empty($question_option[2]) ? "$question_option[2]" : NULL;
@@ -2819,7 +2833,7 @@ function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$question_o
    $option7 = !empty($question_option[7]) ? "$question_option[7]" : NULL;
    $option8 = !empty($question_option[8]) ? "$question_option[8]" : NULL;
    $option9 = !empty($question_option[9]) ? "$question_option[9]" : NULL;
-    $query = "INSERT INTO tbl_survey_questions(loksabha,vidhansabha,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,created_at) VALUES ('$selected_loksabha','$vidhansabha','$question','$option','$option1','$option2','$option3','$option4','$option5','$option6','$option7','$option8','$option9',now())";
+   $query = "INSERT INTO tbl_survey_questions(loksabha,vidhansabha,question,question_heading,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,status,created_at) VALUES ('$selected_loksabha','$vidhansabha','$question','$questionHeading','$option','$option1','$option2','$option3','$option4','$option5','$option6','$option7','$option8','$option9','$headingStatus',now())";
 //    print_r($query);
 //    die;
     try{
@@ -2831,7 +2845,7 @@ function addQuestion($conn,$selected_loksabha,$vidhansabha,$question,$question_o
     header("Location:questions.php");
 }
 
-function  updateQuestion($conn,$questionId,$selected_loksabha,$vidhansabha,$question,$question_option){
+function  updateQuestion($conn,$questionId,$selected_loksabha,$vidhansabha,$question,$question_heading,$question_option,$status){
 
     $option =  !empty($question_option[0]) ? "$question_option[0]" : NULL;
     $option1 = !empty($question_option[1]) ? "$question_option[1]" : NULL;
@@ -2847,8 +2861,9 @@ function  updateQuestion($conn,$questionId,$selected_loksabha,$vidhansabha,$ques
 
     $query = "UPDATE `tbl_survey_questions` SET 
         `loksabha`	=	'$selected_loksabha',
-        `vidhansabha`	=	'$vidhansabha',
+        `vidhansabha`	=	'$vidhansabha',       
         `question`	=	'$question',
+        `question_heading`	='$question_heading',
         `option1`	=	'$option',
         `option2`	=	'$option1',
         `option3`	=	'$option2',
@@ -2859,6 +2874,7 @@ function  updateQuestion($conn,$questionId,$selected_loksabha,$vidhansabha,$ques
         `option8`	=	'$option7',
         `option9`	=	'$option8',
         `option10`	=	'$option9',
+        `status`	=	'$status',
         `updated_at`	=	now()
      WHERE `id` = $questionId";
 
@@ -2927,177 +2943,98 @@ function get_surveyers_stats($conn,$loksabha,$start_date,$end_date){
     return $response;
 }
 
-function export_surveyed_userbase($conn,$filter_pesha,$booth_no,$assignedLoksabha ,$filter_loksabha,$filter_mandal,$filter_panchayat,$filter_boothRange,$filter_category,$filter_caste,$filter_ward,$filter_pramukh_mudde,$filter_mojuda_sarkaar,$filter_2019_loksabha,$filter_2018_vidhansabha,$filter_partyVsCandidate,$filter_vichardhara,$filter_corona,$filter_local_candidate,$filter_2023_vidhansabha,$filter_ageGroup){
-    $response = array();
-
-    $response_data = array();
-    $queryForVoterIds = "SELECT `id` FROM `tbl_voters` ";
-
-    if(!empty($filter_loksabha)){
-        $loksabha = $filter_loksabha;
-        $queryForVoterIds .= "WHERE loksabha = '$loksabha' ";
-    }    
-    if(!empty($filter_vidhansabha)){
-        $vidhansabha = $filter_vidhansabha;
-        $queryForVoterIds .= "AND vidhansabha = '$vidhansabha' ";
-    }
-    if(!empty($filter_boothRange)){
-        $booth_range = $filter_boothRange;
-        $booth_range = explode('~',$booth_range);
-        $queryForVoterIds .= "AND `booth_no` BETWEEN $booth_range[0] AND $booth_range[1] ";
-    }else if(!empty($filter_mandal) && empty($filter_panchayat)){
-        $mandal  = $filter_mandal;
-        $query = "SELECT `booth_range` FROM `tbl_mandal_panchayat_mapping` WHERE `mandal` = '$mandal'";
-        $total_booths = mysqli_query($conn,$query);
-        $values= mysqli_fetch_all($total_booths);
-        foreach($values as $key => $value){
-            $values[$key] = explode('~',str_replace(' ', '', $value[0]));
+function export_surveyed_userbase($conn,$assignedLoksabha,$assignedVidhansabha,$mandal,$panchayat,$boothRange,$optionFilters){
+    $query .= "SELECT tbl_voters.id,tbl_voters.file_id,tbl_voters.loksabha,tbl_voters.vidhansabha,tbl_voters.booth_no, tbl_voters.section_no,tbl_voters.house_no,tbl_voters.voter_name_hin,tbl_voters.voter_age, tbl_voters.father_husband_name_hin,tbl_voters.sambandh,tbl_voters.gender_hin,tbl_voters.ward_hin,tbl_voters.id_no, tbl_voters.poling_station_hin,tbl_voters.poling_station_en,tbl_voters.voter_name_en, tbl_voters.father_husband_name_en,tbl_voters.gender_en,tbl_voters.ward_en FROM tbl_voters JOIN tbl_survey ON tbl_survey.voter_id = 
+    tbl_voters.id WHERE tbl_voters.is_surveyed = 1 ";
+   
+        if(!empty($assignedLoksabha)){
+            $query .= " AND tbl_voters.loksabha = '$assignedLoksabha'";
+        }    
+        if(!empty($assignedVidhansabha)){
+            $query .= " AND tbl_voters.vidhansabha = '$assignedVidhansabha'";
         }
-        foreach($values as $k => $v){
-            foreach($v as $kv => $vv){
-                $booth[] = $vv;
-            }
+        if(!empty($mandal)){
+            $query .= " AND tbl_voters.mandal = $mandal";
+       }
+
+       if(!empty($panchayat)){
+        $query .= " AND tbl_voters.panchayat = $panchayat";
         }
-        $min_booth = MIN($booth);
-        $max_booth = MAX($booth);
-        $queryForVoterIds .= "AND `booth_no` BETWEEN $min_booth AND $max_booth ";
-    }else if(!empty($filter_panchayat)){
-        $panchayat  = $filter_panchayat;
-        $query = "SELECT `booth_range` FROM `tbl_mandal_panchayat_mapping` WHERE `panchayat` = '$panchayat'";
-        $total_booths = mysqli_query($conn,$query);
-        $values= mysqli_fetch_all($total_booths);
-        foreach($values as $key => $value){
-            $values[$key] = explode('~',str_replace(' ', '', $value[0]));
+
+        if(!empty($boothRange)){
+           $query .= " AND tbl_voters.booth_no = $boothRange";
         }
-        foreach($values as $k => $v){
-            foreach($v as $kv => $vv){
-                $booth[] = $vv;
-            }
+
+        if(!empty($optionFilters)){
+            $query .= " AND find_in_set(tbl_survey.selected_options,'$optionFilters')";
         }
-        $min_booth = MIN($booth);
-        $max_booth = MAX($booth);
-        $queryForVoterIds .= "AND `booth_no` BETWEEN $min_booth AND $max_booth ";
-    }
-    if(!empty($filter_ward)){
-        $ward = $filter_ward;
-        $queryForVoterIds .= "AND ward_hin LIKE '%$ward%' ";
-    }
-    if(!empty($filter_gender)){
-        $gender = $filter_gender;
-        $queryForVoterIds .= "AND gender_hin = '$gender' ";
-    }
-    if(!empty($filter_ageGroup)){
-        $ageGroup = $filter_ageGroup;
-        $ageGroup = explode('~',$ageGroup);
-        $queryForVoterIds .= "AND `voter_age` BETWEEN $ageGroup[0] AND $ageGroup[1] ";
-    }
-
-    $queryForVoterIds .= " AND is_surveyed = 1";
-
-    $total_value= mysqli_query($conn,$queryForVoterIds);
-    $result= mysqli_fetch_all($total_value);
-
-    foreach($result as $key => $value){
-        $response_data[] = $value[0];
-    }
-    $voter_ids = implode(', ', $response_data);;
-
-    $query = "SELECT tbl_voters.id AS 'id', `file_id`, `loksabha`, `vidhansabha`, `booth_no`, `section_no`, `house_no`, `voter_name_hin`, `voter_age`, `father_husband_name_hin`, `sambandh`, `gender_hin`, `ward_hin`, `id_no`, `poling_station_hin`, `poling_station_en`, `voter_name_en`, `father_husband_name_en`, `gender_en`, `ward_en`, `pesha`, `mobile_no`, `whatsapp_no`, `pramukh_mudde`, `rating_current_govt`, `voted_2019_loksabha`, `voted_2018_vidhansabha`, `vote_reason_2018`, `vichardhahra`, `corona`, `active_karyakarta`, `vidhansabha_2023`, `caste`, `caste_categories`, `surveyed_by`, tbl_voter_survey.created_at AS surveyed_at  FROM tbl_voter_survey INNER JOIN tbl_voters ON tbl_voter_survey.voter_id = tbl_voters.id";
-    
-    // if(isset($booth) && $booth != '' && $booth != NULL){
-    //     $query .= ' WHERE tbl_voters.booth_no = '."'".$booth."' ORDER BY tbl_voter_survey.created_at DESC LIMIT 2000";
-    // }else{
-	// $query .= ' ORDER BY tbl_voter_survey.created_at DESC LIMIT 2000';
-	// }
-    $query .= " WHERE tbl_voters.is_surveyed = 1";
-    if(isset($voter_ids) && $voter_ids != '' && $voter_ids != NULL){
-        $query .= " AND tbl_voters.id IN ($voter_ids)";
-    }
-    if(isset($filter_category) && $filter_category != '' && $filter_category != NULL){
-        $query .= " AND tbl_voter_survey.caste_categories LIKE '%".$filter_category."%'";
-    }
-    if(isset($filter_caste) && $filter_caste != '' && $filter_caste != NULL){
-        $query .= " AND tbl_voter_survey.caste LIKE '%".trim($filter_caste)."%'";
-    }
-    if(isset($filter_pesha) && $filter_pesha != '' && $filter_pesha != NULL){
-        $query .= " AND tbl_voter_survey.pesha LIKE '%".trim($filter_pesha)."%'";
-    }
-    if(isset($filter_pramukh_mudde) && $filter_pramukh_mudde != '' && $filter_pramukh_mudde != NULL){
-        $query .= " AND tbl_voter_survey.pramukh_mudde LIKE '%".trim($filter_pramukh_mudde)."%'";
-    }
-    if(isset($filter_mojuda_sarkaar) && $filter_mojuda_sarkaar != '' && $filter_mojuda_sarkaar != NULL){
-        $query .= " AND tbl_voter_survey.rating_current_govt LIKE '%".trim($filter_mojuda_sarkaar)."%'";
-    }
-    if(isset($filter_2019_loksabha) && $filter_2019_loksabha != '' && $filter_2019_loksabha != NULL){
-        $query .= " AND tbl_voter_survey.voted_2019_loksabha LIKE '%".trim($filter_2019_loksabha)."%'";
-    }
-    if(isset($filter_2018_vidhansabha) && $filter_2018_vidhansabha != '' && $filter_2018_vidhansabha != NULL){
-        $query .= " AND tbl_voter_survey.voted_2018_vidhansabha LIKE '%".trim($filter_2018_vidhansabha)."%'";
-    }
-    if(isset($filter_partyVsCandidate) && $filter_partyVsCandidate != '' && $filter_partyVsCandidate != NULL){
-        $query .= " AND tbl_voter_survey.vote_reason_2018 LIKE '%".trim($filter_partyVsCandidate)."%'";
-    }
-    if(isset($filter_vichardhara) && $filter_vichardhara != '' && $filter_vichardhara != NULL){
-        $query .= " AND tbl_voter_survey.vichardhahra LIKE '%".trim($filter_vichardhara)."%'";
-    }
-    if(isset($filter_corona) && $filter_corona != '' && $filter_corona != NULL){
-        $query .= " AND tbl_voter_survey.corona LIKE '%".trim($filter_corona)."%'";
-    }
-    if(isset($filter_local_candidate) && $filter_local_candidate != '' && $filter_local_candidate != NULL){
-        $query .= " AND tbl_voter_survey.active_karyakarta LIKE '%".trim($filter_local_candidate)."%'";
-    }
-    if(isset($filter_2023_vidhansabha) && $filter_2023_vidhansabha != '' && $filter_2023_vidhansabha != NULL){
-        $query .= " AND tbl_voter_survey.vidhansabha_2023 LIKE '%".trim($filter_2023_vidhansabha)."%'";
-    }
-    
-    $query .= ' ORDER BY tbl_voter_survey.created_at DESC LIMIT 2000';
+   
+    $query .= ' ORDER BY tbl_survey.created_at DESC LIMIT 2000';
+    //asd($query);
     mysqli_set_charset($conn,'utf8');
     $value = mysqli_query($conn,$query);
     $result = mysqli_fetch_all($value);
-    $i = 1;
 
-    foreach($result as $key => $value){
-        foreach($value as $innerKey => $innerValue){
-            $response[$key]['s_no'] = $i;
-            $response[$key]['file_id'] = $value[1];
-            $response[$key]['loksabha'] = $value[2];
-            $response[$key]['vidhansabha'] = $value[3];
-            $response[$key]['booth_no'] = $value[4];
-            $response[$key]['section_no'] = $value[5];
-            $response[$key]['house_no'] = $value[6];
-            $response[$key]['voter_name_hin'] = $value[7];
-            $response[$key]['voter_age'] = $value[8];
-            $response[$key]['father_husband_name_hin'] = $value[9];
-            $response[$key]['sambandh'] = $value[10];
-            $response[$key]['gender_hin'] = $value[11];
-            $response[$key]['ward_hin'] = $value[12];
-            $response[$key]['id_no'] = $value[13];
-            $response[$key]['poling_station_hin'] = $value[14];
-            $response[$key]['poling_station_en'] = $value[15];
-            $response[$key]['voter_name_en'] = $value[16];
-            $response[$key]['father_husband_name_en'] = $value[17];
-            $response[$key]['gender_en'] = $value[18];
-            $response[$key]['ward_en'] = $value[19];
-            $response[$key]['pesha'] = $value[20];
-            $response[$key]['mobile_no'] = $value[21];
-            $response[$key]['whatsapp_no'] = $value[22];
-            $response[$key]['pramukh_mudde'] = $value[23];
-            $response[$key]['rating_current_govt'] = $value[24];
-            $response[$key]['voted_2019_loksabha'] = $value[25];
-            $response[$key]['voted_2018_vidhansabha'] = $value[26];
-            $response[$key]['vote_reason_2018'] = $value[27];
-            $response[$key]['vichardhahra'] = $value[28];
-            $response[$key]['corona'] = $value[29];
-            $response[$key]['active_karyakarta'] = $value[30];
-            $response[$key]['vidhansabha_2023'] = $value[31];
-            $response[$key]['caste'] = $value[32];
-            $response[$key]['caste_categories'] = $value[33];
-            $response[$key]['surveyed_by'] = $value[34];
-            $response[$key]['surveyed_at'] = $value[35];
-        }
-        $i++;
+    if(!empty($assignedLoksabha)){      
+        $queryQuestionOption = "SELECT `id`,`question_heading` FROM `tbl_survey_questions` WHERE vidhansabha = '$assignedVidhansabha' AND `question_heading` != '' AND status = '1' ";
     }
-    return $response;
+    else{   
+        $queryQuestionOption = "SELECT `id`,`question_heading` FROM `tbl_survey_questions`  WHERE `question_heading` != '' AND status = '1' ";   
+    }    
+    $optionvalue = mysqli_query($conn,$queryQuestionOption);
+    $queryQuestionOptionResult = mysqli_fetch_all($optionvalue);
+    // echo count($queryQuestionOptionResult);
+    // die;
+    $i = 1;
+    $response = array();        
+    foreach($result as $key => $value){  
+        $voterId = $value[0];
+        $querysurvayerdetail = "SELECT survey_date,username FROM tbl_survey AS ts JOIN tbl_admin_users AS tau ON ts.surveyed_by = tau.id WHERE ts.voter_id = $voterId";   
+        $valuequerysurvayerdetail = mysqli_query($conn,$querysurvayerdetail);
+        $resultsurveyerdetials = mysqli_fetch_row($valuequerysurvayerdetail); 
+      //  asd($value[0]);
+       // foreach($value as $innerKey => $innerValue){           
+           $resultData['s_no'] = $i;
+           $resultData['file_id'] = $value[1];
+           $resultData['loksabha'] = $value[2];
+           $resultData['vidhansabha'] = $value[3];
+           $resultData['booth_no'] = $value[4];
+           $resultData['section_no'] = $value[5];
+           $resultData['house_no'] = $value[6];
+           $resultData['voter_name_hin'] = $value[7];
+           $resultData['voter_age'] = $value[8];
+           $resultData['father_husband_name_hin'] = $value[9];
+           $resultData['sambandh'] = $value[10];
+           $resultData['gender_hin'] = $value[11];
+           $resultData['ward_hin'] = $value[12];
+           $resultData['id_no'] = $value[13];
+           $resultData['poling_station_hin'] = $value[14];
+           $resultData['poling_station_en'] = $value[15];
+           $resultData['voter_name_en'] = $value[16];
+           $resultData['father_husband_name_en'] = $value[17];
+           $resultData['gender_en'] = $value[18];
+           $resultData['ward_en'] = $value[19];
+           $resultData['surveyed_by'] = $resultsurveyerdetials[1];
+           $resultData['surveyed_at'] = $resultsurveyerdetials[0];
+    
+
+            foreach($queryQuestionOptionResult as $k => $questionoption){              
+                 $questionId = $questionoption[0]; 
+                 $questionHeading = $questionoption[1]; 
+                 $querySurvayAnswer = "SELECT `selected_options` FROM `tbl_survey` WHERE `voter_id` = $voterId AND `question_id` = $questionId";
+
+                $valueSurvayAnswer = mysqli_query($conn,$querySurvayAnswer);
+                $resultSurvayAnswer = mysqli_fetch_row($valueSurvayAnswer);
+                //asd($querySurvayAnswer);
+               $resultData[$questionHeading] = $resultSurvayAnswer[0];        
+           }
+
+        array_push($response,$resultData);
+        $i++;
+        // asd($response);
+    }
+   // asd($response);
+ return $response;
 }
 
 function get_mandal_panchayat_datasets($conn,$loksabha){
@@ -3902,7 +3839,7 @@ function get_sms($conn,$sms_id){
 
 function getSurveyQuestion($conn,$questionid){
     $response = array();
-    $query = "SELECT id,loksabha,vidhansabha,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM tbl_survey_questions";
+    $query = "SELECT id,loksabha,vidhansabha,question,question_heading,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,status FROM tbl_survey_questions";
     $query = isset($questionid) ? $query." where id = $questionid" : $query;
     mysqli_set_charset($conn,'utf8');
     $value= mysqli_query($conn,$query);
@@ -3912,11 +3849,12 @@ function getSurveyQuestion($conn,$questionid){
             $response['loksabha'] = $value[1];
             $response['vidhansabha'] = $value[2];
             $response['question'] = $value[3];
-            $response['option'] = array('option1' => $value[4], 'option2' => $value[5], 'option3' => $value[6], 'option4' => $value[7],'option5' => $value[8],'option6' => $value[9],'option7' =>$value[10],'option8' => $value[11],'option9' => $value[12],'option10' => $value[13]);
-
+            $response['question_heading'] = $value[4];
+            $response['option'] = array('option1' => $value[5], 'option2' => $value[6], 'option3' => $value[7], 'option4' => $value[8],'option5' => $value[9],'option6' => $value[10],'option7' =>$value[11],'option8' => $value[12],'option9' => $value[13],'option10' => $value[14]);
+            $response['status'] = $value[15];
     }
 
-  // asd($response);
+ //asd($response);
     return $response;
 }
 
@@ -4523,13 +4461,38 @@ function  update_voter_survey($conn,$voter_id,$pesha,$mobile_no,$whatsapp_no,$pr
 }
 
 function get_mandal_list($conn,$vidhansabha){
+if(!empty($vidhansabha)){
+    $query = "SELECT mandal FROM `tbl_mandal` WHERE `vidhansabha` = '$vidhansabha' GROUP BY mandal"; 
+  
+}else{
+    $query = "SELECT mandal FROM `tbl_mandal` GROUP BY mandal"; 
+  
+}
+
    // $query = "SELECT mandal FROM `tbl_mandal_panchayat_mapping` WHERE `loksabha` = '$loksabha' GROUP BY mandal";
-   $query = "SELECT mandal FROM `tbl_mandal` WHERE `vidhansabha` = '$vidhansabha' GROUP BY mandal"; 
    mysqli_set_charset($conn,'utf8');
     $value = mysqli_query($conn,$query);
     $result = mysqli_fetch_all($value);
 
     return $result;
 }
+function getFilterQuestionList($conn,$vidhansabha){
+
+//asd($vidhansabha);
+if(!empty($vidhansabha)){
+    $query = "SELECT id,question_heading,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM `tbl_survey_questions` WHERE `vidhansabha` = '$vidhansabha' AND status = '1'"; 
+
+}else{
+    $query = "SELECT id,question_heading,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM `tbl_survey_questions` WHERE  status = '1'"; 
+
+}
+    
+
+    mysqli_set_charset($conn,'utf8');
+     $value = mysqli_query($conn,$query);
+     $result = mysqli_fetch_all($value);
+ 
+     return $result;
+ }
 
 ?>

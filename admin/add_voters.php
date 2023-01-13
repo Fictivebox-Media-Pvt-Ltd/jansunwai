@@ -15,6 +15,8 @@ if (!isset($_SESSION['user_id'])) {
     $deptId = $loginUserData['department_id'];
     $adminEmail = $loginUserData['email'];
     $userName = $loginUserData['username'];
+    $assignedLoksabha = $loginUserData['assigned_loksabha'];
+    $assignedVidhansabha = $loginUserData['assigned_vidhansabha'];
     $deptName = get_department_details($conn,$deptId);
 }
 
@@ -22,6 +24,8 @@ if(isset($_POST['file_id'])){
     $file_id = $_POST['file_id'];
     $loksabha = isset($_POST['loksabha']) ? $_POST['loksabha'] : '';
     $vidhansabha = isset($_POST['vidhansabha']) ? $_POST['vidhansabha'] : '';
+    $mandal = isset($_POST['mandal']) ? $_POST['namdal'] : '';
+    $panchayat = isset($_POST['panchayat']) ? $_POST['panchayat'] : '';
     $booth_no = isset($_POST['booth_no']) ? $_POST['booth_no'] : '';
     $house_no = isset($_POST['house_no']) ? $_POST['house_no'] : '';
     $voter_name_hin = isset($_POST['voter_name_hin']) ? $_POST['voter_name_hin'] : '';
@@ -39,9 +43,12 @@ if(isset($_POST['file_id'])){
     $cast_en = isset($_POST['cast_en']) ? $_POST['cast_en'] : '';
     $pesha_en = isset($_POST['pesha_en']) ? $_POST['pesha_en'] : '';
 
-    add_single_voter($conn,$file_id,$loksabha,$vidhansabha,$booth_no,$house_no,$voter_name_hin,$voter_age,$father_husband_name_hin,$gender_hin,$ward_hin,$cast_hin,$phone_no,$pesha_hin,$voter_name_en,$father_husband_name_en,$gender_en,$ward_en,$cast_en,$pesha_en);
+    add_single_voter($conn,$file_id,$loksabha,$vidhansabha,$mandal,$panchayat,$booth_no,$house_no,$voter_name_hin,$voter_age,$father_husband_name_hin,$gender_hin,$ward_hin,$cast_hin,$phone_no,$pesha_hin,$voter_name_en,$father_husband_name_en,$gender_en,$ward_en,$cast_en,$pesha_en);
 }
 
+$all_loksabhas = array();
+$all_loksabhas = get_all_loksabha($conn);
+$mandal_list = get_mandal_list($conn,$assignedVidhansabha);
 if (isset($_POST["import"]))
 { 
   require_once('vendor/excel_reader2.php');
@@ -51,8 +58,7 @@ if (isset($_POST["import"]))
   if(in_array($_FILES["file"]["type"],$allowedFileType)){
         $targetPath = 'doc/'.$_FILES['file']['name'];
         move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
-
-        $query = "INSERT INTO `tbl_voters` (`file_id`, `loksabha`, `vidhansabha`, `booth_no`, `section_no`, `house_no`, `voter_name_hin`, `voter_age`, `father_husband_name_hin`, `sambandh`, `gender_hin`, `ward_hin`, `id_no`, `poling_station_hin`, `poling_station_en`, `voter_name_en`, `father_husband_name_en`, `gender_en`, `ward_en`) VALUES";
+        $query = "INSERT INTO `tbl_voters` (`file_id`, `loksabha`, `vidhansabha`, `mandal`,`panchayat`,`booth_no`, `section_no`, `house_no`, `voter_name_hin`, `voter_age`, `father_husband_name_hin`, `sambandh`, `gender_hin`, `ward_hin`, `id_no`, `poling_station_hin`, `poling_station_en`, `voter_name_en`, `father_husband_name_en`, `gender_en`, `ward_en`,`mobileNo`,`whatsappNo`) VALUES";
         $sub_query = "";
         $Reader = new SpreadsheetReader($targetPath);
         $Reader->ChangeSheet(0);   
@@ -74,93 +80,111 @@ if (isset($_POST["import"]))
                 if(isset($Row[$skipColumns+2])) {
                     $vidhansabha = $Row[$skipColumns+2];
                 }
+                $mandal = ''; 
+                if(isset($Row[$skipColumns+3])) {
+                    $mandal = $Row[$skipColumns+3];
+                }
+                $panchayat = ''; 
+                if(isset($Row[$skipColumns+4])) {
+                    $panchayat = $Row[$skipColumns+4];
+                }
 
                 $booth_no= ''; 
-                if(isset($Row[$skipColumns+3])) {
-                    $booth_no = $Row[$skipColumns+3];
+                if(isset($Row[$skipColumns+5])) {
+                    $booth_no = $Row[$skipColumns+5];
                 }
 
                 $section_no= ''; 
-                if(isset($Row[$skipColumns+4])) {
-                    $section_no = $Row[$skipColumns+4];
+                if(isset($Row[$skipColumns+6])) {
+                    $section_no = $Row[$skipColumns+6];
                 }
 
                 $house_no = '';
-                if(isset($Row[$skipColumns+5])) {
-                    $house_no = $Row[$skipColumns+5];
+                if(isset($Row[$skipColumns+7])) {
+                    $house_no = $Row[$skipColumns+7];
                 }
 
                 $voter_name_hin = ''; 
-                if(isset($Row[$skipColumns+6])) {
-                    $voter_name_hin = $Row[$skipColumns+6];
+                if(isset($Row[$skipColumns+8])) {
+                    $voter_name_hin = $Row[$skipColumns+8];
                 }  
 
                 $voter_age = ''; 
-                if(isset($Row[$skipColumns+7])) {
-                    $voter_age = $Row[$skipColumns+7];
+                if(isset($Row[$skipColumns+9])) {
+                    $voter_age = $Row[$skipColumns+9];
                 }  
 
                 $father_husband_name_hin = ''; 
-                if(isset($Row[$skipColumns+8])) {
-                    $father_husband_name_hin = $Row[$skipColumns+8];
+                if(isset($Row[$skipColumns+10])) {
+                    $father_husband_name_hin = $Row[$skipColumns+10];
                 }  
 
                 $sambandh = ''; 
-                if(isset($Row[$skipColumns+9])) {
-                    $sambandh = $Row[$skipColumns+9];
+                if(isset($Row[$skipColumns+11])) {
+                    $sambandh = $Row[$skipColumns+11];
                 } 
 
                 $gender_hin = ''; 
-                if(isset($Row[$skipColumns+10])) {
-                    $gender_hin = $Row[$skipColumns+10];
+                if(isset($Row[$skipColumns+12])) {
+                    $gender_hin = $Row[$skipColumns+12];
                 } 
                 
                 $ward_hin = ''; 
-                if(isset($Row[$skipColumns+11])) {
-                    $ward_hin = $Row[$skipColumns+11];
+                if(isset($Row[$skipColumns+13])) {
+                    $ward_hin = $Row[$skipColumns+13];
                 } 
 
                 $id_no = ''; 
-                if(isset($Row[$skipColumns+12])) {
-                    $id_no = $Row[$skipColumns+12];
+                if(isset($Row[$skipColumns+14])) {
+                    $id_no = $Row[$skipColumns+14];
                 } 
 
                 $poling_station_hin = ''; 
-                if(isset($Row[$skipColumns+13])) {
-                    $poling_station_hin = $Row[$skipColumns+13];
+                if(isset($Row[$skipColumns+15])) {
+                    $poling_station_hin = $Row[$skipColumns+15];
                 } 
 
                 $poling_station_en = ''; 
-                if(isset($Row[$skipColumns+14])) {
-                    $poling_station_en = $Row[$skipColumns+14];
+                if(isset($Row[$skipColumns+16])) {
+                    $poling_station_en = $Row[$skipColumns+16];
                 } 
 
                 $voter_name_en = ''; 
-                if(isset($Row[$skipColumns+15])) {
-                    $voter_name_en = $Row[$skipColumns+15];
+                if(isset($Row[$skipColumns+17])) {
+                    $voter_name_en = $Row[$skipColumns+17];
                 }  
 
                 $father_husband_name_en = ''; 
-                if(isset($Row[$skipColumns+16])) {
-                    $father_husband_name_en = $Row[$skipColumns+16];
+                if(isset($Row[$skipColumns+18])) {
+                    $father_husband_name_en = $Row[$skipColumns+18];
                 }  
 
                 $gender_en = ''; 
-                if(isset($Row[$skipColumns+17])) {
-                    $gender_en = $Row[$skipColumns+17];
+                if(isset($Row[$skipColumns+19])) {
+                    $gender_en = $Row[$skipColumns+19];
                 } 
                 
                 $ward_en = ''; 
-                if(isset($Row[$skipColumns+18])) {
-                    $ward_en = $Row[$skipColumns+18];
+                if(isset($Row[$skipColumns+20])) {
+                    $ward_en = $Row[$skipColumns+20];
+                } 
+                $mobileNo = ''; 
+                if(isset($Row[$skipColumns+21])) {
+                    $mobileNo = $Row[$skipColumns+21];
+                } 
+                $whatsappNo = ''; 
+                if(isset($Row[$skipColumns+22])) {
+                    $whatsappNo = $Row[$skipColumns+22];
                 } 
 
-                $sub_query = $sub_query." ('$file_id','$loksabha','$vidhansabha','$booth_no','$section_no','$house_no','$voter_name_hin','$voter_age','$father_husband_name_hin','$sambandh','$gender_hin','$ward_hin','$id_no','$poling_station_hin','$poling_station_en','$voter_name_en','$father_husband_name_en','$gender_en','$ward_en')\n,";
+                $sub_query = $sub_query." ('$file_id','$loksabha','$vidhansabha','$mandal','$panchayat','$booth_no','$section_no','$house_no','$voter_name_hin','$voter_age','$father_husband_name_hin','$sambandh','$gender_hin','$ward_hin','$id_no','$poling_station_hin','$poling_station_en','$voter_name_en','$father_husband_name_en','$gender_en','$ward_en','$mobileNo','$whatsappNo')\n,";
             }
             $counter++;
         }
         $query = $query.$sub_query;
         $query = substr($query, 0, -1).';';
+        // print_r($query);
+        // die;
         $file = fopen('bulkupload/bulk_upload.sql','w');
         // fwrite($file,$query);
         // mysqli_set_charset($conn,'utf8');
@@ -223,7 +247,7 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7 offset-lg-5">
                                         <div class="form-group mt-2">
                                             <button name="import" type="submit" class="btn btn-lg btn-primary">Upload</button>
-                                            <a href="./SampleFiles/Voter_list_sample.xlsx" download="proposed_file_name" class="btn btn-lg btn-info"> Download Sample File</a><br><br><br>
+                                            <a href="./SampleFiles/Voters_sampleFIle.xlsx" download="proposed_file_name" class="btn btn-lg btn-info"> Download Sample File</a><br><br><br>
                                         </div>
                                     </div>
                                     
@@ -263,7 +287,12 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter Loksabha" name="loksabha">
+                                                <select name="loksabha" id="loksabha" class="form-control">
+                                                    <?php foreach ($all_loksabhas as $key => $value) { ?>
+                                                        <option value="" selected disabled hidden>लोकसभा</option>
+                                                        <option value="<?php echo $value['loksabha']; ?>"><?php echo $value['loksabha']; ?></option>
+                                                    <?php } ?>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -277,9 +306,44 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter Vidhansabha" name="vidhansabha">
+                                                <select name="vidhansabha" class="form-control" id="vidhansabha_list">
+                                                    <?php if (!empty($filters['vidhansabha'])) { ?>
+                                                        <option value="<?php echo $filters['vidhansabha'] ?>" selected><?php echo $filters['vidhansabha'] . '✓' ?></option>
+                                                    <?php } else { ?>
+                                                        <option value="" selected disabled hidden>विधानसभा</option>
+                                                    <?php } ?>
+                                                </select>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row g-3 align-center">
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <label class="form-label">Mandal</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <select name="mandal" class="form-control" id="mandal_list">
+                                              <option value="" selected disabled hidden>मंडल</option>
+                                        </select>
+                                                       
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="row g-3 align-center">
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <label class="form-label">Panchayat</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <select name="panchayat" class="form-control" id="panchayat_list">
+                                           <option value="" selected disabled hidden>पंचायत</option>
+                                        </select>          
+                                      </div>
                                     </div>
                                 </div>
                                 <div class="row g-3 align-center">
@@ -291,8 +355,10 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7">
                                         <div class="form-group">
                                             <div class="form-control-wrap">
-                                            <input type="number" class="form-control" placeholder="Enter Booth Number" name="booth_no">
-                                            </div>
+                                                <select name="booth_no" class="form-control" id="booth_range">
+                                                  <option value="" selected disabled hidden>बूथ रेंज</option>
+                                                </select>
+                                           </div>
                                         </div>
                                     </div>
                                 </div>
@@ -380,48 +446,7 @@ if (isset($_POST["import"]))
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="row g-3 align-center">
-                                    <div class="col-lg-5">
-                                        <div class="form-group">
-                                            <label class="form-label">Cast</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7">
-                                        <div class="form-group">
-                                            <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter Cast" name="cast_en">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="row g-3 align-center">
-                                    <div class="col-lg-5">
-                                        <div class="form-group">
-                                            <label class="form-label">Phone No</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7">
-                                        <div class="form-group">
-                                            <div class="form-control-wrap">
-                                            <input type="number" class="form-control" placeholder="Enter Phone Number" name="phone_no">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="row g-3 align-center">
-                                    <div class="col-lg-5">
-                                        <div class="form-group">
-                                            <label class="form-label">Pesha</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7">
-                                        <div class="form-group">
-                                            <div class="form-control-wrap">
-                                            <input type="text" class="form-control" placeholder="Enter Pesha" name="pesha_en">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
+                               
                                 <div class="row g-3">
                                     <div class="col-lg-7 offset-lg-5">
                                         <div class="form-group mt-2">
@@ -443,6 +468,93 @@ if (isset($_POST["import"]))
     </div>
     <!-- app-root @e -->
     <!-- JavaScript -->
+    <script>
+        $(document).ready(function() {
+            $("#loksabha").click(function() {
+                var loksabha = $(this).val();
+                $.ajax({
+                    url: 'serviceFetchVidhansabha.php',
+                    type: 'post',
+                    data: {
+                        loksabha: loksabha
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        var len = response.length;
+                        $("#vidhansabha_list").empty();
+                        $("#vidhansabha_list").append('<option value="" selected disabled hidden>विधानसभा</option>');
+                        for (var i = 0; i < len; i++) {
+                            var name = response[i];
+                            $("#vidhansabha_list").append("<option value='" + name + "'>" + name + "</option>");
+                        }
+                    }
+                });
+            });
+
+            $("#vidhansabha_list").click(function() {
+                var vidhansabha = $(this).val();
+                $.ajax({
+                    url: 'serviceFetchMandal.php',
+                    type: 'post',
+                    data: {
+                        vidhansabha: vidhansabha
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        var len = response.length;
+                        $("#mandal_list").empty();
+                        $("#mandal_list").append('<option value="" selected disabled hidden>मंडल</option>');
+                        for (var i = 0; i < len; i++) {
+                            var name = response[i];
+                            $("#mandal_list").append("<option value='" + name + "'>" + name + "</option>");
+                        }
+                    }
+                });
+            });
+            $("#mandal_list").click(function(){
+            var mandal = $(this).val();
+            $.ajax({
+                url: 'service_fetch_panchayat.php',
+                type: 'post',
+                data: {mandal:mandal},
+                dataType: 'json',
+                success:function(response){
+                    var len = response.length;
+                    $("#panchayat_list").empty();
+                    $("#panchayat_list").append('<option value="" selected disabled hidden>पंचायत</option>');
+                    for( var i = 0; i<len; i++){
+                        var name = response[i];
+                        $("#panchayat_list").append("<option value='"+name+"'>"+name+"</option>");
+                    }
+                }
+            });
+        });
+        $("#panchayat_list").click(function(){
+            var panchayat = $(this).val();
+            $.ajax({
+                url: 'service_fetch_booth_range.php',
+                type: 'post',
+                data: {panchayat:panchayat},
+                dataType: 'json',
+                success:function(response){
+                    var len = response.length;                   
+                    $("#booth_range").empty();
+                    $("#booth_range").append('<option value="" selected disabled hidden>बूथ रेंज</option>');
+                    for(var i = 0; i<len; i++){
+                        var name = response[i];
+                        var boothresponse = name[0].split(",");
+                        var boothlen = boothresponse.length;
+                        for( var i = 0; i<boothlen; i++){
+                            var boothname = boothresponse[i];
+                         // console.log(boothname);
+                        $("#booth_range").append("<option value='"+boothname+"'>"+boothname+"</option>");
+                        }
+                    }
+                }
+            });
+        });
+        });
+    </script>
     <script>
         jQuery(document).ready(function($) {
             $('.disableKeyPress').bind('keypress', function(e) {

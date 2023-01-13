@@ -1,7 +1,7 @@
 <?php
 include_once '../configs/includes.php';
 if (isset($_POST['selected_loksabha']) && isset($_POST['vidhansabha']) && isset($_POST['question']) && isset($_POST['question_option'])) {
-    addQuestion($conn, $_POST['selected_loksabha'], $_POST['vidhansabha'], $_POST['question'], $_POST['question_option']);
+    addQuestion($conn, $_POST['selected_loksabha'], $_POST['vidhansabha'],$_POST['question'],$_POST['questionHeading'], $_POST['headingStatus'], $_POST['question_option']);
 }
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -77,13 +77,13 @@ $all_loksabhas = get_all_loksabha($conn);
                                                 <div class="row">
                                                     <div class="col-md-6 align-self-center">
                                                         <div class="form-group">
-                                                            <label class="fw-medium text-dark mb-0" for="">Questions</label>
-                                                            <input type="text" class="form-control" id="" aria-describedby="" placeholder="">
+                                                            <label class="fw-medium text-dark mb-0" for="">Questions Heading</label>
+                                                            <input type="text" class="form-control" id="" name="questionHeading" placeholder="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 align-self-center">
                                                         <div class="custom-control custom-switch">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                                            <input type="checkbox" class="custom-control-input" value="1" name="headingStatus" id="customSwitch1">
                                                             <label class="custom-control-label" for="customSwitch1">Status</label>
                                                         </div>
                                                     </div>

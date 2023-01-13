@@ -1,6 +1,6 @@
 <?php
 include_once '../configs/includes.php';
-$query = "SELECT id,loksabha,vidhansabha,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10 FROM tbl_survey_questions";
+$query = "SELECT id,loksabha,vidhansabha,question_heading,question,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,status FROM tbl_survey_questions";
 
 if(isset($_POST["search"]["value"]))
 {
@@ -32,17 +32,19 @@ foreach($result as $key => $value){
         $response[$key]['id'] = $value[0];
         $response[$key]['loksabha'] = $value[1];
         $response[$key]['vidhansabha'] = $value[2];
-        $response[$key]['question'] = $value[3];
-        $response[$key]['option1'] = $value[4];
-        $response[$key]['option2'] = $value[5];
-        $response[$key]['option3'] = $value[6];
-        $response[$key]['option4'] = $value[7];
-        $response[$key]['option5'] = $value[8];
-        $response[$key]['option6'] = $value[9];
-        $response[$key]['option7'] = $value[10];
-        $response[$key]['option8'] = $value[11];
-        $response[$key]['option9'] = $value[12];
-        $response[$key]['option10'] = $value[13];
+        $response[$key]['question_heading'] = $value[3];
+        $response[$key]['question'] = $value[4];
+        $response[$key]['option1'] = $value[5];
+        $response[$key]['option2'] = $value[6];
+        $response[$key]['option3'] = $value[7];
+        $response[$key]['option4'] = $value[8];
+        $response[$key]['option5'] = $value[9];
+        $response[$key]['option6'] = $value[10];
+        $response[$key]['option7'] = $value[11];
+        $response[$key]['option8'] = $value[12];
+        $response[$key]['option9'] = $value[13];
+        $response[$key]['option10'] = $value[14];
+        $response[$key]['status'] = $value[15];
     }
 }
 $i = 1;
@@ -52,6 +54,7 @@ foreach($response as $row)
 	$sub_array[] = $_POST['start']+$i;
     $sub_array[] = $row['loksabha'];
     $sub_array[] = $row['vidhansabha'];
+    $sub_array[] = $row['question_heading'];
     $sub_array[] = $row['question'];
     $sub_array[] = $row['option1'];
     $sub_array[] = $row['option2'];
@@ -63,6 +66,13 @@ foreach($response as $row)
     $sub_array[] = $row['option8'];
     $sub_array[] = $row['option9'];
     $sub_array[] = $row['option10'];
+
+    if($row['status'] == 1){
+        $sub_array[] ='<a href="?changeStatus='.$row['id'].'" class="" title="Edit this Question"><em class="icon ni ni-toggle-on h4"></em> </a>';
+    }
+    else{
+        $sub_array[] ='<a href="?changeStatus='.$row['id'].'" class="" title="Edit this Question"><em class="icon ni ni-toggle-off h4"></em> </a>';
+    }
     $sub_array[] = '<a href="?del='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Delete This Question.!"><em class="icon ni ni-trash"></em></a>'.
         '<a href="edit_question.php?id='.$row['id'].'" class="btn btn-icon btn-trigger btn-tooltip" title="Edit this Question"><em class="icon ni ni-edit"></em></a>';
     $data[] = $sub_array;
