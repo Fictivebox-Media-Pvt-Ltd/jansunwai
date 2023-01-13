@@ -153,7 +153,7 @@ if (isset($_POST["import"]))
                                     <div class="col-lg-7 offset-lg-5">
                                         <div class="form-group mt-2 mb-5">
                                             <button name="import" type="submit" class="btn btn-lg btn-primary">Upload</button>
-                                            <a href="" download="" class="btn btn-lg btn-info"> Download Sample File</a>
+                                            <a href="./SampleFiles/booth_adhyaksh_SampleFile.xlsx" download="" class="btn btn-lg btn-info"> Download Sample File</a>
                                         </div>
                                     </div>
                                 </div>
