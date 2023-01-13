@@ -27,7 +27,7 @@
                                     </div>
                                     <div class="card card-preview w-100" style="width: max-content;">
                                         <div class="card-inner">
-                                            <form method="POST" class="gy-3">
+                                            <!-- <form method="POST" class="gy-3">
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
@@ -49,36 +49,44 @@
                                                         <button name="import" type="submit" class="btn btn-lg btn-primary">Submit</button>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </form> -->
                                             <div class="row">
                                                 <div class="col-md-12 mt-4">
                                                     <table class="table" id="panchayatList">
                                                         <thead>
                                                             <tr>
                                                                 <th>S.No.</th>
-                                                                <th>Name</th>
+                                                                <th>News Agency</th>
+                                                                <th>Author</th>
+                                                                <th>Website</th>
                                                                 <th>Phone</th>
                                                                 <th>Email</th>
+                                                                <th>Location</th>
                                                                 <th>Action</th>
-
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
                                                                 <td>1</td>
-                                                                <td>Deepak</td>
+                                                                <td>Press Trust of India</td>
+                                                                <td>K C Roy</td>
+                                                                <td><a href="">www.ptinews.com</a></td>
                                                                 <td>+91 000 0000 000</td>
                                                                 <td>deepak@gmail.com</td>
+                                                                <td>Location</td>
                                                                 <td>
                                                                     <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Edit"><em class="icon ni ni-edit"></em></a>
                                                                     <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Delete"><em class="icon ni ni-trash"></em></a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>1</td>
-                                                                <td>Deepak</td>
+                                                                <td>2</td>
+                                                                <td>United News of India</td>
+                                                                <td>Dr. Bidhan Chandra Roy</td>                                                               
+                                                                <td><a href="">www.uniindia.com</a></td>
                                                                 <td>+91 000 0000 000</td>
                                                                 <td>deepak@gmail.com</td>
+                                                                <td>Location</td>
                                                                 <td>
                                                                     <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Edit"><em class="icon ni ni-edit"></em></a>
                                                                     <a href="#!" class="btn btn-icon btn-trigger btn-tooltip" title="Delete"><em class="icon ni ni-trash"></em></a>

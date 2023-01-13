@@ -165,6 +165,17 @@ $sms = get_sms($conn,NULL);
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <?php include_once 'head.php'; ?>
+<style>
+.card .table tr:first-child th,
+.card .table tr:first-child td {
+    white-space: nowrap;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 1.25rem !important;
+}
+</style>
 
 <body class="nk-body bg-lighter npc-default has-sidebar">
     <div class="nk-app-root">
@@ -331,9 +342,9 @@ $sms = get_sms($conn,NULL);
                                                    </select>
                                                     <button href="#" class="btn-outline-success btn-tooltip" title="Click to send an Whatsapp SMS"><em class="icon ni ni-call-alt"></em>&nbsp;Whatsapp</button>
                                                 </div>
-                                        <div class="card card-preview" style="width: max-content;">
+                                        <div class="card card-preview w-100" style="width: max-content;">
                                             <div class="card-inner">
-                                                <table class="table" id="voter-list">
+                                                <table class="table table-bordered table-responsive mt-3" id="voter-list">
                                                     <thead>
                                                         <tr>
                                                         <th style="width:80px;">S. No.</th>
