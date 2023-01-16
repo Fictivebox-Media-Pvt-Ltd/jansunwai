@@ -38,7 +38,7 @@ if($jwt){
           $voterMobile = $personal_info['mobile'];
           $voterWhatsapp = $personal_info['whatsapp'];
 
-        $query = "UPDATE `tbl_voters` SET `voter_name_en` = '$voterName',`father_husband_name_en` = '$voterFName',`mobileNo` = '$voterMobile',`whatsappNo` = '$voterWhatsapp' WHERE `id` = '$voter_id'";
+        $query = "UPDATE `tbl_voters` SET `voter_name_en` = '$voterName',`father_husband_name_en` = '$voterFName',`mobileNo` = '$voterMobile',`whatsappNo` = '$voterWhatsapp',`is_surveyed` = 1 WHERE `id` = '$voter_id'";
         // print_r($query);
         // die;
         mysqli_set_charset($conn,'utf8');

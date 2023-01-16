@@ -68,7 +68,7 @@ $queryQuestionOptionResult = mysqli_fetch_all($valueQuestionOption);
 //asd($result);
 
 $voter_ids = get_voter_ids($conn,$filters);
-$query .= "SELECT tbl_voters.id,tbl_voters.file_id,tbl_voters.loksabha,tbl_voters.vidhansabha,tbl_voters.booth_no, tbl_voters.section_no,tbl_voters.house_no,tbl_voters.voter_name_hin,tbl_voters.voter_age, tbl_voters.father_husband_name_hin,tbl_voters.sambandh,tbl_voters.gender_hin,tbl_voters.ward_hin,tbl_voters.id_no, tbl_voters.poling_station_hin,tbl_voters.poling_station_en,tbl_voters.voter_name_en, tbl_voters.father_husband_name_en,tbl_voters.gender_en,tbl_voters.ward_en FROM tbl_voters JOIN tbl_survey ON tbl_survey.voter_id = 
+$query .= "SELECT DISTINCT tbl_voters.id,tbl_voters.file_id,tbl_voters.loksabha,tbl_voters.vidhansabha,tbl_voters.booth_no, tbl_voters.section_no,tbl_voters.house_no,tbl_voters.voter_name_hin,tbl_voters.voter_age, tbl_voters.father_husband_name_hin,tbl_voters.sambandh,tbl_voters.gender_hin,tbl_voters.ward_hin,tbl_voters.id_no, tbl_voters.poling_station_hin,tbl_voters.poling_station_en,tbl_voters.voter_name_en, tbl_voters.father_husband_name_en,tbl_voters.gender_en,tbl_voters.ward_en FROM tbl_voters JOIN tbl_survey ON tbl_survey.voter_id = 
 tbl_voters.id WHERE tbl_voters.is_surveyed = 1 ";
 
 if(!empty($filters['loksabha'])){
@@ -110,7 +110,7 @@ if($_POST["length"] != -1)
 {
 	$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 }
-   // asd($query);
+  // asd($query);
 mysqli_set_charset($conn,'utf8');
 $value = mysqli_query($conn,$query);
 $result = mysqli_fetch_all($value);
@@ -212,7 +212,7 @@ $output = array(
 //asd($voter_ids);
 function get_total_all_records($conn,$voter_ids){
     //asd($voter_ids);
-    $query = "SELECT count(tbl_voters.id) as total_users FROM tbl_voters INNER JOIN tbl_voter_survey ON tbl_voters.id = tbl_voter_survey.voter_id ";
+    $query = "SELECT count(tbl_voters.id) as total_users FROM tbl_voters INNER JOIN tbl_survey ON tbl_voters.id = tbl_survey.voter_id ";
     $query .= " WHERE tbl_voters.is_surveyed = 1";
     if(isset($_GET['assignedLoksabha']) && $_GET['assignedLoksabha'] != '' && $_GET['assignedLoksabha'] != NULL && isset($_GET['booth_no']) && $_GET['booth_no'] != ''){
         $query .= ' AND tbl_voters.loksabha = '."'".$_GET['assignedLoksabha']."'".' AND tbl_voters.booth_no = '."'".$_GET['booth_no']."'";
@@ -225,7 +225,7 @@ function get_total_all_records($conn,$voter_ids){
         $query .= " AND tbl_voters.id IN ($voter_ids)";
     }
     if(isset($_GET['filter_category']) && $_GET['filter_category'] != '' && $_GET['filter_category'] != NULL){
-        $query .= " AND tbl_voter_survey.caste_categories LIKE '%".$_GET['filter_category']."%'";
+        $query .= " AND tbl_survey.caste_categories LIKE '%".$_GET['filter_category']."%'";
     }
   //asd($query);
 
