@@ -60,8 +60,10 @@ $getFilterQuestionList = getFilterQuestionList($conn,$assignedVidhansabha);
     if(isset($_GET['isExport']) && $_GET['isExport'] != '' && $_GET['isExport'] != NULL && $_GET['isExport'] == TRUE){
       
         $optionFilters = $_GET['optionFilters'];
+        $firstTime = NULL;
+        $mahila = NULL;
  
-        $export_surveyed_userbase = export_surveyed_userbase($conn,$assignedLoksabha,$assignedVidhansabha,$_GET['mandal'],$_GET['panchayat'],$_GET['boothRange'],$optionFilters);
+        $export_surveyed_userbase = export_surveyed_userbase($conn,$assignedLoksabha,$assignedVidhansabha,$_GET['mandal'],$_GET['panchayat'],$_GET['boothRange'],$optionFilters,$firstTime,$mahila);
         $file = new Spreadsheet();
         $objPHPExcel = $file;
         $alphabet = range('A', 'Z');
@@ -165,7 +167,7 @@ $sms = get_sms($conn,NULL);
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <?php include_once 'head.php'; ?>
-<style>
+<!-- <style>
 .card .table tr:first-child th,
 .card .table tr:first-child td {
     white-space: nowrap;
@@ -175,7 +177,7 @@ $sms = get_sms($conn,NULL);
     position: relative;
     margin-bottom: 1.25rem !important;
 }
-</style>
+</style> -->
 
 <body class="nk-body bg-lighter npc-default has-sidebar">
     <div class="nk-app-root">
@@ -250,7 +252,7 @@ $sms = get_sms($conn,NULL);
                                                         </select>
                                                         </div>
                                                     </div>
-                                                </div>                                               
+                                                </div>                         
                                                                 
                                                                                 
                                             <?php if(!empty($getFilterQuestionList)){ ?>
@@ -280,27 +282,7 @@ $sms = get_sms($conn,NULL);
                                         <!-- <br> -->
                                         <div class="col-md-12">
                                             <div class="row g-12">
-                                             
-                                                <!--<div class="col-lg-2">
-                                                    <div class="form-group">
-                                                        <div class="form-control-wrap">
-                                                        <select name="ageGroup" class="form-control">
-                                                            <!?php if(!empty($filter_ageGroup)){ ?>
-                                                                <option value="<!?php echo $filter_ageGroup?>" selected><!?php echo $filter_ageGroup.'✓'?></option>
-                                                            <!?php }else{ ?>
-                                                                <option value="" selected disabled hidden>Age Group</option>
-                                                            <!?php }?>    
-                                                            <option value="25~30">25 ~ 30</option>
-                                                            <option value="31~35">31 ~ 35</option>
-                                                            <option value="36~40">36 ~ 40</option>
-                                                            <option value="40~45">40 ~ 45</option>
-                                                            <option value="45~50">45 ~ 50</option>
-                                                        </select>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-                                                
-                                                <div class="col-lg-2">
+                                              <div class="col-lg-2">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <button style="min-width:-webkit-fill-available;justify-content:center" type="submit" name="data_filter" value="applied" class=" btn-outline-primary">Apply</button>
@@ -342,9 +324,9 @@ $sms = get_sms($conn,NULL);
                                                    </select>
                                                     <button href="#" class="btn-outline-success btn-tooltip" title="Click to send an Whatsapp SMS"><em class="icon ni ni-call-alt"></em>&nbsp;Whatsapp</button>
                                                 </div>
-                                        <div class="card card-preview w-100" style="width: max-content;">
+                                        <div class="card card-preview" style="width: max-content;">
                                             <div class="card-inner">
-                                                <table class="table table-bordered table-responsive mt-3" id="voter-list">
+                                                <table class="table" id="voter-list">
                                                     <thead>
                                                         <tr>
                                                         <th style="width:80px;">S. No.</th>
