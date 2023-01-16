@@ -2943,7 +2943,7 @@ function get_surveyers_stats($conn,$loksabha,$start_date,$end_date){
     return $response;
 }
 
-function export_surveyed_userbase($conn,$assignedLoksabha,$assignedVidhansabha,$mandal,$panchayat,$boothRange,$optionFilters){
+function export_surveyed_userbase($conn,$assignedLoksabha,$assignedVidhansabha,$mandal,$panchayat,$boothRange,$optionFilters,$firstTime,$mahila){
     $query .= "SELECT tbl_voters.id,tbl_voters.file_id,tbl_voters.loksabha,tbl_voters.vidhansabha,tbl_voters.booth_no, tbl_voters.section_no,tbl_voters.house_no,tbl_voters.voter_name_hin,tbl_voters.voter_age, tbl_voters.father_husband_name_hin,tbl_voters.sambandh,tbl_voters.gender_hin,tbl_voters.ward_hin,tbl_voters.id_no, tbl_voters.poling_station_hin,tbl_voters.poling_station_en,tbl_voters.voter_name_en, tbl_voters.father_husband_name_en,tbl_voters.gender_en,tbl_voters.ward_en FROM tbl_voters JOIN tbl_survey ON tbl_survey.voter_id = 
     tbl_voters.id WHERE tbl_voters.is_surveyed = 1 ";
    
@@ -2964,9 +2964,15 @@ function export_surveyed_userbase($conn,$assignedLoksabha,$assignedVidhansabha,$
         if(!empty($boothRange)){
            $query .= " AND tbl_voters.booth_no = $boothRange";
         }
-
+        
         if(!empty($optionFilters)){
             $query .= " AND find_in_set(tbl_survey.selected_options,'$optionFilters')";
+        }
+        if(!empty($firstTime)){
+            $query .= " AND tbl_voters.voter_age <= 22 ";
+        }
+        if(!empty($mahila)){
+            $query .= " AND tbl_voters.gender_en ='F'";
         }
    
     $query .= ' ORDER BY tbl_survey.created_at DESC LIMIT 2000';
