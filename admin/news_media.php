@@ -27,11 +27,11 @@
                                     </div>
                                     <div class="card card-preview w-100" style="width: max-content;">
                                         <div class="card-inner">
-                                            <!-- <form method="POST" class="gy-3">
+                                        <form method="POST" class="gy-3">
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label class="form-label">Name</label>
+                                                            <label class="form-label">News Agency</label>
                                                             <select name="selected_Mandal" class="form-control">
                                                                 <option value="" selected disabled hidden>Choose here
                                                                 </option>
@@ -40,29 +40,54 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label class="form-label">Name</label>
-                                                            <input type="text" class="form-control" placeholder="Name">
+                                                    <div class="form-group">
+                                                            <label class="form-label">Author</label>
+                                                            <input type="text" class="form-control" placeholder="Author">
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Website</label>
+                                                            <input type="text" class="form-control" placeholder="Website">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                    <div class="form-group">
+                                                            <label class="form-label">Phone </label>
+                                                            <input type="text" class="form-control" placeholder="Designation">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mt-2">
+                                                    <div class="form-group">
+                                                            <label class="form-label">Email</label>
+                                                            <input type="email" class="form-control" placeholder="Email">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mt-2">
+                                                    <div class="form-group">
+                                                            <label class="form-label">Location</label>
+                                                            <input type="text" class="form-control" placeholder="Location">
+                                                        </div>
+                                                    </div>
+                                                   
                                                     <div class="col-md-3 align-self-end">
                                                         <button name="import" type="submit" class="btn btn-lg btn-primary">Submit</button>
                                                     </div>
                                                 </div>
-                                            </form> -->
+                                            </form>
                                             <div class="row">
                                                 <div class="col-md-12 mt-4">
-                                                    <table class="table" id="panchayatList">
+                                                    <table class="table table-striped table-bordered table-hover" id="panchayatList">
                                                         <thead>
                                                             <tr>
-                                                                <th>S.No.</th>
-                                                                <th>News Agency</th>
-                                                                <th>Author</th>
-                                                                <th>Website</th>
-                                                                <th>Phone</th>
-                                                                <th>Email</th>
-                                                                <th>Location</th>
-                                                                <th>Action</th>
+                                                                <th class="py-3">S.No.</th>
+                                                                <th class="py-3">News Agency</th>
+                                                                <th class="py-3">Author</th>
+                                                                <th class="py-3">Website</th>
+                                                                <th class="py-3">Phone</th>
+                                                                <th class="py-3">Email</th>
+                                                                <th class="py-3">Location</th>
+                                                                <th class="py-3">Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>

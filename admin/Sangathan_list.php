@@ -31,7 +31,7 @@
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label class="form-label">Name</label>
+                                                            <label class="form-label">Sangathan Type</label>
                                                             <select name="selected_Mandal" class="form-control">
                                                                 <option value="" selected disabled hidden>Choose here
                                                                 </option>
@@ -40,26 +40,51 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                    <div class="form-group">
+                                                            <label class="form-label">Booth</label>
+                                                            <input type="text" class="form-control" placeholder="Boath">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label class="form-label">Name</label>
                                                             <input type="text" class="form-control" placeholder="Name">
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-3">
+                                                    <div class="form-group">
+                                                            <label class="form-label">Designations</label>
+                                                            <input type="text" class="form-control" placeholder="Designation">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mt-2">
+                                                    <div class="form-group">
+                                                            <label class="form-label">Contact Details</label>
+                                                            <input type="text" class="form-control" placeholder="Contact Details">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mt-2">
+                                                    <div class="form-group">
+                                                            <label class="form-label">DOB</label>
+                                                            <input type="text" class="form-control" placeholder="DOB">
+                                                        </div>
+                                                    </div>
+                                                   
                                                     <div class="col-md-3 align-self-end">
                                                         <button name="import" type="submit" class="btn btn-lg btn-primary">Submit</button>
                                                     </div>
                                                 </div>
                                             </form>
                                             <div class="row">
-                                                <div class="col-md-12 mt-4">
-                                                    <table class="table" id="panchayatList">
+                                                <div class="col-md-12 mt-5">
+                                                    <table class="table table-striped table-bordered table-hover" id="panchayatList">
                                                         <thead>
                                                             <tr>
-                                                                <th>S.No.</th>
-                                                                <th>Name</th>
-                                                                <th>Phone</th>
-                                                                <th>Email</th>
-                                                                <th>Action</th>
+                                                                <th class="py-3">S.No.</th>
+                                                                <th class="py-3">Name</th>
+                                                                <th class="py-3">Phone</th>
+                                                                <th class="py-3">Email</th>
+                                                                <th class="py-3">Action</th>
 
                                                             </tr>
                                                         </thead>
@@ -86,6 +111,7 @@
                                                             </tr>
                                                         </tbody>
                                                     </table>
+
                                                 </div>
                                             </div>
                                         </div>

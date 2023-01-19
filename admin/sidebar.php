@@ -231,10 +231,6 @@ $deptName = get_department_details($conn, $deptId);
                                     <a href="#" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-text">Sangathan</span></a>
                                     <ul class="nk-menu-sub">
                                         <li class="nk-menu-item">
-                                            <a href="add_sangathan.php" class="nk-menu-link"><span class="nk-menu-text">Add
-                                                    Sangathan</span></a>
-                                        </li>
-                                        <li class="nk-menu-item">
                                             <a href="sangathan_list.php" class="nk-menu-link"><span class="nk-menu-text">Sangathan List</span></a>
                                         </li>
                                     </ul>
@@ -266,7 +262,7 @@ $deptName = get_department_details($conn, $deptId);
                                 </li>
                                 <li class="nk-menu-item">
                                     <!-- Mukhiya.php -->
-                                    <a href="javascript:void(0)" class="nk-menu-link" style="opacity: .5;color: #526484 !important;"><span class="nk-menu-text">Mukhiya</span></a>
+                                    <a href="Mukhiya.php" class="nk-menu-link"><span class="nk-menu-text">Mukhiya</span></a>
                                 </li>
                             </ul><!-- .nk-menu-sub -->
                         </li>
@@ -487,10 +483,6 @@ $deptName = get_department_details($conn, $deptId);
                             <li class="nk-menu-item">
                                 <!-- News_media.php -->
                                 <a href="News_media.php" class="nk-menu-link"><span class="nk-menu-text">News</span></a>
-                            </li>
-                            <li class="nk-menu-item">
-                                <!-- Youtube_media.php -->
-                                <a href="youtube_media.php" class="nk-menu-link"><span class="nk-menu-text">Youtube</span></a>
                             </li>
                             <li class="nk-menu-item">
                                 <!-- Social_media.php -->
